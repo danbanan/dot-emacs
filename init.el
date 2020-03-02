@@ -15,24 +15,35 @@
   (package-install 'alect-themes))
 
 
-;; WINDOW SETUP
+;; FRAME SETUP
 (add-hook 'window-setup-hook
 	  (lambda()
 	    (setq frame-resize-pixelwise t
 		  ns-pop-up-frames nil
-		  ;; mac-option-modifier nil
 		  mac-command-modifier nil
 		  select-enable-clipboard t)
 	    (set-face-attribute 'default nil :family "Anonymous Pro" :height 170)
 	    (tool-bar-mode -1)
 	    (scroll-bar-mode -1)
-	    (set-frame-position nil 0 -24)
-	    (fullscreen-frame)
+	    (set-frame-position nil 0 0)
+	    (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t)
+	    (set-frame-parameter nil 'undecorated t)
 	    ;; Awesome color theme
 	    (load-theme 'alect-light)))
 
 
-;; Set up Geiser for Scheme developement
+
+;; CC MODE:
+(require 'cc-mode)
+
+;; Set coding style
+(setq c-default-style '((java-mode . "java")
+			(cc-mode . "linux")
+			(other . "gnu")))
+
+
+
+;; SCHEME DEVELOPMENT: Geiser package
 (unless (package-installed-p 'geiser)
   (package-install 'geiser))
 
