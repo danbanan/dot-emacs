@@ -2,8 +2,13 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("daily-planner"
- (filename . "~/OneDrive/Documents/org/planner/tasks.org")
+(("P4"
+ (filename . "~/Documents/ifi/Documents/inf3151/danra-sondrslu/P4/")
+ (front-context-string . "design\n  drwx---")
+ (rear-context-string . "48 Mar 24 13:30 ")
+ (position . 410))
+("daily-planner"
+ (filename . "~/OneDrive/Documents/org/planner/")
  (front-context-string . "* <2020-03-22 Su")
  (rear-context-string)
  (position . 1))

@@ -31,7 +31,6 @@
 ;; Enable centered window
 (centered-window-mode t)
 
-
 ;; FRAME SETUP
 (add-hook 'window-setup-hook
 	  (lambda()
@@ -46,18 +45,19 @@
 	    (set-frame-position nil 0 0)
 	    (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t)
 	    (global-visual-line-mode t)))
-
-	    
-
+	  
 ;; FILE SYSTEM SETUP
 ;; Disables back-up files, i.e. all files starting with '~'.
 (setq make-backup-files nil)
 ;; Adds the load-path to my personal elisp library directory, used for installing packages manually.
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-;; 'ls' command in Mac OSX does not support '--dired' flag.
+;; Use 'gls' command in Mac OSX for dired
 (when (string= system-type "darwin")       
-  (setq dired-use-ls-dired nil))
-
+  (setq insert-directory-program "gls"
+	dired-use-ls-dired t))
+;; Sort directories first and byte, kilobyte, megabyte ... suffixes.
+;; 'coreutils' must be installed
+(setq dired-listing-switches "-ahl --group-directories-first")
 
 ;; LINES SETTINGS
 ;; Show line numbers
@@ -68,14 +68,11 @@
 ;; Adjust line spacing
 (setq-default line-spacing 0.5)
 
-
 ;; ORG-MODE
 (require 'org)
 ;; Global key shortcuts for org
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
-;; Makes sure org is loaded
-(setq org-log-done t)
 ;; Beautify bullets in org-mode
 (unless (package-installed-p 'org-bullets)
   (package-install 'org-bullets))
@@ -83,33 +80,27 @@
 ;; Fontify the whole line for headings (with a background color). - Leuven theme
 (setq org-fontify-whole-heading-line t)
 ;; Agenda config
-(setq org-agenda-files '("~/OneDrive/Documents/org/planner"))
+(setq org-agenda-files '("/Users/danrachou/OneDrive/Documents/org/planner"))
 (setq org-agenda-skip-scheduled-if-deadline-is-shown 'repeated-after-deadline)
+;; Makes sure org is loaded
+(setq org-log-done t)
 
 ;; CC-MODE
 (require 'cc-mode)
-
 ;; Set coding style
 (setq c-default-style '((java-mode . "java")
 			(cc-mode . "k&r")
 			(other . "gnu")))
 
-
-
 ;; SCHEME DEVELOPMENT: Geiser package
 (unless (package-installed-p 'geiser)
   (package-install 'geiser))
-
 ;; Set racket path
 (setq geiser-racket-binary "/Applications/Racket v7.6/bin/racket")
-
 ;; Use Racket version
 (setq geiser-active-implementations '(racket))
-
 ;; Showing matching parantheses
 (show-paren-mode 1)
-
-
 
 ;; ASSEMBLER DEVELOPMENT: gas-mode
 ;; (require 'gas-mode)
@@ -176,7 +167,6 @@
  '(custom-safe-themes
    (quote
     ("a06658a45f043cd95549d6845454ad1c1d6e24a99271676ae56157619952394a" "e1d09f1b2afc2fed6feb1d672be5ec6ae61f84e058cb757689edb669be926896" "aded61687237d1dff6325edb492bde536f40b048eab7246c61d5c6643c696b7f" "4cf9ed30ea575fb0ca3cff6ef34b1b87192965245776afa9e9e20c17d115f3fb" "123a8dabd1a0eff6e0c48a03dc6fb2c5e03ebc7062ba531543dfbce587e86f2a" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" "5e3fc08bcadce4c6785fc49be686a4a82a356db569f55d411258984e952f194a" "7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" default)))
- '(org-agenda-files nil)
  '(package-selected-packages
    (quote
     (centered-window org-bullets org ample-theme alec-themes geiser markdown-mode dracula-theme auctex alect-themes))))
