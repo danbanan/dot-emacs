@@ -2,7 +2,17 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("planner"
+(("P5"
+ (filename . "~/Documents/ifi/Documents/inf3151/danra-sondrslu/P5/")
+ (front-context-string . "design\n  drwx---")
+ (rear-context-string . "0K Apr 25 09:00 ")
+ (position . 275))
+("ledger"
+ (filename . "~/Dropbox/ledger/journal.dat")
+ (front-context-string . "2020/03/22 * Dom")
+ (rear-context-string)
+ (position . 1))
+("planner"
  (filename . "~/Dropbox/org/planner/")
  (front-context-string . "life.org\n  -rwxr")
  (rear-context-string . "17 Mar 31 14:32 ")

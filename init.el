@@ -2,7 +2,7 @@
 (require 'package)
 
 (add-to-list 'package-archives
-	'("melpa" . "https://melpa.org/packages/"))
+	     '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
 (unless (file-exists-p (expand-file-name
@@ -31,6 +31,19 @@
 ;; Enable centered window
 (centered-window-mode t)
 
+;; Set font
+(set-face-attribute 'default nil :family "Source Code Pro" :height 160)
+;; Disable menu bar
+(menu-bar-mode -1)
+;; Disable tool bar
+(tool-bar-mode -1)
+;; Disable scroll bar
+(scroll-bar-mode -1)
+
+;; Line setup
+(unless (package-installed-p 'adaptive-wrap)
+  (package-install 'adaptive-wrap))
+
 ;; FRAME SETUP
 (add-hook 'window-setup-hook
 	  (lambda()
@@ -38,9 +51,6 @@
 		  ns-pop-up-frames nil
 		  mac-command-modifier nil
 		  select-enable-clipboard t)
-	    (set-face-attribute 'default nil :family "Source Code Pro" :height 160)
-	    (tool-bar-mode -1)
-	    (scroll-bar-mode -1)
 	    (set-frame-parameter nil 'undecorated t)
 	    (set-frame-position nil 0 0)
 	    (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t)
@@ -59,6 +69,10 @@
 ;; 'coreutils' must be installed
 (setq dired-listing-switches "-ahl --group-directories-first")
 
+;; Interactive Do
+(setq ido-enable-flex-matching t)
+(ido-mode t)
+
 ;; LINES SETTINGS
 ;; Show line numbers
 (when (version<= "26.0.50" emacs-version)
@@ -76,7 +90,9 @@
 ;; Beautify bullets in org-mode
 (unless (package-installed-p 'org-bullets)
   (package-install 'org-bullets))
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(add-hook 'org-mode-hook (lambda ()
+			   (org-bullets-mode 1)
+			   (adaptive-wrap-prefix-mode)))
 ;; Fontify the whole line for headings (with a background color). - Leuven theme
 (setq org-fontify-whole-heading-line t)
 ;; Agenda config
@@ -86,10 +102,24 @@
 (setq org-log-done t)
 ;; Adding habits to org modules
 (add-to-list 'org-modules 'org-habits)
+;; Org TODO keywords
+(setq org-todo-keywords '((sequence "TODO(t)"
+				    "IN-PROGRESS(i)"
+				    "WAITING(w)"
+				    "|"
+				    "CANCELLED(c)"
+				    "POSTPONED(p)"
+				    "DONE(d)")))
+
+;; CALENDER MODE
+(add-hook 'calendar-load-hook
+	  (lambda ()
+	    (calendar-set-date-style 'european)))
 
 ;; MARKDOWN-MODE
 (unless (package-installed-p 'markdown-mode)
   (package-install 'markdown-mode))
+(require 'markdown-mode)
 
 ;; LEDGER-MODE
 (unless (package-installed-p 'ledger-mode)
@@ -154,7 +184,8 @@
 (defun halfscreen-frame ()
   (interactive)
   (set-frame-size nil (- (/ (display-pixel-width) 2) 20)
-		  (display-pixel-height) t))
+		  (display-pixel-height) t)
+  (revert-buffer nil 1))
 
 ;; Function to set frame to full screen
 (defun fullscreen-frame ()
@@ -172,6 +203,12 @@
 (require 'cc-mode)
 ;; Change indentation level in C major mode
 (setq-default c-basic-offset 4)
+;; CSCOPE
+(unless (package-installed-p 'xcscope)
+  (package-install 'xcscope))
+(require 'xcscope)
+(cscope-setup)
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -188,9 +225,10 @@
      ("reg" "%(binary) -f %(ledger-file) reg")
      ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
      ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
+ '(org-export-backends (quote (ascii html icalendar latex md odt)))
  '(package-selected-packages
    (quote
-    (ledger-mode centered-window org-bullets org ample-theme alec-themes geiser markdown-mode dracula-theme auctex alect-themes))))
+    (adaptive-wrap xcscope ledger-mode centered-window org-bullets org ample-theme alec-themes geiser markdown-mode dracula-theme auctex alect-themes))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
