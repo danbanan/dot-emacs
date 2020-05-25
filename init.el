@@ -25,6 +25,18 @@
 ;; Current theme
 (load-theme 'leuven t)
 
+;; YASnippet - template tool for Emacs
+(unless (package-installed-p 'yasnippet)
+  (package-install 'yasnippet))
+(add-to-list 'load-path "~/Dropbox/yasnippets/")
+(require 'yasnippet)
+(yas-global-mode 1)
+
+;; COMPANY MODE - complete anything
+(unless (package-installed-p 'company)
+  (package-install 'company))
+(require 'company)
+
 ;; CENTER WINDOW: activated only on single windows
 (unless (package-installed-p 'centered-window)
   (package-install 'centered-window))
@@ -129,10 +141,45 @@
 
 ;; CC-MODE
 (require 'cc-mode)
-;; Set coding style
-(setq c-default-style '((java-mode . "java")
-			(cc-mode . "k&r")
-			(other . "gnu")))
+;; Making <RET> indent the new line
+(defun my-make-CR-do-indent ()
+  (define-key c-mode-base-map "\C-m" 'c-context-line-break))
+;; electric-pair-open-newline-between-pairs doesn't do anything for some reason.
+;; Using a custom newline instead, taken from Magnar Sveen .emacs
+(defun new-line-dwim ()
+  (interactive)
+  (let ((break-open-pair (or (and (looking-back "{") (looking-at "}"))
+                             ;; (and (looking-back ">") (looking-at "<"))
+                             ;; (and (looking-back "(") (looking-at ")"))
+                             ;; (and (looking-back "\\[") (looking-at "\\]")
+			     )))
+    (newline)
+    (when break-open-pair
+      (save-excursion
+        (newline)
+        (indent-for-tab-command)))
+    (indent-for-tab-command)))
+;; CC mode hooks
+(add-hook 'c-initialization-hook 'my-make-CR-do-indent)
+4(add-hook 'c-mode-common-hook
+	  (lambda ()
+	    ;; Set coding style
+	    (setq c-default-style '((java-mode . "java")
+				    (awk-mode . "awk")
+				    (other . "linux")))
+	    (setq indent-tabs-mode nil)
+	    (company-mode)))
+(add-hook 'c-mode-hook
+	  (lambda ()
+	    (c-set-style "linux")
+	    (electric-pair-mode 1)
+	    (local-set-key (kbd "<RET>") 'new-line-dwim)))
+
+;; XCSCOPE - cscope interface
+(unless (package-installed-p 'xcscope)
+  (package-install 'xcscope))
+(require 'xcscope)
+(cscope-setup)
 
 ;; SCHEME DEVELOPMENT: Geiser package
 (unless (package-installed-p 'geiser)
@@ -199,16 +246,6 @@
 ;;   (setq tab-always-indent (default-value 'tab-always-indent)))
 
 ;; (add-hook 'asm-mode-hook #'my-asm-mode-hook)
-
-(require 'cc-mode)
-;; Change indentation level in C major mode
-(setq-default c-basic-offset 4)
-;; CSCOPE
-(unless (package-installed-p 'xcscope)
-  (package-install 'xcscope))
-(require 'xcscope)
-(cscope-setup)
-
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
