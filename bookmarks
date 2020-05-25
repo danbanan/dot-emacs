@@ -7,10 +7,10 @@
  (front-context-string . ".Trash\n  drwxr-x")
  (rear-context-string . "28 May  7 16:13 ")
  (position . 282))
-("P6"
+(("P6"
  (filename . "~/Documents/ifi/Documents/inf3151/danra-sondrslu/P6/")
- (front-context-string . "6.html\n  -rw----")
- (rear-context-string . "8K May 13 10:22 ")
+ (front-context-string . "design\n  drwx---")
+ (rear-context-string . "0K May 19 11:14 ")
  (position . 275))
 ("P5"
  (filename . "~/Documents/ifi/Documents/inf3151/danra-sondrslu/P5/")
