@@ -17,6 +17,21 @@
  (front-context-string . "* <2020-03-22 Su")
  (rear-context-string)
  (position . 1))
+("planner"
+ (filename . "~/Dropbox/org/planner/")
+ (front-context-string . "life.org\n  -rwxr")
+ (rear-context-string . "17 Mar 31 14:32 ")
+ (position . 256))
+("oblig2"
+ (filename . "~/Documents/ifi/Documents/in2140/oblig2/")
+ (front-context-string . "backup\n  drwx---")
+ (rear-context-string . "2K Mar 11 19:10 ")
+ (position . 260))
+("P4"
+ (filename . "~/Documents/ifi/Documents/inf3151/danra-sondrslu/P4/")
+ (front-context-string . "design\n  drwx---")
+ (rear-context-string . "48 Mar 24 13:30 ")
+ (position . 410))
 ("init"
  (filename . "~/.emacs.d/init.el")
  (front-context-string . ";; BASIC SETUP\n(")
