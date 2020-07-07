@@ -2,7 +2,17 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("daily-planner"
+(("TPG-Codec-4586"
+ (filename . "c:/tpg-repo/tpg-git/TPG-Codec-4586/")
+ (front-context-string . "TPG-TestApp-4586")
+ (rear-context-string . "096 03-26 18:02 ")
+ (position . 1056))
+("my-repos"
+ (filename . "~/source/my-repos/")
+ (front-context-string . "scripts\n  drwxrw")
+ (rear-context-string . "  0 03-27 10:20 ")
+ (position . 236))
+("daily-planner"
  (filename . "~/OneDrive/Documents/org/planner/tasks.org")
  (front-context-string . "* <2020-03-22 Su")
  (rear-context-string)

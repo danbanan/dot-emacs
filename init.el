@@ -39,12 +39,12 @@
 		  ns-pop-up-frames nil
 		  mac-command-modifier nil
 		  select-enable-clipboard t)
-	    (set-face-attribute 'default nil :family "Source Code Pro" :height 160)
+	    (set-face-attribute 'default nil :family "Consolas" :height 120)
 	    (tool-bar-mode -1)
 	    (scroll-bar-mode -1)
 	    (set-frame-parameter nil 'undecorated t)
 	    (set-frame-position nil 0 0)
-	    (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t)
+	    (set-frame-size nil (- (display-pixel-width) 34) (- (display-pixel-height) 70) t)
 	    (global-visual-line-mode t)))
 
 	    
@@ -83,7 +83,7 @@
 ;; Fontify the whole line for headings (with a background color). - Leuven theme
 (setq org-fontify-whole-heading-line t)
 ;; Agenda config
-(setq org-agenda-files '("~/OneDrive/Documents/org/planner"))
+(setq org-agenda-files '("c:/Users/dra/Dropbox/org/planner/"))
 (setq org-agenda-skip-scheduled-if-deadline-is-shown 'repeated-after-deadline)
 
 ;; CC-MODE
@@ -94,57 +94,9 @@
 			(cc-mode . "k&r")
 			(other . "gnu")))
 
-
-
-;; SCHEME DEVELOPMENT: Geiser package
-(unless (package-installed-p 'geiser)
-  (package-install 'geiser))
-
-;; Set racket path
-(setq geiser-racket-binary "/Applications/Racket v7.6/bin/racket")
-
-;; Use Racket version
-(setq geiser-active-implementations '(racket))
-
 ;; Showing matching parantheses
 (show-paren-mode 1)
 
-
-
-;; ASSEMBLER DEVELOPMENT: gas-mode
-;; (require 'gas-mode)
-;; (add-to-list 'auto-mode-alist '("\\.S\\'" . gas-mode))
-
-;; Nasm-mode
-;; (unless (package-installed-p 'nasm-mode)
-;;   (package-install 'nasm-mode))
-
-;; Asm86 mode
-;; (autoload 'asm86-mode "~/.emacs/non-elpa/emacs86/asm86-mode.elc")
-
-;; ;; Make Emacs load Asm86 mode for .asm files.
-;; (setq auto-mode-alist
-;;       (append '(("\\.asm\\'" . asm86-mode) ("\\.inc\\'" . asm86-mode))
-;; 	      auto-mode-alist))
-
-;; ;; Enabling syntax highlighting.
-;; (add-hook 'asm86-mode 'turn-on-font-lock)
-
-;; "Recommended" color scheme.
-;; (cond ((fboundp 'global-font-lock-mode)
-;;        ;; Customize face attributes
-;;        (setq font-lock-face-attributes
-;;              ;; Symbol-for-Face Foreground Background Bold Italic Underline
-;;              '((font-lock-comment-face       "DarkGreen")
-;;                (font-lock-string-face        "Sienna")
-;;                (font-lock-keyword-face       "RoyalBlue")
-;;                (font-lock-function-name-face "Red")
-;;                (font-lock-variable-name-face "Black")
-;;                (font-lock-type-face          "Blue")
-;;                (font-lock-constant-face      "Purple")
-;;                ))
-;;        ;; Load the font-lock package.
-;;        (require 'font-lock)))
 
 
 ;; Function to set frame to half screen
@@ -155,18 +107,6 @@
 ;; Function to set frame to full screen
 (defun fullscreen-frame ()
   (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height)))
-
-;; (defun my-asm-mode-hook ()
-;;   ;; you can use `comment-dwim' (M-;) for this kind of behaviour anyway
-;;   (local-unset-key (vector asm-comment-char))
-;;   ;; asm-mode sets it locally to nil, to "stay closer to the old TAB behaviour".
-;;   (setq tab-always-indent (default-value 'tab-always-indent)))
-
-;; (add-hook 'asm-mode-hook #'my-asm-mode-hook)
-
-(require 'cc-mode)
-;; Change indentation level in C major mode
-(setq-default c-basic-offset 4)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
