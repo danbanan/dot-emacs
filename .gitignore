@@ -49,3 +49,20 @@ flycheck_*.el
 
 # network security
 /network-security.data
+
+# ido
+ido.last
+
+# bookmark - too machine specific
+bookmarks
+
+# lsp and dap
+.dap*
+.lsp*
+/.cache/
+/auto-save-list/
+/eclipse.jdt.ls/
+/workspace/
+
+# magit
+/transient/
