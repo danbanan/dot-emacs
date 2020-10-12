@@ -184,7 +184,11 @@
   (package-install 'lsp-java))
 (require 'lsp-java)
 (setq lsp-java-format-settings-url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
+(defun db-java-hook ()
+  (setq indent-tabs-mode nil)
+  (setq tab-width 4))
 (add-hook 'java-mode-hook #'lsp)
+(add-hook 'java-mode-hook 'db-java-hook)
 (electric-pair-mode 1)
 
 ;; Assembler DEVELOPMENT: gas-mode
