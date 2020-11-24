@@ -18,3 +18,5 @@
 (tool-bar-mode -1)
 ;; Disable scroll bar
 (scroll-bar-mode -1)
+;; Sort completions vertically
+(setq completions-format 'vertical)
