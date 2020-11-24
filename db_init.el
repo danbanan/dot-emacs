@@ -61,9 +61,9 @@
 (setq-default line-spacing 0.5)
 
 ;;; Custom keybindings
-(setq mac-command-modifier 'super)
+(setq-default mac-command-modifier 'super)
 
-;; Org-MODE
+;;; Org-MODE
 (require 'org)
 ;; Global key shortcuts for org
 (define-key global-map "\C-cl" 'org-store-link)
@@ -91,6 +91,8 @@
 				    "CANCELLED(c)"
 				    "POSTPONED(p)"
 				    "DONE(d)")))
+;; Make Org commands work on regions
+(setq org-loop-over-headlines-in-active-region 'start-level)
 
 ;; CALENDER MODE
 (add-hook 'calendar-load-hook
@@ -186,10 +188,13 @@
 (setq lsp-java-format-settings-url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
 (defun db-java-hook ()
   (setq indent-tabs-mode nil)
-  (setq tab-width 4))
+  (setq tab-width 4)
+  (setq mac-command-modifier 'super)
+  (set-fill-column 100)
+  (local-set-key "M-tab" 'company-complete)
+  (electric-pair-mode 1))
 (add-hook 'java-mode-hook #'lsp)
 (add-hook 'java-mode-hook 'db-java-hook)
-(electric-pair-mode 1)
 
 ;; Assembler DEVELOPMENT: gas-mode
 ;; (require 'gas-mode)
