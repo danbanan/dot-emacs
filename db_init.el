@@ -1,26 +1,26 @@
-;;; YASnippet - template tool for Emacs
+;;;* YASnippet - template tool for Emacs
 (unless (package-installed-p 'yasnippet)
   (package-install 'yasnippet))
 (add-to-list 'load-path "~/Dropbox/yasnippets/")
 (require 'yasnippet)
-(yas-global-mode 1)
+;;(yas-global-mode 1)
 
-;;; COMPANY MODE - complete anything
+;;;* COMPANY MODE - complete anything
 (unless (package-installed-p 'company)
   (package-install 'company))
 (require 'company)
 
-;;; LSP - Language Server Protocol
+;;;* LSP - Language Server Protocol
 (unless (package-installed-p 'lsp-mode)
   (package-install 'lsp-mode))
 (require 'lsp-mode)
 
-;;; MAGIT
+;;;* MAGIT
 (unless (package-installed-p 'magit)
   (package-install 'magit))
 (require 'magit)
 
-;; FRAME SETUP
+;;;* FRAME SETUP
 (add-hook 'window-setup-hook
 	  (lambda()
 	    (setq frame-resize-pixelwise t
@@ -32,7 +32,7 @@
 	    (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t)
 	    (global-visual-line-mode t)))
 	  
-;; FILE SYSTEM SETUP
+;;;* FILE SYSTEM SETUP
 ;; Disables back-up files, i.e. all files starting with '~'.
 (setq make-backup-files nil)
 ;; Adds the load-path to my personal elisp library directory, used for installing packages manually.
@@ -45,11 +45,18 @@
 ;; 'coreutils' must be installed
 (setq dired-listing-switches "-ahl --group-directories-first")
 
-;; Interactive Do
-(setq ido-enable-flex-matching t)
-(ido-mode t)
+;;;* Interactive Do
+;; (setq ido-enable-flex-matching t)
+;; (ido-mode t)
 
-;; LINES SETTINGS
+;;;* IVY - narrowing completion framework
+(unless (package-installed-p 'ivy)
+  (package-install 'ivy))
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "(%d/%d) ")
+
+;;;* LINES SETTINGS
 ;; Show line numbers
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode t))
@@ -60,10 +67,19 @@
 ;; Adjust line spacing
 (setq-default line-spacing 0.5)
 
-;;; Custom keybindings
+;;;* Custom keybindings
 (setq-default mac-command-modifier 'super)
 
-;;; Org-MODE
+;;;* Lisp mode
+(add-hook 'emacs-lisp-mode-hook
+	  (lambda ()
+	    (outline-minor-mode t)
+	    (setq outline-regexp ";;;\\*+")
+	    (local-set-key (kbd "C-c C-c") 'outline-hide-entry)
+	    (local-set-key (kbd "C-c C-e") 'outline-show-entry)
+	    (outline-hide-body)))
+
+;;;* Org-MODE
 (require 'org)
 ;; Global key shortcuts for org
 (define-key global-map "\C-cl" 'org-store-link)
@@ -94,23 +110,23 @@
 ;; Make Org commands work on regions
 (setq org-loop-over-headlines-in-active-region 'start-level)
 
-;; CALENDER MODE
+;;;* CALENDER MODE
 (add-hook 'calendar-load-hook
 	  (lambda ()
 	    (calendar-set-date-style 'european)))
 
-;; MARKDOWN-MODE
+;;;* MARKDOWN-MODE
 (unless (package-installed-p 'markdown-mode)
   (package-install 'markdown-mode))
 (require 'markdown-mode)
 
-;; LEDGER-MODE
+;;;* LEDGER-MODE
 (unless (package-installed-p 'ledger-mode)
   (package-install 'ledger-mode))
 ;; Load ledger-mode for '.dat' files
 (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
 
-;; CC-MODE
+;;;* CC-MODE
 (require 'cc-mode)
 ;; Making <RET> indent the new line
 ;; (defun my-make-CR-do-indent ()
@@ -144,14 +160,13 @@
 ;; 	    (c-set-style "linux")
 ;; 	    (electric-pair-mode 1)
 ;; 	    (local-set-key (kbd "<RET>") 'new-line-dwim)))
-
-;; XCSCOPE - cscope interface
+;;;* XCSCOPE - cscope interface
 (unless (package-installed-p 'xcscope)
   (package-install 'xcscope))
 (require 'xcscope)
 (cscope-setup)
 
-;; SCHEME DEVELOPMENT: Geiser package
+;;;* SCHEME DEVELOPMENT: Geiser package
 (unless (package-installed-p 'geiser)
   (package-install 'geiser))
 ;; Set racket path
@@ -161,7 +176,7 @@
 ;; Showing matching parantheses
 (show-paren-mode 1)
 
-;; RSS reader
+;;;* RSS reader
 (unless (package-installed-p 'elfeed)
   (package-install 'elfeed))
 (global-set-key (kbd "C-x W") 'elfeed)
@@ -174,7 +189,7 @@
 	"https://www.uio.no/studier/emner/matnat/ifi/IN5020/h20/beskjeder/?vrtx=feed"
 	"https://www.uio.no/studier/emner/matnat/ifi/IN5070/h20/beskjeder/?vrtx=feed"))
 
-;; JAVA DEVELOPMENT
+;;;* JAVA DEVELOPMENT
 ;; eclim - not good
 ;; (unless (package-installed-p 'eclim)
 ;;   (package-install 'eclim))
@@ -196,25 +211,20 @@
 (add-hook 'java-mode-hook #'lsp)
 (add-hook 'java-mode-hook 'db-java-hook)
 
-;; Assembler DEVELOPMENT: gas-mode
+;;;* Assembler DEVELOPMENT: gas-mode
 ;; (require 'gas-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.S\\'" . gas-mode))
-
 ;; Nasm-mode
 ;; (unless (package-installed-p 'nasm-mode)
 ;;   (package-install 'nasm-mode))
-
 ;; Asm86 mode
 ;; (autoload 'asm86-mode "~/.emacs/non-elpa/emacs86/asm86-mode.elc")
-
 ;; ;; Make Emacs load Asm86 mode for .asm files.
 ;; (setq auto-mode-alist
 ;;       (append '(("\\.asm\\'" . asm86-mode) ("\\.inc\\'" . asm86-mode))
 ;; 	      auto-mode-alist))
-
 ;; ;; Enabling syntax highlighting.
 ;; (add-hook 'asm86-mode 'turn-on-font-lock)
-
 ;; "Recommended" color scheme.
 ;; (cond ((fboundp 'global-font-lock-mode)
 ;;        ;; Customize face attributes
@@ -230,28 +240,27 @@
 ;;                ))
 ;;        ;; Load the font-lock package.
 ;;        (require 'font-lock)))
-
-
-;; Function to set frame to half screen
-(defun halfscreen-frame ()
-  (interactive)
-  (set-frame-size nil (- (/ (display-pixel-width) 2) 20)
-		  (display-pixel-height) t)
-  (revert-buffer nil 1))
-
-;; Function to set frame to full screen
-(defun fullscreen-frame ()
-  (interactive)
-  (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t))
-
 ;; (defun my-asm-mode-hook ()
 ;;   ;; you can use `comment-dwim' (M-;) for this kind of behaviour anyway
 ;;   (local-unset-key (vector asm-comment-char))
 ;;   ;; asm-mode sets it locally to nil, to "stay closer to the old TAB behaviour".
 ;;   (setq tab-always-indent (default-value 'tab-always-indent)))
-
 ;; (add-hook 'asm-mode-hook #'my-asm-mode-hook)
 
+
+;;;* Frame size editor
+;; Function to set frame to half screen
+;; (defun halfscreen-frame ()
+;;   (interactive)
+;;   (set-frame-size nil (- (/ (display-pixel-width) 2) 20)
+;; 		  (display-pixel-height) t)
+;;   (revert-buffer nil 1))
+;; Function to set frame to full screen
+;; (defun fullscreen-frame ()
+;;   (interactive)
+;;   (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t))
+
+;;;* Custom set variables
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
