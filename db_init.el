@@ -32,29 +32,21 @@
 	    (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t)
 	    (global-visual-line-mode t)))
 	  
-;;;* FILE SYSTEM SETUP
-;; Disables back-up files, i.e. all files starting with '~'.
-(setq make-backup-files nil)
-;; Adds the load-path to my personal elisp library directory, used for installing packages manually.
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-;; Use 'gls' command in Mac OSX for dired
-(when (string= system-type "darwin")       
-  (setq insert-directory-program "gls"
-	dired-use-ls-dired t))
-;; Sort directories first and byte, kilobyte, megabyte ... suffixes.
-;; 'coreutils' must be installed
-(setq dired-listing-switches "-ahl --group-directories-first")
 
 ;;;* Interactive Do
 ;; (setq ido-enable-flex-matching t)
 ;; (ido-mode t)
 
-;;;* IVY - narrowing completion framework
+;;;* Minibuffer completion
+;; Ivy - generic completion mechanism
 (unless (package-installed-p 'ivy)
   (package-install 'ivy))
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
+;; Counsel - collection of Ivy-enhanced versions of common Emacs commands
+(unless (package-installed-p 'counsel)
+  (package-install 'counsel))
 
 ;;;* LINES SETTINGS
 ;; Show line numbers

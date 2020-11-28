@@ -1,4 +1,4 @@
-;; BASIC SETUP
+;;;* BASIC SETUP
 (require 'package)
 
 (add-to-list 'package-archives
@@ -20,3 +20,20 @@
 (scroll-bar-mode -1)
 ;; Sort completions vertically
 (setq completions-format 'vertical)
+;; no startup msg  
+(setq inhibit-startup-message t)
+
+;;;* FILE SYSTEM SETUP
+;; Disables back-up files, i.e. all files starting with '~'.
+(setq make-backup-files nil)
+;; Adds the load-path to my personal elisp library directory, used for installing packages manually.
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+;; Use 'gls' command in Mac OSX for dired
+(when (string= system-type "darwin")       
+  (setq insert-directory-program "gls"
+	dired-use-ls-dired t))
+;; Sort directories first and byte, kilobyte, megabyte ... suffixes.
+;; 'coreutils' must be installed
+(setq dired-listing-switches "-ahl --group-directories-first")
+;; Set default directory on start-up
+(setq default-directory "~/Dropbox")
