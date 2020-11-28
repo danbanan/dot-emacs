@@ -44,9 +44,18 @@
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
-;; Counsel - collection of Ivy-enhanced versions of common Emacs commands
+
+;;; Counsel - collection of Ivy-enhanced versions of common Emacs commands
+; --------------------------------------------------------------------
 (unless (package-installed-p 'counsel)
   (package-install 'counsel))
+; --------------------------------------------------------------------
+
+;;; Global key bindings
+; --------------------------------------------------------------------
+(global-set-key (kbd "C-x j f") 'counsel-file-jump)
+(global-set-key (kbd "C-x j d") 'counsel-dired-jump)
+; --------------------------------------------------------------------
 
 ;;;* LINES SETTINGS
 ;; Show line numbers
@@ -69,6 +78,8 @@
 	    (setq outline-regexp ";;;\\*+")
 	    (local-set-key (kbd "C-c C-c") 'outline-hide-entry)
 	    (local-set-key (kbd "C-c C-e") 'outline-show-entry)
+	    (local-set-key (kbd "C-c C-o") 'counsel-outline)
+	    (electric-pair-mode t)
 	    (outline-hide-body)))
 
 ;;;* Org-MODE
