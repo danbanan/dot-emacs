@@ -11,7 +11,7 @@
   (package-refresh-contents))
 
 ;; Set font
-(set-face-attribute 'default nil :family "Source Code Pro" :height 130)
+(set-face-attribute 'default nil :family "Fira Code Light" :height 130)
 ;; Disable menu bar
 (menu-bar-mode -1)
 ;; Disable tool bar
@@ -20,8 +20,11 @@
 (scroll-bar-mode -1)
 ;; Sort completions vertically
 (setq completions-format 'vertical)
-;; no startup msg  
+
+;;; Disable start-up screen
+;;; ------------------------------------------------------------------
 (setq inhibit-startup-message t)
+;;; -----------------------------------------------------------------
 
 ;;;* FILE SYSTEM SETUP
 ;; Disables back-up files, i.e. all files starting with '~'.
@@ -35,5 +38,8 @@
 ;; Sort directories first and byte, kilobyte, megabyte ... suffixes.
 ;; 'coreutils' must be installed
 (setq dired-listing-switches "-ahl --group-directories-first")
-;; Set default directory on start-up
-(setq default-directory "~/Dropbox")
+
+;;; Set default directory on start-up
+; --------------------------------------------------------------------
+(setq default-directory "~/Dropbox/")
+; --------------------------------------------------------------------
