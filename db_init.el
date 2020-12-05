@@ -92,6 +92,8 @@
   (package-install 'org-bullets))
 (add-hook 'org-mode-hook (lambda ()
 			   (org-bullets-mode 1)
+			   (face-remap-add-relative 'default  :family "Iosevka Aile Extralight" :height 140)
+			   (buffer-face-mode)
 			   (adaptive-wrap-prefix-mode)))
 ;; Fontify the whole line for headings (with a background color). - Leuven theme
 (setq org-fontify-whole-heading-line t)
