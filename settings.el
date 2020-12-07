@@ -12,8 +12,8 @@
 
 ;; Set font
 (if (string-equal system-type "darwin")
-    (set-face-attribute 'default nil :family "Iosevka Aile Extralight" :height 150)
-  (set-face-attribute 'default nil :family "Iosevka Aile Extralight" :height 120))
+    (set-face-attribute 'default nil :font "Iosevka Light Extended" :height 150)
+  (set-face-attribute 'default nil :family "Consolas" :height 110))
 ;; Disable menu bar
 (menu-bar-mode -1)
 ;; Disable tool bar
