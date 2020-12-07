@@ -3,7 +3,6 @@
   (package-install 'yasnippet))
 (add-to-list 'load-path "~/Dropbox/yasnippets/")
 (require 'yasnippet)
-;;(yas-global-mode 1)
 
 ;;;* COMPANY MODE - complete anything
 (unless (package-installed-p 'company)
@@ -25,7 +24,6 @@
 	  (lambda()
 	    (setq frame-resize-pixelwise t
 		  ns-pop-up-frames nil
-		  mac-command-modifier nil
 		  select-enable-clipboard t)
 	    (set-frame-parameter nil 'undecorated t)
 	    (set-frame-position nil 0 0)
@@ -57,7 +55,7 @@
 (global-set-key (kbd "C-x j d") 'counsel-dired-jump)
 ; --------------------------------------------------------------------
 
-;;;* LINES SETTINGS
+;;;* Lines Settings
 ;; Show line numbers
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode t))
@@ -67,9 +65,6 @@
 (setq column-number-mode t)
 ;; Adjust line spacing
 (setq-default line-spacing 0.5)
-
-;;;* Custom keybindings
-(setq-default mac-command-modifier 'super)
 
 ;;;* Lisp mode
 (add-hook 'emacs-lisp-mode-hook
@@ -82,7 +77,7 @@
 	    (electric-pair-mode t)
 	    (outline-hide-body)))
 
-;;;* Org-MODE
+;;;* Org mode
 (require 'org)
 ;; Global key shortcuts for org
 (define-key global-map "\C-cl" 'org-store-link)
@@ -207,7 +202,6 @@
 (defun db-java-hook ()
   (setq indent-tabs-mode nil)
   (setq tab-width 4)
-  (setq mac-command-modifier 'super)
   (set-fill-column 100)
   (local-set-key "M-tab" 'company-complete)
   (electric-pair-mode 1))
