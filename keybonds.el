@@ -1,6 +1,13 @@
-;;;* Apple modifier keys
-(setq mac-option-modifier 'meta
-      mac-command-modifier 'super)
+;;;* OS specific modifier keys
+(cond ((string-equal system-type "darwin")
+       (setq mac-option-modifier 'meta)
+       (setq mac-command-modifier 'super))
+      ((string-equal system-type "windows-nt")
+       (setq w32-pass-alt-to-system nil)
+       (setq w32-rwindow-modifier 'super)
+       (setq w32-lwindow-modifier 'super)
+       (w32-register-hot-key [M-tab])
+       (w32-register-hot-key [s-])))
 ;;;* Norwegian keys
 (define-key key-translation-map (kbd "s-'") (kbd "æ"))
 (define-key key-translation-map (kbd "s-o") (kbd "ø"))

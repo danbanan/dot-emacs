@@ -11,7 +11,9 @@
   (package-refresh-contents))
 
 ;; Set font
-(set-face-attribute 'default nil :family "Iosevka Aile Extralight" :height 150)
+(if (string-equal system-type "darwin")
+    (set-face-attribute 'default nil :family "Iosevka Aile Extralight" :height 150)
+  (set-face-attribute 'default nil :family "Iosevka Aile Extralight" :height 120))
 ;; Disable menu bar
 (menu-bar-mode -1)
 ;; Disable tool bar
@@ -43,3 +45,16 @@
 ; --------------------------------------------------------------------
 (setq default-directory "~/Dropbox/")
 ; --------------------------------------------------------------------
+;;;* Frame setup
+(add-hook 'window-setup-hook
+	  (lambda()
+	    (setq frame-resize-pixelwise t)
+	    (setq ns-pop-up-frames nil)
+	    (setq select-enable-clipboard t)
+	    (set-frame-parameter nil 'undecorated t)
+	    (set-frame-position nil 0 0)
+	    (global-visual-line-mode t)
+	    (cond ((string-equal system-type "darwin")
+		   (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t))
+		  ((string-equal system-type "windows-nt")
+		   (set-frame-size nil (- (display-pixel-width) 32) (- (display-pixel-height) 40) t)))))

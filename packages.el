@@ -19,18 +19,6 @@
   (package-install 'magit))
 (require 'magit)
 
-;;;* FRAME SETUP
-(add-hook 'window-setup-hook
-	  (lambda()
-	    (setq frame-resize-pixelwise t
-		  ns-pop-up-frames nil
-		  select-enable-clipboard t)
-	    (set-frame-parameter nil 'undecorated t)
-	    (set-frame-position nil 0 0)
-	    (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t)
-	    (global-visual-line-mode t)))
-	  
-
 ;;;* Interactive Do
 ;; (setq ido-enable-flex-matching t)
 ;; (ido-mode t)
