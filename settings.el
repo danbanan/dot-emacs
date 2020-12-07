@@ -11,7 +11,7 @@
   (package-refresh-contents))
 
 ;; Set font
-(set-face-attribute 'default nil :family "Fira Code Light" :height 130)
+(set-face-attribute 'default nil :family "Iosevka Aile Extralight" :height 150)
 ;; Disable menu bar
 (menu-bar-mode -1)
 ;; Disable tool bar
