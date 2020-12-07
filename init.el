@@ -1,9 +1,10 @@
 (defun load-config (filename)
   (load (concat "~/.emacs.d/" filename)))
 
-(load-config "db_settings.el")
-(load-config "db_themes.el")
-(load-config "db_init.el")
+(load-config "settings.el")
+(load-config "themes.el")
+(load-config "packages.el")
+(load-config "keybonds.el")
 
 ;;; CUSTOM SET VARIABLES
 (custom-set-variables

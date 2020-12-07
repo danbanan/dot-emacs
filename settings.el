@@ -1,4 +1,4 @@
-;;;* BASIC SETUP
+;;;* Basic setup
 (require 'package)
 
 (add-to-list 'package-archives
@@ -26,7 +26,7 @@
 (setq inhibit-startup-message t)
 ;;; -----------------------------------------------------------------
 
-;;;* FILE SYSTEM SETUP
+;;;* File system setup
 ;; Disables back-up files, i.e. all files starting with '~'.
 (setq make-backup-files nil)
 ;; Adds the load-path to my personal elisp library directory, used for installing packages manually.
