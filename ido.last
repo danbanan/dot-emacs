@@ -1,0 +1,70 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("c:/Users/dra/Dropbox/org/work/" . "Cucs/")
+ ("c:/Users/dra/Dropbox/org/" . "work/")
+ ("c:/Users/dra/Dropbox/" . "org/")
+ ("c:/" . "tpg-repo/")
+ ("c:/tpg-repo/tpg-git/TPG-Codec-CoT/TPG.FN.Codec.CoT.Test/TestFiles/" . "In/")
+ ("c:/tpg-repo/tpg-git/TPG-Codec-CoT/TPG.FN.Codec.CoT.Test/" . "TestFiles/")
+ ("c:/tpg-repo/tpg-git/TPG-Codec-CoT/" . "TPG.FN.Codec.CoT.Test/")
+ ("c:/tpg-repo/tpg-git/" . "TPG-Codec-CoT/")
+ ("c:/tpg-repo/" . "tpg-git/")
+ ("c:/Users/dra/" . "Dropbox/")
+ ("c:/Users/" . "dra/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "c:/Users/dra/Dropbox/org/work/Cucs/"
+ "c:/Users/dra/Dropbox/org/planner/"
+ "c:/Users/dra/Dropbox/org/work/"
+ "c:/Users/dra/Dropbox/org/"
+ "c:/tpg-repo/tpg-git/TPG-Codec-CoT/"
+ "c:/tpg-repo/tpg-git/TPG-Codec-CoT/TPG.FN.Codec.CoT.Test/"
+ "c:/tpg-repo/tpg-git/TPG-Codec-CoT/TPG.FN.Codec.CoT.Test/TestFiles/In/"
+ "c:/Users/dra/.emacs.d/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "README.md"
+ "CodecTests.cs"
+ "TiImageEvent.xml"
+ "bookmarks"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("c:/Users/dra/Dropbox/org/work/Cucs/" (24402 29036 0 0) "README.md" "../" "./")
+
+ ("c:/Users/dra/Dropbox/org/work/" (24373 32030 0 0) "STANAG-4586 E ed02a2.pdf" "Stanag 4586 - Full Document.pdf" "messages.org" "D002563-FLIR-UAS_STANAG4586-Guideline- Black Hornet PRS G2 - V02.pdf" "cucs-server.txt" "Cucs/" "bh3-testrun.txt" "../" "./")
+
+ ("c:/Users/dra/Dropbox/" (24382 10101 0 0) "yasnippets/" "uio/" "paychecks/" "org/" "ledger/" "Get Started with Dropbox.pdf" "Get Started with Dropbox Paper.url" "desktop.ini" "bank-statements/" "4586-compliance-kit-tutorial.pdf" ".dropbox.cache/" ".dropbox" "../" "./")
+
+ ("c:/Users/dra/" (24354 35173 0 0) "Videos/" "Templates/" "Start Menu/" "source/" "SendTo/" "Searches/" "Saved Games/" "Recent/" "PrintHood/" "Postman/" "OneDrive - Teleplan AS/" "OneDrive/" "ntuser.pol" "ntuser.ini" "NTUSER.DAT{8ca4cd30-22fa-11ea-b307-102233445566}.TMContainer00000000000000000002.regtrans-ms" "NTUSER.DAT{8ca4cd30-22fa-11ea-b307-102233445566}.TMContainer00000000000000000001.regtrans-ms" "NTUSER.DAT{8ca4cd30-22fa-11ea-b307-102233445566}.TM.blf" "ntuser.dat.LOG2" "ntuser.dat.LOG1" "NTUSER.DAT" "NetHood/" "My Documents/" "Music/" "MicrosoftEdgeBackups/" "Local Settings/" "Links/" "IntelGraphicsProfiles/" "Favorites/" "Dropbox/" "Downloads/" "Documents/" "Cookies/" "Contacts/" "Application Data/" "AppData/" "3D Objects/" ".vscode/" ".templateengine/" ".ssh/" ".nuget/" ".gitconfig" ".emacs.d/" ".dotnet/" ".config/" ".bash_history" ".4586ct/" "../" "./")
+
+ ("c:/Users/dra/Dropbox/org/planner/" (24366 31184 0 0) "work.org" "studies.org" "life.org" "../" "./")
+
+ ("c:/Users/dra/Dropbox/org/" (24337 31974 0 0) "work/" "scripting/" "README.md" "programming/" "planner/" "language/" "environment/" "emacs/" "data/" "classes/" ".gitignore" ".git/" "../" "./")
+
+ ("c:/Users/dra/.emacs.d/" (24332 33610 0 0) "url/" "snippets/" "lisp/" "init.el" "ido.last" "elpa/" "bookmarks" "auto-save-list/" ".gitignore" ".git/" "../" "./")
+
+ ("c:/tpg-repo/tpg-git/TPG-Codec-CoT/TPG.FN.Codec.CoT.Test/TestFiles/In/" (24332 33092 0 0) "TiPayload.txt" "TiImageEvent.xml" "Test1.xml" "SpiEvent.xml" "NuavPositionEvent.xml" "GcsPositionEvent.xml" "EoPayload.txt" "EoImageEvent.xml" "empty.xml" "../" "./")
+
+ ("c:/tpg-repo/tpg-git/TPG-Codec-CoT/TPG.FN.Codec.CoT.Test/" (24332 33497 0 0) "TPG.FN.CoT.Codec.Test.csproj" "TestFiles/" "obj/" "log4net.config" "CodecTests.cs" "bin/" "../" "./")
+
+ ("c:/tpg-repo/tpg-git/TPG-Codec-CoT/TPG.FN.Codec.CoT.Test/TestFiles/" (24316 44671 0 0) "Out/" "In/" "../" "./")
+
+ ("c:/tpg-repo/tpg-git/TPG-Codec-CoT/" (24324 26292 0 0) "TPG.FN.CoT.Host/" "TPG.FN.CoT.DataLink/" "TPG.FN.CoT.Codec/" "TPG.FN.Codec.CoT.Test/" "TPG-Codec-CoT.sln" "README.md" ".vs/" ".gitignore" ".git/" "../" "./")
+
+ ("c:/tpg-repo/tpg-git/" (24315 15497 0 0) "TPG-TrackLogServer/" "TPG-TestApp-4586/" "TPG-MediaServer/" "TPG-Geo-Earth/" "TPG-Geo/" "TPG-FacnavDoc/" "TPG-DependencyAnalyzer/" "TPG-Codec-CoT/" "TPG-Codec-4586/" "../" "./")
+
+ ("c:/tpg-repo/" (24179 46597 0 0) "tpg-packages/" "tpg-git/" "dev/" "3p-repo/" ".vs/" "../" "./")
+
+ ("c:/Users/" (24214 53071 0 0) "Public/" "EWGadmin/" "dra/" "desktop.ini" "Default User/" "Default/" "All Users/" "administrator.TELEPLAN/" "Administrator/" "../" "./")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

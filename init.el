@@ -37,14 +37,14 @@
   (package-install 'company))
 (require 'company)
 
-;; CENTER WINDOW: activated only on single windows
-(unless (package-installed-p 'centered-window)
-  (package-install 'centered-window))
-;; Enable centered window
-(centered-window-mode t)
+;; ;; CENTER WINDOW: activated only on single windows
+;; (unless (package-installed-p 'centered-window)
+;;   (package-install 'centered-window))
+;; ;; Enable centered window
+;; (centered-window-mode t)
 
 ;; Set font
-(set-face-attribute 'default nil :family "Consolas" :height 120)
+(set-face-attribute 'default nil :family "Consolas" :height 105) ;; 120 at work | 105 at home
 ;; Disable menu bar
 (menu-bar-mode -1)
 ;; Disable tool bar
@@ -67,7 +67,8 @@
 	    (scroll-bar-mode -1)
 	    (set-frame-parameter nil 'undecorated t)
 	    (set-frame-position nil 0 0)
-	    (set-frame-size nil 2528 1398 t)
+	    ;;	    (set-frame-size nil 2528 1398 t) ;; screen at work
+	    (set-frame-size nil 1888 1040 t) ;; screen at home
 	    (global-visual-line-mode t)))
 	  
 ;; FILE SYSTEM SETUP

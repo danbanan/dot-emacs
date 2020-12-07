@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("TPG-Codec-4586"
+(("CoT"
+ (filename . "c:/tpg-repo/tpg-git/TPG-Codec-CoT/")
+ (front-context-string . "..\n     53480245")
+ (rear-context-string . " 4k 2020-01-07  ")
+ (position . 177))
+("TPG-Codec-4586"
  (filename . "c:/tpg-repo/tpg-git/TPG-Codec-4586/")
  (front-context-string . "TPG-TestApp-4586")
  (rear-context-string . "096 03-26 18:02 ")
