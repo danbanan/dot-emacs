@@ -25,7 +25,7 @@
  '(org-export-backends (quote (ascii html icalendar latex md odt)))
  '(package-selected-packages
    (quote
-    (magit lsp-mode eclim emacs-eclim adaptive-wrap xcscope ledger-mode centered-window org-bullets org ample-theme alec-themes geiser markdown-mode dracula-theme auctex alect-themes))))
+    (ssh-agency magit lsp-mode eclim emacs-eclim adaptive-wrap xcscope ledger-mode centered-window org-bullets org ample-theme alec-themes geiser markdown-mode dracula-theme auctex alect-themes))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

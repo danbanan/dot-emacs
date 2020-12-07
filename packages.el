@@ -14,10 +14,14 @@
   (package-install 'lsp-mode))
 (require 'lsp-mode)
 
-;;;* MAGIT
+;;;* Magit
 (unless (package-installed-p 'magit)
   (package-install 'magit))
 (require 'magit)
+;; Fixes SSH passphrases in Windows by storing passphrase in agent
+(when (and (string-equal system-type "windows-nt")
+	   (not (package-installed-p 'ssh-agency)))
+  (package-install 'ssh-agency))
 
 ;;;* Interactive Do
 ;; (setq ido-enable-flex-matching t)
