@@ -12,8 +12,10 @@
 
 ;; Set font
 (if (string-equal system-type "darwin")
-    (set-face-attribute 'default nil :font "Iosevka Light Extended" :height 150)
-  (set-face-attribute 'default nil :family "Consolas" :height 110))
+    (add-to-list 'default-frame-alist
+		 '(font . "Iosevka Light Extended-12"))
+  (add-to-list 'default-frame-alist
+	       '(font . "Iosevka Light Extended-10.5")))
 ;; Disable menu bar
 (menu-bar-mode -1)
 ;; Disable tool bar
