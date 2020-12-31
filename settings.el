@@ -13,7 +13,7 @@
 ;; Set font
 (if (string-equal system-type "darwin")
     (add-to-list 'default-frame-alist
-		 '(font . "Iosevka Light Extended-12"))
+		 '(font . "Iosevka Light Extended-13"))
   (add-to-list 'default-frame-alist
 	       '(font . "Iosevka Light Extended-10.5")))
 ;; Disable menu bar
