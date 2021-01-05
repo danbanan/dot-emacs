@@ -11,11 +11,14 @@
   (package-refresh-contents))
 
 ;; Set font
-(if (string-equal system-type "darwin")
-    (add-to-list 'default-frame-alist
-		 '(font . "Iosevka Light Extended-13"))
-  (add-to-list 'default-frame-alist
-	       '(font . "Iosevka Light Extended-10.5")))
+(cond ((string-equal system-type "darwin")
+       (add-to-list 'default-frame-alist
+		    '(font . "Iosevka Light Extended-13")))
+       ((string-equal system-type "gnu/linux")
+	(add-to-list 'default-frame-alist
+		     '(font . "Iosevka Light Extended-10.5")))
+       (else (add-to-list 'default-frame-alist
+			  '(font . "Iosevka Light Extended-10.5"))))
 ;; Disable menu bar
 (menu-bar-mode -1)
 ;; Disable tool bar
@@ -58,5 +61,7 @@
 	    (global-visual-line-mode t)
 	    (cond ((string-equal system-type "darwin")
 		   (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t))
+		  ((string-equal system-type "gnu/linux")
+		   (set-frame-size nil (- (display-pixel-width) 16) (display-pixel-height) t))
 		  ((string-equal system-type "windows-nt")
 		   (set-frame-size nil (- (display-pixel-width) 32) (- (display-pixel-height) 40) t)))))
