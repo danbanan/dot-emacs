@@ -70,7 +70,13 @@
 	    (outline-hide-body)))
 
 ;;;* Org mode
-(require 'org)
+;; agenda config
+(setq-default org-agenda-files '("~/Dropbox/org/planner"))
+(setq org-agenda-skip-scheduled-if-deadline-is-shown 'repeated-after-deadline)
+;; Makes sure org is loaded
+(setq org-log-done t)
+;; Fix clock report format in agenda
+(setq org-agenda-clockreport-parameter-plist '(:link t :maxlevel 4))
 ;; Global key shortcuts for org
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
@@ -79,18 +85,10 @@
   (package-install 'org-bullets))
 (add-hook 'org-mode-hook (lambda ()
 			   (org-bullets-mode 1)
-			   ;; (face-remap-add-relative 'default  :family "Iosevka Aile Extralight" :height 120) 
-			   (buffer-face-mode)
-			   (adaptive-wrap-prefix-mode)))
+			   ))
 ;; Fontify the whole line for headings (with a background color). - Leuven theme
 (setq org-fontify-whole-heading-line t)
-;; Agenda config
-(setq-default org-agenda-files '("~/Dropbox/org/planner"))
-(setq org-agenda-skip-scheduled-if-deadline-is-shown 'repeated-after-deadline)
-;; Makes sure org is loaded
-(setq org-log-done t)
-;; Adding habits to org modules
-(add-to-list 'org-modules 'org-habits)
+
 ;; Org TODO keywords
 (setq org-todo-keywords '((sequence "TODO(t)"
 				    "IN-PROGRESS(i)"
