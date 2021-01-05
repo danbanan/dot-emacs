@@ -257,12 +257,19 @@
 ;;;* rust-mode
 (unless (package-installed-p 'rust-mode)
   (package-install 'rust-mode))
+;; racer-mode - completion, find definition and describe functions and types in rust-mode
+(unless (package-installed-p 'racer)
+  (package-install 'racer))
+(add-hook 'racer-mode-hook #'eldoc-mode)
 (require 'rust-mode)
-;; The Rust style guide recommends spaces rather than tabs for
-;; indentation.
+;; The Rust style guide recommends spaces rather than tabs for indentation.
 (add-hook 'rust-mode-hook
 	  (lambda ()
-	    (setq indent-tabs-mode nil)))
-(define-key rust-mode-map (kbd "C-c C-c") 'rust-check)
-(define-key rust-mode-map (kbd "C-c C-r") 'rust-run)
-(define-key rust-mode-map (kbd "C-c C-b") 'rust-compile)
+	    (setq indent-tabs-mode nil)
+	    (company-mode)
+	    (racer-mode)))
+(define-key rust-mode-map (kbd "C-c C-c") #'rust-check)
+(define-key rust-mode-map (kbd "C-c C-r") #'rust-run)
+(define-key rust-mode-map (kbd "C-c C-b") #'rust-compile)
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
