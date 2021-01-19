@@ -171,13 +171,15 @@
   (package-install 'elfeed))
 (global-set-key (kbd "C-x W") 'elfeed)
 (setq elfeed-feeds
-      '("https://www.uio.no/studier/emner/matnat/ifi/IN5170/h20/exercises/?vrtx=feed"
-	"https://www.uio.no/studier/emner/matnat/ifi/IN5170/h20/handouts/?vrtx=feed"
-	"https://www.uio.no/studier/emner/matnat/ifi/IN5170/h20/lectures/?vrtx=feed"
-	"https://www.uio.no/studier/emner/matnat/ifi/IN5170/h20/obligs/?vrtx=feed"
-	"https://www.uio.no/studier/emner/matnat/ifi/IN5170/h20/beskjeder/?vrtx=feed"
-	"https://www.uio.no/studier/emner/matnat/ifi/IN5020/h20/beskjeder/?vrtx=feed"
-	"https://www.uio.no/studier/emner/matnat/ifi/IN5070/h20/beskjeder/?vrtx=feed"))
+      '(;; School stuff
+	"https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/?vrtx=feed"
+	"https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/exercises/?vrtx=feed"
+	"https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/handouts/?vrtx=feed"
+	"https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/obligs/?vrtx=feed"
+	"https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/slides/?vrtx=feed"
+	"https://www.uio.no/studier/emner/matnat/ifi/IN5050/v21/index.html?vrtx=feed"
+	;; Emacs stuff
+	"http://pragmaticemacs.com/feed/"))
 
 ;;;* JAVA DEVELOPMENT
 ;; eclim - not good
