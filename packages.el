@@ -23,9 +23,12 @@
 (require 'yasnippet)
 
 ;;;* COMPANY MODE - complete anything
-(unless (package-installed-p 'company)
-  (package-install 'company))
-(require 'company)
+(use-package company
+  :ensure t
+  :init
+  (setq company-idle-delay nil  ; avoid auto completion popup
+	company-async-timeout 15
+	company-tooltip-align-annotations t))
 
 ;;;* LSP - Language Server Protocol
 (unless (package-installed-p 'lsp-mode)
@@ -291,3 +294,4 @@
 (define-key rust-mode-map (kbd "C-c C-b") #'rust-compile)
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
+(setq company-tooltip-idle-delay 0.2)
