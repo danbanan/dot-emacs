@@ -16,7 +16,8 @@
 		    '(font . "Iosevka Light Extended-13")))
        ((string-equal system-type "gnu/linux")
 	(add-to-list 'default-frame-alist
-		     '(font . "Iosevka Light Extended-10.5")))
+;;		     '(font . "Monospace-11")))
+		     '(font . "Iosevka Extended-10.8")))
        (else (add-to-list 'default-frame-alist
 			  '(font . "Iosevka Light Extended-10.5"))))
 ;; Disable menu bar
