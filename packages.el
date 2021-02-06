@@ -16,6 +16,10 @@
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 
+(when (string-equal system-type "darwin")
+  (add-to-list 'exec-path "/opt/texlive/2021/bin/x86_64-linux"))
+
+
 ;;;* YASnippet - template tool for Emacs
 (unless (package-installed-p 'yasnippet)
   (package-install 'yasnippet))
