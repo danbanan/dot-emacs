@@ -199,6 +199,7 @@
 	"https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/obligs/?vrtx=feed"
 	"https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/slides/?vrtx=feed"
 	"https://www.uio.no/studier/emner/matnat/ifi/IN5050/v21/index.html?vrtx=feed"
+	"https://www.uio.no/studier/emner/matnat/ifi/IN5050/v21/slides/?vrtx=feed"
 	;; Emacs stuff
 	"http://pragmaticemacs.com/feed/"))
 
