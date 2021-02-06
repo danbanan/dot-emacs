@@ -296,3 +296,5 @@
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
 (setq company-tooltip-idle-delay 0.2)
+;;;* terminal-here
+(setq terminal-here-linux-terminal-command 'xfce4-terminal)
