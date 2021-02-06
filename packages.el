@@ -16,6 +16,10 @@
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 
+(when (string-equal system-type "darwin")
+  (add-to-list 'exec-path "/opt/texlive/2021/bin/x86_64-linux"))
+
+
 ;;;* YASnippet - template tool for Emacs
 (unless (package-installed-p 'yasnippet)
   (package-install 'yasnippet))
@@ -200,6 +204,7 @@
 	"https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/slides/?vrtx=feed"
 	"https://www.uio.no/studier/emner/matnat/ifi/IN5050/v21/index.html?vrtx=feed"
 	"https://www.uio.no/studier/emner/matnat/ifi/IN5050/v21/beskjeder/?vrtx=feed"
+	"https://www.uio.no/studier/emner/matnat/ifi/IN5050/v21/slides/?vrtx=feed"
 	;; Emacs stuff
 	"http://pragmaticemacs.com/feed/"))
 
@@ -296,3 +301,5 @@
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
 (setq company-tooltip-idle-delay 0.2)
+;;;* terminal-here
+(setq terminal-here-linux-terminal-command 'xfce4-terminal)

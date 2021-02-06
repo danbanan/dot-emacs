@@ -16,7 +16,8 @@
 		    '(font . "Iosevka Light Extended-13")))
        ((string-equal system-type "gnu/linux")
 	(add-to-list 'default-frame-alist
-		     '(font . "Iosevka Light Extended-10.5")))
+;;		     '(font . "Monospace-11")))
+		     '(font . "Iosevka Extended-10.8")))
        (else (add-to-list 'default-frame-alist
 			  '(font . "Iosevka Light Extended-10.5"))))
 ;; Disable menu bar
@@ -65,3 +66,8 @@
 		   (set-frame-size nil (- (display-pixel-width) 16) (display-pixel-height) t))
 		  ((string-equal system-type "windows-nt")
 		   (set-frame-size nil (- (display-pixel-width) 32) (- (display-pixel-height) 40) t)))))
+;;;* Shell settings
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+;;;* Environment variables
+
