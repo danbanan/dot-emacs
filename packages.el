@@ -203,6 +203,7 @@
 	"https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/obligs/?vrtx=feed"
 	"https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/slides/?vrtx=feed"
 	"https://www.uio.no/studier/emner/matnat/ifi/IN5050/v21/index.html?vrtx=feed"
+	"https://www.uio.no/studier/emner/matnat/ifi/IN5050/v21/beskjeder/?vrtx=feed"
 	"https://www.uio.no/studier/emner/matnat/ifi/IN5050/v21/slides/?vrtx=feed"
 	;; Emacs stuff
 	"http://pragmaticemacs.com/feed/"))
@@ -302,3 +303,10 @@
 (setq company-tooltip-idle-delay 0.2)
 ;;;* terminal-here
 (setq terminal-here-linux-terminal-command 'xfce4-terminal)
+;;;* vterm
+(use-package vterm
+  :commands vterm
+  :config
+  ;; To have enough buffer to look through output, but not so much that is negatively affects
+  ;; performance.
+  (setq vterm-max-scrollback 10000))

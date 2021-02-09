@@ -13,7 +13,7 @@
 ;; Set font
 (cond ((string-equal system-type "darwin")
        (add-to-list 'default-frame-alist
-		    '(font . "Iosevka Light Extended-13")))
+		    '(font . "Iosevka Extended-13.5")))
        ((string-equal system-type "gnu/linux")
 	(add-to-list 'default-frame-alist
 ;;		     '(font . "Monospace-11")))
