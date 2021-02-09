@@ -303,3 +303,10 @@
 (setq company-tooltip-idle-delay 0.2)
 ;;;* terminal-here
 (setq terminal-here-linux-terminal-command 'xfce4-terminal)
+;;;* vterm
+(use-package vterm
+  :commands vterm
+  :config
+  ;; To have enough buffer to look through output, but not so much that is negatively affects
+  ;; performance.
+  (setq vterm-max-scrollback 10000))
