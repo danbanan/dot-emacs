@@ -30,14 +30,9 @@
 (use-package company
   :ensure t
   :init
-  (setq company-idle-delay nil  ; avoid auto completion popup
+  (setq company-idle-delay 0.5
 	company-async-timeout 15
 	company-tooltip-align-annotations t))
-
-;;;* LSP - Language Server Protocol
-(unless (package-installed-p 'lsp-mode)
-  (package-install 'lsp-mode))
-(require 'lsp-mode)
 
 ;;;* Magit
 (unless (package-installed-p 'magit)
