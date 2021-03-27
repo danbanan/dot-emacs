@@ -281,15 +281,31 @@
 (define-key rust-mode-map (kbd "C-c C-c") #'rust-check)
 (define-key rust-mode-map (kbd "C-c C-r") #'rust-run)
 (define-key rust-mode-map (kbd "C-c C-b") #'rust-compile)
+(define-key rust-mode-map (kbd "C-c C-t") #'rust-test)
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
 (setq company-tooltip-idle-delay 0.2)
+(when (string= system-type "gnu/linux")
+  (setq racer-rust-src-path
+	"/home/danra/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/"))
+;; LALRPOP files
+(add-to-list 'auto-mode-alist '("\\.lalrpop\\'" . rust-mode))
 ;;;* terminal-here
 (setq terminal-here-linux-terminal-command 'xfce4-terminal)
 ;;;* vterm
 (use-package vterm
+  :ensure t
   :commands vterm
   :config
   ;; To have enough buffer to look through output, but not so much that is negatively affects
   ;; performance.
   (setq vterm-max-scrollback 10000))
+;;;* TRAMP
+(setq tramp-default-method "ssh")
+;;;* clang-format
+(use-package clang-format
+  :ensure t
+  :init
+  (setq-default clang-format-style "file"))
+;;;* Eshell
+(add-hook 'eshell-mode-hook 'company-mode)
