@@ -145,38 +145,41 @@
 
 ;;;* CC-MODE
 (require 'cc-mode)
-;; Making <RET> indent the new line
-;; (defun my-make-CR-do-indent ()
-;;   (define-key c-mode-base-map "\C-m" 'c-context-line-break))
-;; ;; electric-pair-open-newline-between-pairs doesn't do anything for some reason.
-;; ;; Using a custom newline instead, taken from Magnar Sveen .emacs
-;; (defun new-line-dwim ()
-;;   (interactive)
-;;   (let ((break-open-pair (or (and (looking-back "{") (looking-at "}"))
-;;                              ;; (and (looking-back ">") (looking-at "<"))
-;;                              ;; (and (looking-back "(") (looking-at ")"))
-;;                              ;; (and (looking-back "\\[") (looking-at "\\]")
-;; 			     )))
-;;     (newline)
-;;     (when break-open-pair
-;;       (save-excursion
-;;         (newline)
-;;         (indent-for-tab-command)))
-;;     (indent-for-tab-command)))
-;; ;; CC mode hooks
-;; (add-hook 'c-initialization-hook 'my-make-CR-do-indent)
-;; (add-hook 'c-mode-common-hook
-;; 	  (lambda ()
-;; 	    ;; Set coding style
-;; 	    (setq c-default-style '((awk-mode . "awk")
-;; 				    (other . "linux")))
-;; 	    (setq indent-tabs-mode nil)
-;; 	    (company-mode)))
-;; (add-hook 'c-mode-hook
-;; 	  (lambda ()
-;; 	    (c-set-style "linux")
-;; 	    (electric-pair-mode 1)
-;; 	    (local-set-key (kbd "<RET>") 'new-line-dwim)))
+;; LLVM format settings
+(defun llvm-lineup-statement (langelem)
+  (let ((in-assign (c-lineup-assignments langelem)))
+    (if (not in-assign)
+        '++
+      (aset in-assign 0
+            (+ (aref in-assign 0)
+               (* 2 c-basic-offset)))
+      in-assign)))
+
+;; Add a cc-mode style for editing LLVM C and C++ code
+(c-add-style "llvm.org"
+             '("gnu"
+	       (fill-column . 80)
+	       (c++-indent-level . 2)
+	       (c-basic-offset . 4)
+	       (indent-tabs-mode . nil)
+	       (c-offsets-alist . ((arglist-intro . ++)
+				   (innamespace . 0)
+				   (member-init-intro . ++)
+				   (statement-cont . llvm-lineup-statement)))))
+
+(use-package eglot
+  :ensure t)
+
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+
+(add-hook 'c-mode-hook
+	  (lambda ()
+	    (c-set-style "llvm.org")
+	    (local-set-key (kbd "<C-M-tab>") 'clang-format-buffer)
+	    (local-set-key (kbd "<C-tab>") 'company-complete)
+	    (company-mode)
+	    (eglot-ensure)))
+
 ;;;* XCSCOPE - cscope interface
 (unless (package-installed-p 'xcscope)
   (package-install 'xcscope))
