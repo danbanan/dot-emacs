@@ -48,10 +48,6 @@
 	   (not (package-installed-p 'ssh-agency)))
   (package-install 'ssh-agency))
 
-;;;* Interactive Do
-;; (setq ido-enable-flex-matching t)
-;; (ido-mode t)
-
 ;;;* Minibuffer completion
 ;; Ivy - generic completion mechanism
 (unless (package-installed-p 'ivy)
