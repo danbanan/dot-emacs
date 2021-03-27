@@ -205,26 +205,13 @@
 	"http://pragmaticemacs.com/feed/"))
 
 ;;;* JAVA DEVELOPMENT
-;; eclim - not good
-;; (unless (package-installed-p 'eclim)
-;;   (package-install 'eclim))
-;; (require 'eclim)
-;; (setq eclimd-executable "/Users/danrachou/.p2/pool/plugins/org.eclim_2.8.0/bin/eclimd")
-;; (setq eclim-executable "/Users/danrachou/.p2/pool/plugins/org.eclim_2.8.0/bin/eclim")
-;; lsp
-(unless (package-installed-p 'lsp-java)
-  (package-install 'lsp-java))
-(require 'lsp-java)
-(setq lsp-java-format-settings-url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
-(defun db-java-hook ()
-  (setq indent-tabs-mode nil)
-  (setq tab-width 4)
-  (set-fill-column 100)
-  (local-set-key "M-tab" 'company-complete)
-  (electric-pair-mode 1))
-(add-hook 'java-mode-hook #'lsp)
-(add-hook 'java-mode-hook 'db-java-hook)
-
+(add-hook 'java-mode-hook
+	  (lambda ()
+	    (setq indent-tabs-mode nil)
+	    (setq tab-width 4)
+	    (set-fill-column 100)
+	    (local-set-key "C-tab" 'company-complete)
+	    (electric-pair-mode 1)))
 ;;;* Assembler DEVELOPMENT: gas-mode
 ;; (require 'gas-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.S\\'" . gas-mode))
