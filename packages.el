@@ -91,6 +91,8 @@
 	    (local-set-key (kbd "C-c C-c") 'outline-hide-entry)
 	    (local-set-key (kbd "C-c C-e") 'outline-show-entry)
 	    (local-set-key (kbd "C-c C-o") 'counsel-outline)
+	    (local-set-key (kbd "<C-tab>") 'company-complete)
+	    (company-mode)
 	    (electric-pair-mode t)
 	    (outline-hide-body)))
 
