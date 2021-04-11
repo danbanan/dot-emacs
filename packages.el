@@ -21,10 +21,10 @@
 
 
 ;;;* YASnippet - template tool for Emacs
-(unless (package-installed-p 'yasnippet)
-  (package-install 'yasnippet))
-(add-to-list 'load-path "~/Dropbox/yasnippets/")
-(require 'yasnippet)
+;; (unless (package-installed-p 'yasnippet)
+;;   (package-install 'yasnippet))
+;; (add-to-list 'load-path "~/Dropbox/yasnippets/")
+;; (require 'yasnippet)
 
 ;;;* COMPANY MODE - complete anything
 (use-package company
@@ -33,11 +33,6 @@
   (setq company-idle-delay nil  ; avoid auto completion popup
 	company-async-timeout 15
 	company-tooltip-align-annotations t))
-
-;;;* LSP - Language Server Protocol
-(unless (package-installed-p 'lsp-mode)
-  (package-install 'lsp-mode))
-(require 'lsp-mode)
 
 ;;;* Magit
 (unless (package-installed-p 'magit)
@@ -83,17 +78,6 @@
 ;; Adjust line spacing
 (setq-default line-spacing 0.5)
 
-;;;* Lisp mode
-(add-hook 'emacs-lisp-mode-hook
-	  (lambda ()
-	    (outline-minor-mode t)
-	    (setq outline-regexp ";;;\\*+")
-	    (local-set-key (kbd "C-c C-c") 'outline-hide-entry)
-	    (local-set-key (kbd "C-c C-e") 'outline-show-entry)
-	    (local-set-key (kbd "C-c C-o") 'counsel-outline)
-	    (electric-pair-mode t)
-	    (outline-hide-body)))
-
 ;;;* Org mode
 ;; agenda config
 (setq-default org-agenda-files '("~/Dropbox/org/planner"))
@@ -110,9 +94,12 @@
   (package-install 'org-bullets))
 (add-hook 'org-mode-hook (lambda ()
 			   (org-bullets-mode 1)
-			   ))
+			   (outline-minor-mode t)
+			   (local-set-key (kbd "C-c SPC") 'counsel-outline)))
 ;; Fontify the whole line for headings (with a background color). - Leuven theme
 (setq org-fontify-whole-heading-line t)
+;; Fontify bold, italixs and underlined text without the pre-symbols
+(setq org-hide-emphasis-markers t)
 
 ;; Org TODO keywords
 (setq org-todo-keywords '((sequence "TODO(t)"
@@ -131,9 +118,15 @@
 	    (calendar-set-date-style 'european)))
 
 ;;;* MARKDOWN-MODE
-(unless (package-installed-p 'markdown-mode)
-  (package-install 'markdown-mode))
-(require 'markdown-mode)
+(use-package markdown-mode
+  :ensure t
+  :init
+  (add-hook 'markdown-mode-hook
+	    (lambda ()
+	      (outline-minor-mode t)
+	      (setq outline-regexp "[\#]+")
+	      ;; (setq outline-heading-end-regexp "#+")
+	      (local-set-key (kbd "C-c SPC") 'counsel-outline))))
 
 ;;;* LEDGER-MODE
 (unless (package-installed-p 'ledger-mode)
@@ -143,6 +136,12 @@
 
 ;;;* CC-MODE
 (require 'cc-mode)
+(setq-default c-default-style '((java-mode . "java")
+				(awk-mode . "awk")
+				(other . "stroustrup")))
+(add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cuh\\'" . c++-mode))
+(add-hook 'cc-mode 'color-identifiers-mode)
 ;; Making <RET> indent the new line
 ;; (defun my-make-CR-do-indent ()
 ;;   (define-key c-mode-base-map "\C-m" 'c-context-line-break))
@@ -215,19 +214,13 @@
 ;; (require 'eclim)
 ;; (setq eclimd-executable "/Users/danrachou/.p2/pool/plugins/org.eclim_2.8.0/bin/eclimd")
 ;; (setq eclim-executable "/Users/danrachou/.p2/pool/plugins/org.eclim_2.8.0/bin/eclim")
-;; lsp
-(unless (package-installed-p 'lsp-java)
-  (package-install 'lsp-java))
-(require 'lsp-java)
-(setq lsp-java-format-settings-url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
-(defun db-java-hook ()
-  (setq indent-tabs-mode nil)
-  (setq tab-width 4)
-  (set-fill-column 100)
-  (local-set-key "M-tab" 'company-complete)
-  (electric-pair-mode 1))
-(add-hook 'java-mode-hook #'lsp)
-(add-hook 'java-mode-hook 'db-java-hook)
+(add-hook 'java-mode-hook
+	  (lambda ()
+	    (setq indent-tabs-mode nil)
+	    (setq tab-width 4)
+	    (set-fill-column 100)
+	    (local-set-key "M-tab" 'company-complete)
+	    (electric-pair-mode 1)))
 
 ;;;* Assembler DEVELOPMENT: gas-mode
 ;; (require 'gas-mode)
@@ -281,6 +274,8 @@
 ;;;* Ebuku - bookmark manager
 (unless (package-installed-p 'ebuku)
   (package-install 'ebuku))
+(require 'ebuku)
+
 ;;;* rust-mode
 (unless (package-installed-p 'rust-mode)
   (package-install 'rust-mode))
@@ -298,7 +293,9 @@
 (define-key rust-mode-map (kbd "C-c C-c") #'rust-check)
 (define-key rust-mode-map (kbd "C-c C-r") #'rust-run)
 (define-key rust-mode-map (kbd "C-c C-b") #'rust-compile)
+(define-key rust-mode-map (kbd "C-c C-t") #'rust-test)
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(add-to-list 'auto-mode-alist '("\\.lalrpop\\'" . rust-mode))
 (setq company-tooltip-align-annotations t)
 (setq company-tooltip-idle-delay 0.2)
 ;;;* terminal-here
@@ -310,3 +307,21 @@
   ;; To have enough buffer to look through output, but not so much that is negatively affects
   ;; performance.
   (setq vterm-max-scrollback 10000))
+;;;* html
+(eval-after-load 'js2-mode
+  '(define-key js2-mode-map (kbd "C-c b") 'web-beautify-js))
+;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
+(eval-after-load 'js
+  '(define-key js-mode-map (kbd "C-c b") 'web-beautify-js))
+
+(eval-after-load 'json-mode
+  '(define-key json-mode-map (kbd "C-c b") 'web-beautify-js))
+
+(eval-after-load 'sgml-mode
+  '(define-key html-mode-map (kbd "C-c b") 'web-beautify-html))
+
+(eval-after-load 'web-mode
+  '(define-key web-mode-map (kbd "C-c b") 'web-beautify-html))
+
+(eval-after-load 'css-mode
+  '(define-key css-mode-map (kbd "C-c b") 'web-beautify-css))

@@ -8,8 +8,9 @@
 (unless (package-installed-p 'gruvbox-theme)
   (package-install 'gruvbox-theme))
 
-(unless (package-installed-p 'leuven-theme)
-  (package-install 'leuven-theme))
+(use-package github-modern-theme
+  :ensure t)
 
-;; Current theme
-(load-theme 'leuven t)
+(use-package leuven-theme
+  :ensure t
+  :init (load-theme 'solarized-dark t))
