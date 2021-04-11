@@ -11,6 +11,10 @@
 (use-package github-modern-theme
   :ensure t)
 
-(use-package leuven-theme
+;; Current theme
+(use-package solarized-theme
   :ensure t
   :init (load-theme 'solarized-dark t))
+
+(use-package leuven-theme
+  :ensure t)

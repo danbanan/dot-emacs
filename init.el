@@ -152,7 +152,7 @@
      ("account" "%(binary) -f %(ledger-file) reg %(account)")))
  '(org-export-backends '(ascii html icalendar latex md odt))
  '(package-selected-packages
-   '(web-beautify solarized-theme color-identifiers-mode github-modern-theme github-modern clang-format edit-indirect vterm terminal-here tramp use-package racer racer-mode rust-mode ebuku ssh-agency magit lsp-mode eclim emacs-eclim adaptive-wrap xcscope ledger-mode centered-window org-bullets ample-theme alec-themes geiser markdown-mode dracula-theme auctex alect-themes)))
+   '(eglot pdf-tools web-beautify solarized-theme color-identifiers-mode github-modern-theme github-modern clang-format edit-indirect vterm terminal-here tramp use-package racer racer-mode rust-mode ebuku ssh-agency magit lsp-mode eclim emacs-eclim adaptive-wrap xcscope ledger-mode centered-window org-bullets ample-theme alec-themes geiser markdown-mode dracula-theme auctex alect-themes)))
 
 ;; Removing theme theme prompt
 (load-config "themes.el")

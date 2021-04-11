@@ -30,7 +30,7 @@
 (use-package company
   :ensure t
   :init
-  (setq company-idle-delay nil  ; avoid auto completion popup
+  (setq company-idle-delay 0.5
 	company-async-timeout 15
 	company-tooltip-align-annotations t))
 
@@ -42,10 +42,6 @@
 (when (and (string-equal system-type "windows-nt")
 	   (not (package-installed-p 'ssh-agency)))
   (package-install 'ssh-agency))
-
-;;;* Interactive Do
-;; (setq ido-enable-flex-matching t)
-;; (ido-mode t)
 
 ;;;* Minibuffer completion
 ;; Ivy - generic completion mechanism
@@ -77,6 +73,16 @@
 (setq column-number-mode t)
 ;; Adjust line spacing
 (setq-default line-spacing 0.5)
+
+;;;* Lisp mode
+(add-hook 'emacs-lisp-mode-hook
+	  (lambda ()
+	    (outline-minor-mode t)
+	    (setq outline-regexp ";;;\\*+")
+	    (local-set-key (kbd "<C-tab>") 'company-complete)
+	    (local-set-key (kbd "C-c SPC") 'counsel-outline)
+	    (company-mode)
+	    (electric-pair-mode t)))
 
 ;;;* Org mode
 ;; agenda config
@@ -136,49 +142,54 @@
 
 ;;;* CC-MODE
 (require 'cc-mode)
-(setq-default c-default-style '((java-mode . "java")
-				(awk-mode . "awk")
-				(other . "stroustrup")))
+
+;; LLVM format settings
+(defun llvm-lineup-statement (langelem)
+  (let ((in-assign (c-lineup-assignments langelem)))
+    (if (not in-assign)
+        '++
+      (aset in-assign 0
+            (+ (aref in-assign 0)
+               (* 2 c-basic-offset)))
+      in-assign)))
+
+;; Add a cc-mode style for editing LLVM C and C++ code
+(c-add-style "llvm.org"
+             '("gnu"
+	       (fill-column . 80)
+	       (c++-indent-level . 2)
+	       (c-basic-offset . 4)
+	       (indent-tabs-mode . nil)
+	       (c-offsets-alist . ((arglist-intro . ++)
+				   (innamespace . 0)
+				   (member-init-intro . ++)
+				   (statement-cont . llvm-lineup-statement)))))
+
+(use-package eglot
+  :ensure t)
+
+(use-package color-identifiers-mode
+  :ensure t)
+
+;; (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+
+(add-hook 'c-mode-hook
+	  (lambda ()
+	    (c-set-style "llvm.org")
+	    (local-set-key (kbd "<C-M-tab>") 'clang-format-buffer)
+	    (local-set-key (kbd "<C-tab>") 'company-complete)
+	    (company-mode)
+	    ;; (eglot-ensure)
+	    (color-identifiers-mode t)))
+	  
 (add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cuh\\'" . c++-mode))
-(add-hook 'cc-mode 'color-identifiers-mode)
-;; Making <RET> indent the new line
-;; (defun my-make-CR-do-indent ()
-;;   (define-key c-mode-base-map "\C-m" 'c-context-line-break))
-;; ;; electric-pair-open-newline-between-pairs doesn't do anything for some reason.
-;; ;; Using a custom newline instead, taken from Magnar Sveen .emacs
-;; (defun new-line-dwim ()
-;;   (interactive)
-;;   (let ((break-open-pair (or (and (looking-back "{") (looking-at "}"))
-;;                              ;; (and (looking-back ">") (looking-at "<"))
-;;                              ;; (and (looking-back "(") (looking-at ")"))
-;;                              ;; (and (looking-back "\\[") (looking-at "\\]")
-;; 			     )))
-;;     (newline)
-;;     (when break-open-pair
-;;       (save-excursion
-;;         (newline)
-;;         (indent-for-tab-command)))
-;;     (indent-for-tab-command)))
-;; ;; CC mode hooks
-;; (add-hook 'c-initialization-hook 'my-make-CR-do-indent)
-;; (add-hook 'c-mode-common-hook
-;; 	  (lambda ()
-;; 	    ;; Set coding style
-;; 	    (setq c-default-style '((awk-mode . "awk")
-;; 				    (other . "linux")))
-;; 	    (setq indent-tabs-mode nil)
-;; 	    (company-mode)))
-;; (add-hook 'c-mode-hook
-;; 	  (lambda ()
-;; 	    (c-set-style "linux")
-;; 	    (electric-pair-mode 1)
-;; 	    (local-set-key (kbd "<RET>") 'new-line-dwim)))
-;;;* XCSCOPE - cscope interface
-(unless (package-installed-p 'xcscope)
-  (package-install 'xcscope))
-(require 'xcscope)
-(cscope-setup)
+
+;; ;;;* XCSCOPE - cscope interface
+;; (unless (package-installed-p 'xcscope)
+;;   (package-install 'xcscope))
+;; (require 'xcscope)
+;; (cscope-setup)
 
 ;;;* SCHEME DEVELOPMENT: Geiser package
 (unless (package-installed-p 'geiser)
@@ -208,68 +219,58 @@
 	"http://pragmaticemacs.com/feed/"))
 
 ;;;* JAVA DEVELOPMENT
-;; eclim - not good
-;; (unless (package-installed-p 'eclim)
-;;   (package-install 'eclim))
-;; (require 'eclim)
-;; (setq eclimd-executable "/Users/danrachou/.p2/pool/plugins/org.eclim_2.8.0/bin/eclimd")
-;; (setq eclim-executable "/Users/danrachou/.p2/pool/plugins/org.eclim_2.8.0/bin/eclim")
 (add-hook 'java-mode-hook
 	  (lambda ()
 	    (setq indent-tabs-mode nil)
 	    (setq tab-width 4)
 	    (set-fill-column 100)
-	    (local-set-key "M-tab" 'company-complete)
+	    (local-set-key "C-tab" 'company-complete)
 	    (electric-pair-mode 1)))
 
-;;;* Assembler DEVELOPMENT: gas-mode
-;; (require 'gas-mode)
-;; (add-to-list 'auto-mode-alist '("\\.S\\'" . gas-mode))
-;; Nasm-mode
-;; (unless (package-installed-p 'nasm-mode)
-;;   (package-install 'nasm-mode))
-;; Asm86 mode
-;; (autoload 'asm86-mode "~/.emacs/non-elpa/emacs86/asm86-mode.elc")
-;; ;; Make Emacs load Asm86 mode for .asm files.
-;; (setq auto-mode-alist
-;;       (append '(("\\.asm\\'" . asm86-mode) ("\\.inc\\'" . asm86-mode))
-;; 	      auto-mode-alist))
-;; ;; Enabling syntax highlighting.
-;; (add-hook 'asm86-mode 'turn-on-font-lock)
-;; "Recommended" color scheme.
-;; (cond ((fboundp 'global-font-lock-mode)
-;;        ;; Customize face attributes
-;;        (setq font-lock-face-attributes
-;;              ;; Symbol-for-Face Foreground Background Bold Italic Underline
-;;              '((font-lock-comment-face       "DarkGreen")
-;;                (font-lock-string-face        "Sienna")
-;;                (font-lock-keyword-face       "RoyalBlue")
-;;                (font-lock-function-name-face "Red")
-;;                (font-lock-variable-name-face "Black")
-;;                (font-lock-type-face          "Blue")
-;;                (font-lock-constant-face      "Purple")
-;;                ))
-;;        ;; Load the font-lock package.
-;;        (require 'font-lock)))
-;; (defun my-asm-mode-hook ()
-;;   ;; you can use `comment-dwim' (M-;) for this kind of behaviour anyway
-;;   (local-unset-key (vector asm-comment-char))
-;;   ;; asm-mode sets it locally to nil, to "stay closer to the old TAB behaviour".
-;;   (setq tab-always-indent (default-value 'tab-always-indent)))
-;; (add-hook 'asm-mode-hook #'my-asm-mode-hook)
+;; ;;;* Assembler DEVELOPMENT: gas-mode
+;; ;; (require 'gas-mode)
+;; ;; (add-to-list 'auto-mode-alist '("\\.S\\'" . gas-mode))
+;; ;; Nasm-mode
+;; ;; (unless (package-installed-p 'nasm-mode)
+;; ;;   (package-install 'nasm-mode))
+;; ;; Asm86 mode
+;; ;; (autoload 'asm86-mode "~/.emacs/non-elpa/emacs86/asm86-mode.elc")
+;; ;; ;; Make Emacs load Asm86 mode for .asm files.
+;; ;; (setq auto-mode-alist
+;; ;;       (append '(("\\.asm\\'" . asm86-mode) ("\\.inc\\'" . asm86-mode))
+;; ;; 	      auto-mode-alist))
+;; ;; ;; Enabling syntax highlighting.
+;; ;; (add-hook 'asm86-mode 'turn-on-font-lock)
+;; ;; "Recommended" color scheme.
+;; ;; (cond ((fboundp 'global-font-lock-mode)
+;; ;;        ;; Customize face attributes
+;; ;;        (setq font-lock-face-attributes
+;; ;;              ;; Symbol-for-Face Foreground Background Bold Italic Underline
+;; ;;              '((font-lock-comment-face       "DarkGreen")
+;; ;;                (font-lock-string-face        "Sienna")
+;; ;;                (font-lock-keyword-face       "RoyalBlue")
+;; ;;                (font-lock-function-name-face "Red")
+;; ;;                (font-lock-variable-name-face "Black")
+;; ;;                (font-lock-type-face          "Blue")
+;; ;;                (font-lock-constant-face      "Purple")
+;; ;;                ))
+;; ;;        ;; Load the font-lock package.
+;; ;;        (require 'font-lock)))
+;; ;; (defun my-asm-mode-hook ()
+;; ;;   ;; you can use `comment-dwim' (M-;) for this kind of behaviour anyway
+;; ;;   (local-unset-key (vector asm-comment-char))
+;; ;;   ;; asm-mode sets it locally to nil, to "stay closer to the old TAB behaviour".
+;; ;;   (setq tab-always-indent (default-value 'tab-always-indent)))
+;; ;; (add-hook 'asm-mode-hook #'my-asm-mode-hook)
 
 
-;;;* Frame size editor
-;; Function to set frame to half screen
-;; (defun halfscreen-frame ()
-;;   (interactive)
-;;   (set-frame-size nil (- (/ (display-pixel-width) 2) 20)
-;; 		  (display-pixel-height) t)
-;;   (revert-buffer nil 1))
-;; Function to set frame to full screen
-;; (defun fullscreen-frame ()
-;;   (interactive)
-;;   (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t))
+;; ;;;* Frame size editor
+;; ;; Function to set frame to half screen
+;; ;; (defun halfscreen-frame ()
+;; ;;   (interactive)
+;; ;;   (set-frame-size nil (- (/ (display-pixel-width) 2) 20)
+;; ;; 		  (display-pixel-height) t)
+;; ;;   (revert-buffer nil 1))
 
 ;;;* Ebuku - bookmark manager
 (unless (package-installed-p 'ebuku)
@@ -298,15 +299,26 @@
 (add-to-list 'auto-mode-alist '("\\.lalrpop\\'" . rust-mode))
 (setq company-tooltip-align-annotations t)
 (setq company-tooltip-idle-delay 0.2)
+(when (string= system-type "gnu/linux")
+  (setq racer-rust-src-path
+	"/home/danra/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/"))
+;; LALRPOP files
+(add-to-list 'auto-mode-alist '("\\.lalrpop\\'" . rust-mode))
 ;;;* terminal-here
 (setq terminal-here-linux-terminal-command 'xfce4-terminal)
 ;;;* vterm
 (use-package vterm
+  :ensure t
   :commands vterm
   :config
   ;; To have enough buffer to look through output, but not so much that is negatively affects
   ;; performance.
   (setq vterm-max-scrollback 10000))
+
+
+(use-package web-beautify
+  :ensure t)
+
 ;;;* html
 (eval-after-load 'js2-mode
   '(define-key js2-mode-map (kbd "C-c b") 'web-beautify-js))
@@ -325,3 +337,15 @@
 
 (eval-after-load 'css-mode
   '(define-key css-mode-map (kbd "C-c b") 'web-beautify-css))
+
+;;;* TRAMP
+(setq tramp-default-method "ssh")
+;;;* clang-format
+(use-package clang-format
+  :ensure t
+  :init
+  (setq-default clang-format-style "file"))
+
+;;;* Eshell
+(add-hook 'eshell-mode-hook 'company-mode)
+
