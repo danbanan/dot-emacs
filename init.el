@@ -45,7 +45,7 @@
        ((string-equal system-type "gnu/linux")
 	(add-to-list 'default-frame-alist
 ;;		     '(font . "Monospace-11")))
-		     '(font . "Iosevka Extended-10.8")))
+		     '(font . "Iosevka Heavy Extended-10.8")))
        (else (add-to-list 'default-frame-alist
 			  '(font . "Iosevka Light Extended-10.5"))))
 ;; -----------------------------------------------------------------------------
