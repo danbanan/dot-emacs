@@ -11,9 +11,9 @@
 
 ;; I don't know what this really does... -> I don't think it's necessary either
 ;; -----------------------------------------------------------------------------
-(unless (file-exists-p
-	 (expand-file-name (concat package-user-dir "/archives/MELPA/")))
-  (package-refresh-contents))
+;; (unless (file-exists-p
+;; 	 (expand-file-name (concat package-user-dir "/archives/MELPA/")))
+;;   (package-refresh-contents))
 ;; -----------------------------------------------------------------------------
 
 ;; Adds the load-path to my personal elisp library directory, used for
