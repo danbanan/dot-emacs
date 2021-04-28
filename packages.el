@@ -338,14 +338,36 @@
 (eval-after-load 'css-mode
   '(define-key css-mode-map (kbd "C-c b") 'web-beautify-css))
 
-;;;* TRAMP
+;;; TRAMP
 (setq tramp-default-method "ssh")
-;;;* clang-format
-(use-package clang-format
-  :ensure t
-  :init
-  (setq-default clang-format-style "file"))
+;; ;;; clang-format
+;; (use-package clang-format
+;;   :ensure t
+;;   :init
+;;   (setq-default clang-format-style "file"))
 
-;;;* Eshell
+;;; Eshell
 (add-hook 'eshell-mode-hook 'company-mode)
 
+;;; PDF
+(use-package pdf-tools
+  :ensure t
+  :pin manual
+  :config
+  (pdf-tools-install)
+  (setq-default pdf-view-display-size 'fit-width)
+  (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
+
+(add-hook 'pdf-view-mode-hook
+	  (lambda ()
+	    (linum-mode -1)
+	    (display-line-numbers-mode 0)))
+
+;; (server-start)
+
+;; (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+;;       TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+;;       TeX-source-correlate-start-server t)
+
+;; (add-hook 'TeX-after-compilation-finished-functions
+;;           #'TeX-revert-document-buffer)
