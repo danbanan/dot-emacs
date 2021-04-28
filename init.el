@@ -106,6 +106,17 @@
 	    ;; 	   (set-frame-size nil (- (display-pixel-width) 32) (- (display-pixel-height) 40) t)))
 	    (toggle-frame-maximized)))
 
+(defun ask-before-closing ()
+  "Close only if y was pressed."
+  (interactive)
+  (if (y-or-n-p (format "Are you sure you want to close this frame? "))
+      (save-buffers-kill-emacs)
+    (message "Canceled frame close")))
+
+(define-key global-map (kbd "C-x C-c") 'ask-before-closing)
+(define-key global-map (kbd "C-z") 'ignore)
+(define-key global-map (kbd "C-x C-z") 'ignore)
+
 ;;;* SHELL SETTINGS
 
 
