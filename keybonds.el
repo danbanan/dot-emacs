@@ -15,3 +15,4 @@
 (define-key key-translation-map (kbd "s-\"") (kbd "Æ"))
 (define-key key-translation-map (kbd "s-O") (kbd "Ø"))
 (define-key key-translation-map (kbd "s-A") (kbd "Å"))
+(define-key global-map (kbd "C-j") 'newline)
