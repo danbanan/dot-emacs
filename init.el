@@ -242,8 +242,8 @@
   (load (concat "~/.emacs.d/" filename)))
 
 ;; Removing theme theme prompt
-(load-config "themes.el")
 (load-config "packages.el")
+(load-config "themes.el")
 (load-config "keybonds.el")
 
 

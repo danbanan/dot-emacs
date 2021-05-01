@@ -370,6 +370,7 @@
 
 ;;; TRAMP
 (setq tramp-default-method "ssh")
+
 ;; ;;; clang-format
 ;; (use-package clang-format
 ;;   :ensure t
@@ -382,7 +383,8 @@
 ;;; PDF
 (use-package pdf-tools
   :ensure t
-  :pin manual
+  :init
+  (setq pdf-view-use-unicode-ligther nil)
   :config
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-width)
