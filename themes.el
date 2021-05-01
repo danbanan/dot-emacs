@@ -14,7 +14,9 @@
   :ensure t)
 
 (use-package leuven-theme
-  :ensure t)
+  :ensure t
+  :config
+  (setq org-fontify-whole-heading-line t))
 
 ;; (use-package spacemacs-theme
 ;;   :ensure t)

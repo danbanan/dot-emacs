@@ -98,12 +98,8 @@
 	    (set-frame-parameter nil 'undecorated t)
 	    (set-frame-position nil 0 0)
 	    (global-visual-line-mode t)
-	    ;; (cond ((string-equal system-type "darwin")
-	    ;; 	   (set-frame-size nil (- (display-pixel-width) 20) (display-pixel-height) t))
-	    ;; 	  ((string-equal system-type "gnu/linux")
-	    ;; 	   (set-frame-size nil (- (display-pixel-width) 16) (display-pixel-height) t))
-	    ;; 	  ((string-equal system-type "windows-nt")
-	    ;; 	   (set-frame-size nil (- (display-pixel-width) 32) (- (display-pixel-height) 40) t)))
+	    ;; showing matching parantheses
+	    (show-paren-mode 1)	    	
 	    (toggle-frame-maximized)))
 
 (defun ask-before-closing ()
@@ -113,13 +109,8 @@
       (save-buffers-kill-emacs)
     (message "Canceled frame close")))
 
-(define-key global-map (kbd "C-x C-c") 'ask-before-closing)
-(define-key global-map (kbd "C-z") 'ignore)
-(define-key global-map (kbd "C-x C-z") 'ignore)
 
 ;;;* SHELL SETTINGS
-
-
 ;; -----------------------------------------------------------------------------
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 ;; -----------------------------------------------------------------------------
@@ -132,11 +123,8 @@
 ;; -----------------------------------------------------------------------------
 (add-hook 'emacs-lisp-mode-hook
 	  (lambda ()
-	    (outline-minor-mode t)
 	    (setq outline-regexp ";;;\\*+")
-	    (local-set-key (kbd "C-c C-h") 'outline-hide-entry)
-	    (local-set-key (kbd "C-c C-s") 'outline-show-entry)
-	    (local-set-key (kbd "C-c C-o") 'counsel-outline)
+	    (outline-minor-mode t)
 	    (electric-pair-mode t)))
 ;; -----------------------------------------------------------------------------
 
