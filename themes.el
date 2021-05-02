@@ -1,11 +1,11 @@
 (use-package alect-themes
   :ensure t)
 
-(unless (package-installed-p 'ample-theme)
-  (package-install 'ample-theme))
+(use-package ample-theme
+  :ensure t)
 
-(unless (package-installed-p 'gruvbox-theme)
-  (package-install 'gruvbox-theme))
+(use-package gruvbox-theme
+  :ensure t)
 
 (use-package github-modern-theme
   :ensure t)
@@ -17,9 +17,6 @@
   :ensure t
   :config
   (setq org-fontify-whole-heading-line t))
-
-;; (use-package spacemacs-theme
-;;   :ensure t)
 
 (use-package color-theme-sanityinc-tomorrow
   :ensure t)
@@ -46,4 +43,9 @@
    (load-theme 'sanityinc-tomorrow-night t)
    (setq current-theme 'tomorrow))
 
-(load-light-theme)
+(defun load-blue-theme ()
+  (interactive)
+   (load-theme 'sanityinc-tomorrow-blue t)
+   (setq current-theme 'tomorrow))
+
+(load-blue-theme)
