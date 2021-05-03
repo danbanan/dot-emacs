@@ -351,4 +351,8 @@
 
 
 ;;; Eshell
-(add-hook 'eshell-mode-hook 'company-mode)
+(add-hook 'eshell-mode-hook
+	  (lambda ()
+	    ;; eshell-mode-map is defined locally only
+	    (define-key eshell-mode-map (kbd "C-j") 'eshell-send-input)
+	    (company-mode)))

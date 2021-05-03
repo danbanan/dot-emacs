@@ -78,3 +78,16 @@
 (define-key global-map (kbd "C-x C-c") 'ask-before-closing)
 (define-key global-map (kbd "C-z") 'ignore)
 (define-key global-map (kbd "C-x C-z") 'ignore)
+
+
+;;; Dired
+(define-key dired-mode-map (kbd "C-j") 'dired-find-file)
+(define-key dired-mode-map (kbd "C-h") 'dired-unmark-backward)
+
+
+;;; Comint
+(define-key comint-mode-map (kbd "C-j") 'comint-send-input)
+
+
+;;; Eshell
+
