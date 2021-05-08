@@ -75,12 +75,24 @@
 
 ;;; Counsel - Ivy-enhanced versions of common Emacs commands
 (use-package counsel
+  :ensure t
+  :init
+  (counsel-mode))
+
+
+;;; Swiper
+(use-package swiper
   :ensure t)
 
 
 ;;; Lines Settings
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode t))
+
+;; (global-linum-mode 1)
+
+;; (setq linum-format " %d")
+
 
 ;; Set relative line numbers 
 (setq display-line-numbers-type 'visual)
@@ -356,3 +368,9 @@
 	    ;; eshell-mode-map is defined locally only
 	    (define-key eshell-mode-map (kbd "C-j") 'eshell-send-input)
 	    (company-mode)))
+
+
+;;; Projectile
+(use-package projectile
+  :ensure t
+  :init (projectile-mode))
