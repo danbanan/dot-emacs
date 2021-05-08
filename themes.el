@@ -45,7 +45,8 @@
 
 (defun load-blue-theme ()
   (interactive)
-   (load-theme 'sanityinc-tomorrow-blue t)
-   (setq current-theme 'tomorrow))
+  (load-theme 'deep-blue t)
+  (set-face-attribute 'line-number nil :foreground "dark grey" :background "#102e4e")
+  (setq current-theme 'color))
 
 (load-blue-theme)
