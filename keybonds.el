@@ -20,7 +20,6 @@
 
 
 ;;; Backspace and enter replacements
-(define-key global-map (kbd "<return>") 'ignore)
 (define-key global-map (kbd "<backspace>") 'ignore)
 (define-key global-map (kbd "C-j") 'newline)
 (define-key global-map (kbd "C-?") 'help-command)
@@ -33,9 +32,20 @@
 (define-key help-mode-map (kbd "<return>") 'help-follow)
 
 
+;;; Ivy
+(define-key ivy-minibuffer-map (kbd "C-j") 'ivy-alt-done)
+
+
 ;;; Counsel
+(define-key global-map (kbd "C-x b") 'counsel-switch-buffer)
+(define-key global-map (kbd "C-x 4 b") 'counsel-switch-buffer-other-window)
 (define-key global-map (kbd "C-x j f") 'counsel-file-jump)
 (define-key global-map (kbd "C-x j d") 'counsel-dired-jump)
+
+
+;;; Swiper
+(define-key global-map (kbd "C-s") 'swiper-isearch)
+(define-key global-map (kbd "C-r") 'swiper-isearch-backward)
 
 
 ;;; Org-mode
@@ -48,8 +58,12 @@
 (define-key markdown-mode-map (kbd "C-c SPC") 'counsel-outline)
 
 
-;; Elfeed
+;;; Elfeed
 (define-key global-map (kbd "C-x W") 'elfeed)
+
+
+;;; Ebuku
+(define-key global-map (kbd "C-x B") 'ebuku-add-bookmark)
 
 
 ;; PDF-tools
@@ -63,6 +77,13 @@
 (define-key rust-mode-map (kbd "C-c C-t") 'rust-test)
 (define-key rust-mode-map (kbd "TAB") 'company-indent-or-complete-common)
 
+
+;;; Company
+(define-key company-mode-map (kbd "s-j") 'company-complete)
+(define-key company-active-map (kbd "C-h") 'delete-backward-char)
+(define-key company-active-map (kbd "C-n") 'company-select-next)
+(define-key company-active-map (kbd "C-p") 'company-select-previous)
+(define-key company-active-map (kbd "C-j") 'company-complete)
 
 ;;; Elisp
 (define-key emacs-lisp-mode-map (kbd "<C-tab>") 'counsel-company)
@@ -86,8 +107,12 @@
 
 
 ;;; Comint
+
 (define-key comint-mode-map (kbd "C-j") 'comint-send-input)
 
 
-;;; Eshell
-
+;;; Projectile
+(define-key projectile-mode-map (kbd "s-p f") 'projectile-find-file)
+(define-key projectile-mode-map (kbd "s-p 4 f") 'projectile-find-file-other-window)
+(define-key projectile-mode-map (kbd "s-p d") 'projectile-find-dir)
+(define-key projectile-mode-map (kbd "s-p p") 'projectile-switch-project)
