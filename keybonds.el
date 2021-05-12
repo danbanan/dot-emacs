@@ -112,7 +112,8 @@
 
 
 ;;; Projectile
-(define-key projectile-mode-map (kbd "s-p f") 'projectile-find-file)
-(define-key projectile-mode-map (kbd "s-p 4 f") 'projectile-find-file-other-window)
-(define-key projectile-mode-map (kbd "s-p d") 'projectile-find-dir)
-(define-key projectile-mode-map (kbd "s-p p") 'projectile-switch-project)
+(define-key projectile-mode-map (kbd "C-x p f") 'projectile-find-file)
+(define-key projectile-mode-map (kbd "C-x p 4 f") 'projectile-find-file-other-window)
+(define-key projectile-mode-map (kbd "C-x p d") 'projectile-find-dir)
+(define-key projectile-mode-map (kbd "C-x p p") 'projectile-switch-project)
+(define-key projectile-mode-map (kbd "C-x p s") 'projectile-run-shell)
