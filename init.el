@@ -37,11 +37,11 @@
 
 ;; TODO, start eshell upon startup
 
-;; Font settings
+;;; Font settings
 ;; -----------------------------------------------------------------------------
 (cond ((string-equal system-type "darwin")
-       (add-to-list 'default-frame-alist
-		    '(font . "Iosevka Extended-15.5")))
+       (set-frame-font "Fira Code 14" nil t))
+       ;; (set-frame-font "Iosevka 15" nil t)
        ((string-equal system-type "gnu/linux")
 	(add-to-list 'default-frame-alist
 ;;		     '(font . "Monospace-11")))
@@ -147,6 +147,7 @@
 (load-config "packages.el")
 (load-config "themes.el")
 (load-config "keybonds.el")
+(load-config "setups.el")
 
 
 (custom-set-faces

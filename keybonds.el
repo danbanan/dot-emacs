@@ -93,6 +93,7 @@
 ;; C and C++
 (define-key c-mode-map (kbd "<C-tab>") 'counsel-company)
 ;; (define-key c-mode-map (kbd "<C-M-tab>") 'clang-format-buffer)
+(define-key c-mode-map (kbd "C-c C-c") 'compile)
 
 
 ;;; Frame
@@ -107,7 +108,6 @@
 
 
 ;;; Comint
-
 (define-key comint-mode-map (kbd "C-j") 'comint-send-input)
 
 
@@ -117,3 +117,22 @@
 (define-key projectile-mode-map (kbd "C-x p d") 'projectile-find-dir)
 (define-key projectile-mode-map (kbd "C-x p p") 'projectile-switch-project)
 (define-key projectile-mode-map (kbd "C-x p s") 'projectile-run-shell)
+
+
+;;; Vterm
+(define-key vterm-mode-map (kbd "C-h") 'vterm-send-backspace)
+(define-key global-map (kbd "C-x T") 'vterm-toggle-cd)
+
+
+;;; GNU Global
+(define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
+(define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
+(define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
+(define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
+(define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
+(define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
+(define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
+
+
+;;; Ace-window
+(define-key global-map (kbd "C-x o") 'ace-window)
