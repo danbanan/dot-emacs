@@ -5,6 +5,14 @@
 (require 'use-package)
 
 
+;;; Ace-window - jump easier between windows
+(use-package ace-window
+  :ensure t
+  :init
+  (ace-window-display-mode)
+  (setq aw-keys '(?a ?s ?d ?f)))
+
+
 ;;; PDF
 (use-package pdf-tools
   :ensure t
@@ -238,10 +246,20 @@
 (add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cuh\\'" . c++-mode))
 
+(use-package ggtags
+  :ensure t)
+
+(use-package company-c-headers
+  :ensure t)
+
 (add-hook 'c-mode-hook
 	  (lambda ()
 	    (c-set-style "llvm.org")
+	    (ggtags-mode 1)
 	    (company-mode)
+	    (setq company-backends (remove 'company-clang company-backends))
+	    (when (not (member 'company-c-headers company-backends))
+	      (push 'company-c-headers company-backends))
 	    ;; (eglot-ensure)
 	    (color-identifiers-mode t)))
 	  
@@ -326,6 +344,9 @@
   ;; To have enough buffer to look through output, but not so much that is negatively affects
   ;; performance.
   (setq vterm-max-scrollback 10000))
+
+(use-package vterm-toggle
+  :ensure t)
 
 
 (use-package web-beautify
