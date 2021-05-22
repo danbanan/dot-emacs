@@ -40,12 +40,11 @@
 ;;; Font settings
 ;; -----------------------------------------------------------------------------
 (cond ((string-equal system-type "darwin")
-       (set-frame-font "Fira Code 14" nil t))
        ;; (set-frame-font "Iosevka 15" nil t)
+       (set-frame-font "Fira Code 14" nil t))
        ((string-equal system-type "gnu/linux")
-	(add-to-list 'default-frame-alist
-;;		     '(font . "Monospace-11")))
-		     '(font . "Iosevka Heavy Extended-11")))
+	;; (set-frame-font "Iosevka Heavy 12")
+	(set-frame-font "Fira Code 11" nil t))
        (else (add-to-list 'default-frame-alist
 			  '(font . "Iosevka Light Extended-10.5"))))
 ;; -----------------------------------------------------------------------------
