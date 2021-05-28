@@ -94,6 +94,7 @@
 (define-key c-mode-map (kbd "<C-tab>") 'counsel-company)
 ;; (define-key c-mode-map (kbd "<C-M-tab>") 'clang-format-buffer)
 (define-key c-mode-map (kbd "C-c C-c") 'compile)
+(define-key c++-mode-map (kbd "C-c C-c") 'compile)
 
 
 ;;; Frame

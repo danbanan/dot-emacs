@@ -346,7 +346,10 @@
   (setq vterm-max-scrollback 10000))
 
 (use-package vterm-toggle
-  :ensure t)
+  :ensure t
+  :init
+  (setq vterm-buffer-name "*vterm*")
+  (setq vterm-toggle-cd-auto-create-buffer t))
 
 
 (use-package web-beautify
