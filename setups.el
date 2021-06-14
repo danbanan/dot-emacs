@@ -29,16 +29,16 @@
 
 (defun sisci-decode ()
   (interactive)
-  (compile "ssh in5050-2014-10 'ls -l ~/in5050-codec63-build/x86-build/output.c63; ls -l ~/in5050-codec63/output.yuv; ~/in5050-codec63/c63dec ~/in5050-codec63-build/x86-build/output.c63 ~/in5050-codec63/output.yuv'"))
+  (compile "ssh in5050-2014-11 'ls -l ~/in5050-build/x86-build/output.c63; ~/in5050-codec63/c63dec ~/in5050-build/x86-build/output.c63 ~/in5050-codec63/output.yuv; ls -l ~/in5050-codec63/output.yuv; scp /home/in5050-g01/in5050-codec63/output.yuv tegra-2:/home/in5050-g01/videos/'"))
 
 (defun sisci-predict ()
   (interactive)
-  (compile "ssh in5050-2014-10 '~/in5050-codec63/c63pred ~/in5050-codec63-build/x86-build/output.c63 ~/in5050-codec63/output.yuv'"))
+  (compile "ssh in5050-2014-11 '~/in5050-codec63/c63pred ~/in5050-build/x86-build/output.c63 ~/in5050-codec63/output.yuv; scp /home/in5050-g01/in5050-codec63/output.yuv tegra-2:/home/in5050-g01/videos/'"))
 
 (defun sisci-play-foreman ()
   (interactive)
-  (compile "ssh x86-1 'mplayer -demuxer rawvideo -rawvideo w=352:h=288 ~/in5050-codec63/output.yuv'"))
+  (compile "ssh tegra-2 'mplayer -demuxer rawvideo -rawvideo w=352:h=288 ~/videos/output.yuv'"))
 
 (defun sisci-play-tractor ()
   (interactive)
-  (compile "ssh x86-1 'mplayer -demuxer rawvideo -rawvideo w=1920:h=1080 ~/in5050-codec63/output.yuv'"))
+  (compile "ssh tegra-2 'mplayer -demuxer rawvideo -rawvideo w=1920:h=1080 ~/videos/output.yuv'"))
