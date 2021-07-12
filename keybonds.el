@@ -20,7 +20,7 @@
 
 
 ;;; Backspace and enter replacements
-(define-key global-map (kbd "<backspace>") 'ignore)
+;; (define-key global-map (kbd "<backspace>") 'ignore)
 (define-key global-map (kbd "C-j") 'newline)
 (define-key global-map (kbd "C-?") 'help-command)
 (define-key global-map (kbd "M-?") 'mark-paragraph)
