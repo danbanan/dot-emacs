@@ -1,4 +1,4 @@
-;;; use-package - isolate package configuration
+;;; Use -package - isolate package configuration
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -30,16 +30,21 @@
 
 ;;; Latex
 (use-package auctex
+  :defer t
   :ensure t
   :init
   (when (string-equal system-type "darwin")
     (add-to-list 'exec-path "/opt/texlive/2021/bin/x86_64-linux"))
-  :config
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
-  (setq-default TeX-master nil)
-  :hook (flyspell-mode
-	 LaTeX-math-mode))
+  (setq-default TeX-master nil))
+
+(add-hook 'TeX-mode-hook
+	  (lambda ()
+	    ;; (flyspell-mode t)
+	    (auto-fill-mode t)
+	    (set-fill-column 99)
+	    (Latex-math-mode t)))
 
 ;; (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
 ;;       TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
@@ -147,6 +152,16 @@
 ;; Make Org commands work on regions
 (setq org-loop-over-headlines-in-active-region 'start-level)
 
+;; Setting the time in mode line clock to be accumulated time on the current day
+(setq org-clock-mode-line-total 'today)
+
+(defun create-org-clock-heading ()
+  (let ((last-two-headings (last (org-get-outline-path t) 2)))
+    (format "%s/%s" (car last-two-headings) (cadr last-two-headings))))
+
+(setq org-clock-heading-function #'create-org-clock-heading)
+
+	
 ;; Org bullets - beautify bullets in org-mode
 (use-package org-bullets
   :ensure t)
@@ -155,7 +170,9 @@
 	  (lambda ()
 	    (org-bullets-mode 1)
 	    (outline-minor-mode t)
-	    (outline-hide-sublevels 1)))
+	    (outline-hide-sublevels 1)
+	    (set-fill-column 99)
+	    (auto-fill-mode)))
 
 
 ;;; Calender
