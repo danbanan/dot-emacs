@@ -348,6 +348,10 @@
 	    (racer-mode)))
 
 
+;;; Python development
+;; (setq python-shell-remote-exec-path nil)
+(setq python-shell-interpreter "python3")
+
 ;;; Terminal-here - launch an extern terminal
 ;; Might be interesting if exwm is installed
 ;; (setq terminal-here-linux-terminal-command 'xfce4-terminal)
