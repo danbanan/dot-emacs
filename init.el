@@ -146,8 +146,6 @@
 (load-config "packages.el")
 (load-config "themes.el")
 (load-config "keybonds.el")
-(load-config "setups.el")
-
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
