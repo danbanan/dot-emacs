@@ -263,8 +263,8 @@
 (add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cuh\\'" . c++-mode))
 
-(use-package ggtags
-  :ensure t)
+;; (use-package ggtags
+;;   :ensure t)
 
 (use-package company-c-headers
   :ensure t)
@@ -272,7 +272,6 @@
 (add-hook 'c-mode-hook
 	  (lambda ()
 	    (c-set-style "llvm.org")
-	    (ggtags-mode 1)
 	    (company-mode)
 	    (setq company-backends (remove 'company-clang company-backends))
 	    (when (not (member 'company-c-headers company-backends))
