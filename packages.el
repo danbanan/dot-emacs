@@ -1,11 +1,11 @@
-;;; Use -package - isolate package configuration
+;;; use-package: isolate package configuration
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 (require 'use-package)
 
 
-;;; Ace-window - jump easier between windows
+;;; ace-window: jump easier between windows
 (use-package ace-window
   :ensure t
   :init
@@ -13,7 +13,7 @@
   (setq aw-keys '(?a ?s ?d ?f)))
 
 
-;;; PDF
+;;; pdf-tool: reading PDFs in Emacs
 (use-package pdf-tools
   :ensure t
   :init
@@ -28,7 +28,7 @@
 	    (display-line-numbers-mode 0)))
 
 
-;;; Latex
+;;; auctex: Latex editing environment 
 (use-package auctex
   :defer t
   :ensure t
@@ -55,14 +55,14 @@
 
 
 
-;;; YASnippet - template tool for Emacs
+;;; YASnippet: template tool, pre-defined code snippets
 (use-package yasnippet
   :ensure t
   :init
   (add-to-list 'load-path "~/Dropbox/yasnippets/"))
 
 
-;;; Company - complete anything
+;;; company-mode: COMPlete ANYthing, auto-completion framework
 (use-package company
   :ensure t
   :init
@@ -71,12 +71,12 @@
 	company-tooltip-align-annotations t))
 
 
-;;; Magit - Git porcelain
+;;; magit: Git porcelain
 (use-package magit
   :ensure t)
 
 
-;;; Ivy - Minibuffer completion
+;;; Ivy: minibuffer completion
 (use-package ivy
   :ensure t
   :init
@@ -86,14 +86,14 @@
   (setq ivy-height 30))
 
 
-;;; Counsel - Ivy-enhanced versions of common Emacs commands
+;;; counsel: Ivy-enhanced versions of common Emacs commands
 (use-package counsel
   :ensure t
   :init
   (counsel-mode))
 
 
-;;; Swiper
+;;; Swiper: searching using Ivy
 (use-package swiper
   :ensure t)
 
@@ -160,7 +160,7 @@
     (format "%s/%s" (car last-two-headings) (cadr last-two-headings))))
 
 (setq org-clock-heading-function #'create-org-clock-heading)
-
+(setq org-clock-sound "./dreamy_bells.wav")
 	
 ;; Org bullets - beautify bullets in org-mode
 (use-package org-bullets
@@ -280,15 +280,22 @@
 	    (color-identifiers-mode t)))
 	  
 
-;;; SCHEME DEVELOPMENT: Geiser package
-(use-package geiser
-  :ensure t
-  :init
-  ;; Set racket path
-  (setq geiser-racket-binary "/Applications/Racket v7.6/bin/racket")
-  ;; Use Racket version
-  (setq geiser-active-implementations '(racket)))
+(setq scheme-program-name "plt-r5rs")
+(setq scheme-default-implementation "plt-r5rs")
+;; (define-key scheme-mode-map (kbd "C-M-i") 'scheme-smart-complete)
 
+;;; geiser: Scheme development 
+;; (use-package geiser
+;;   :ensure t
+;;   :init
+;;   ;; Set racket path
+;;   ;; (setq geiser-racket-binary "/Applications/Racket v7.6/bin/racket")
+;;   (setq geiser-racket-binary "/usr/bin/racket")
+;;   ;; Use Racket version
+;;   (setq geiser-active-implementations '(racket)))
+
+;; (use-package geiser-racket
+;;   :ensure t)
 
 ;;; Elfeed - RSS reader
 (use-package elfeed
