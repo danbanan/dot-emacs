@@ -39,14 +39,16 @@
 
 ;;; Font settings
 ;; -----------------------------------------------------------------------------
-(cond ((string-equal system-type "darwin")
-       ;; (set-frame-font "Iosevka 15" nil t)
-       (set-frame-font "Fira Code 14" nil t))
-       ((string-equal system-type "gnu/linux")
-	;; (set-frame-font "Iosevka Heavy 12")
-	(set-frame-font "Fira Code 11" nil t))
-       (else (add-to-list 'default-frame-alist
-			  '(font . "Iosevka Light Extended-10.5"))))
+;; (cond ((string-equal system-type "darwin")
+;;        ;; (set-frame-font "Iosevka 15" nil t)
+;;        (set-frame-font "Fira Code 14" nil t))
+;;        ((string-equal system-type "gnu/linux")
+;; 	;; (set-frame-font "Iosevka Heavy 12")
+;; 	(set-frame-font "Fira Code 11" nil t))
+;;        (else (add-to-list 'default-frame-alist
+;; 			  '(font . "Iosevka Light Extended-10.5"))))
+(set-frame-font "Monospace 12" nil t)
+;; (set-frame-font "Monospace 10" nil t)  ;; for 1080p monitor
 ;; -----------------------------------------------------------------------------
 
 ;; Disable menu, tool, and scroll bar

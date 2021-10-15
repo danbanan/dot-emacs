@@ -43,7 +43,7 @@
 	  (lambda ()
 	    ;; (flyspell-mode t)
 	    (auto-fill-mode t)
-	    (set-fill-column 99)
+	    (set-fill-column 95)
 	    (Latex-math-mode t)))
 
 ;; (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
@@ -160,7 +160,8 @@
     (format "%s/%s" (car last-two-headings) (cadr last-two-headings))))
 
 (setq org-clock-heading-function #'create-org-clock-heading)
-(setq org-clock-sound "./dreamy_bells.wav")
+
+(setq org-clock-sound "~/.emacs.d/bells/dreamy.wav")
 	
 ;; Org bullets - beautify bullets in org-mode
 (use-package org-bullets
@@ -171,7 +172,7 @@
 	    (org-bullets-mode 1)
 	    (outline-minor-mode t)
 	    (outline-hide-sublevels 1)
-	    (set-fill-column 99)
+	    (set-fill-column 95)
 	    (auto-fill-mode)))
 
 
