@@ -329,8 +329,8 @@
 (use-package ebuku
   :ensure t
   :init
-  (require 'ebuku))
-
+  (require 'ebuku)
+  (setq ebuku-results-limit 0))
 
 ;;; Rust development
 (use-package rust-mode

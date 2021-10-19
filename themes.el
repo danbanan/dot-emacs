@@ -30,8 +30,7 @@
 
 ;; (defun load-dark-theme ()
 ;;   (interactive)
-;;    (load-theme 'solarized-dark t)
-;;    (setq current-theme 'solarized))
+;;    )
 
 (defun load-light-theme ()
   (interactive)
@@ -48,8 +47,9 @@
 	 (disable-theme 'leuven))
 	((eq (car custom-enabled-themes) 'deep-blue)
 	 (disable-theme 'deep-blue)))
-  (setq current-theme 'sanityinc-tomorrow-night)
-  (load-theme 'sanityinc-tomorrow-night))
+  ;; (setq current-theme 'sanityinc-tomorrow-night)
+  (setq current-theme 'solarized-dark)
+  (load-theme current-theme))
 
 (defun load-blue-theme ()
   (interactive)
