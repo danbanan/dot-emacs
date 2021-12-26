@@ -137,3 +137,10 @@
 
 ;;; Ace-window
 (define-key global-map (kbd "C-x o") 'ace-window)
+
+
+;;; Multiple cursors
+(define-key global-map (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(define-key global-map (kbd "C->") 'mc/mark-next-like-this)
+(define-key global-map (kbd "C-<") 'mc/mark-previous-like-this)
+(define-key global-map (kbd "C-c C-<") 'mc/mark-all-like-this)

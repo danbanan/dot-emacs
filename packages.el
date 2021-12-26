@@ -1,11 +1,12 @@
-;;; use-package: isolate package configuration
+;;; USE-PACKAGE: isolate package configuration
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+
 (require 'use-package)
 
 
-;;; ace-window: jump easier between windows
+;;; ACE-WINDOW: jump easier between windows
 (use-package ace-window
   :ensure t
   :init
@@ -13,22 +14,23 @@
   (setq aw-keys '(?a ?s ?d ?f)))
 
 
-;;; pdf-tool: reading PDFs in Emacs
+;;; PDF-TOOL: reading PDFs in Emacs
 (use-package pdf-tools
   :ensure t
   :init
   (setq pdf-view-use-unicode-ligther nil)
+  (setq-default pdf-view-display-size 'fit-width)
   :config
-  (pdf-tools-install)
-  (setq-default pdf-view-display-size 'fit-width))
+  (pdf-tools-install))
 
-(add-hook 'pdf-view-mode-hook
-	  (lambda ()
-	    (linum-mode -1)
-	    (display-line-numbers-mode 0)))
+(defun db/pdf-view-mode-hook ()
+  (linum-mode -1)
+  (display-line-numbers-mode 0))
+
+(add-hook 'pdf-view-mode-hook #'db/pdf-view-mode-hook)
 
 
-;;; auctex: Latex editing environment 
+;;; AUCTEX: Latex editing environment 
 (use-package auctex
   :defer t
   :ensure t
@@ -39,12 +41,14 @@
   (setq TeX-parse-self t)
   (setq-default TeX-master nil))
 
-(add-hook 'TeX-mode-hook
-	  (lambda ()
-	    ;; (flyspell-mode t)
-	    (auto-fill-mode t)
-	    (set-fill-column 95)
-	    (Latex-math-mode t)))
+(defun db/TeX-mode-hook ()
+  ;; (flyspell-mode t)
+  (auto-fill-mode t)
+  (set-fill-column 96)
+  (Latex-math-mode t)
+  (visual-fill-column-mode))
+
+(add-hook 'TeX-mode-hook #'db/TeX-mode-hook)
 
 ;; (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
 ;;       TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
@@ -54,21 +58,32 @@
 ;;           #'TeX-revert-document-buffer)
 
 
-
-;;; YASnippet: template tool, pre-defined code snippets
+;;; YASNIPPET: template tool, pre-defined code snippets
 (use-package yasnippet
   :ensure t
   :init
   (add-to-list 'load-path "~/Dropbox/yasnippets/"))
 
 
-;;; company-mode: COMPlete ANYthing, auto-completion framework
+;;; COMPANY-MODE: COMPlete ANYthing, auto-completion framework
 (use-package company
   :ensure t
   :init
   (setq company-idle-delay 0.3
 	company-async-timeout 15
-	company-tooltip-align-annotations t))
+	company-tooltip-align-annotations t)
+  (setq company-backends '(company-capf
+                           company-keywords
+                           company-semantic
+                           company-files
+                           company-etags
+                           company-clang
+                           ;; company-irony-c-headers
+                           ;; company-irony
+                           ;; company-jedi
+                           ;; company-ispell
+                           ;; company-yasnippet
+                           company-cmake)))
 
 
 ;;; magit: Git porcelain
@@ -167,14 +182,49 @@
 (use-package org-bullets
   :ensure t)
 
+(use-package org-tree-slide
+  :ensure t)
+
+(use-package org-tree-slide-pauses
+  :ensure t
+  :init (require 'org-tree-slide-pauses))
+
+(use-package visual-fill-column
+  :ensure t)
+
+(setq visual-fill-column-enable-sensible-window-split t)
+
+(add-hook 'visual-fill-column-mode-hook
+	  (lambda ()
+	    (setq visual-fill-column-width 110)
+	    (setq visual-fill-column-center-text t)))
+
 (add-hook 'org-mode-hook
 	  (lambda ()
 	    (org-bullets-mode 1)
 	    (outline-minor-mode t)
 	    (outline-hide-sublevels 1)
 	    (set-fill-column 95)
-	    (auto-fill-mode)))
+	    (auto-fill-mode)
+	    (visual-fill-column-mode)))
 
+(add-hook 'org-tree-slide-play-hook
+	  (lambda ()
+	    ;; Display images inline
+	    (org-display-inline-images) ;; Can also use org-startup-with-inline-images
+
+	    ;; Scale the text.  The next line is for basic scaling:
+	    (setq text-scale-mode-amount 3)
+	    (text-scale-mode 1)))
+
+	    ;; This option is more advanced, allows you to scale other faces too
+	    ;; (setq-local face-remapping-alist '((default (:height 2.0) variable-pitch)
+	    ;; 				       (org-verbatim (:height 1.75) org-verbatim)
+	    ;; 				       (org-block (:height 1.25) org-block)))))
+
+(add-hook 'org-tree-slide-stop-hook
+	  (lambda ()
+	    (setq-local face-remapping-alist '((default variable-pitch default)))))
 
 ;;; Calender
 (add-hook 'calendar-load-hook
@@ -223,12 +273,12 @@
 (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
 
 
-;;; Eglot - lightweight LSP alternative
-;; (use-package eglot
-;;   :ensure t
-;;   :init
-;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd")))
+(use-package lsp-mode
+  :ensure t)
 
+;; Eglot - lightweight LSP alternative
+(use-package eglot
+  :ensure t)
 
 ;;; Color-indentifier - unique color per variable name
 (use-package color-identifiers-mode
@@ -268,22 +318,32 @@
 ;;   :ensure t)
 
 (use-package company-c-headers
-  :ensure t)
+  :ensure t
+  :init
+  (add-to-list 'company-backends 'company-c-headers))
 
-(add-hook 'c-mode-hook
-	  (lambda ()
-	    (c-set-style "llvm.org")
-	    (company-mode)
-	    (setq company-backends (remove 'company-clang company-backends))
-	    (when (not (member 'company-c-headers company-backends))
-	      (push 'company-c-headers company-backends))
-	    ;; (eglot-ensure)
-	    (color-identifiers-mode t)))
-	  
+(defun db/c++-mode-hook ()
+  (c-set-style "llvm.org")
+  (color-identifiers-mode t)
+  (company-mode)
+  (eglot))
 
+(defun db/c-mode-hook ()
+  (c-set-style "llvm.org")
+  (company-mode)
+  ;; (setq company-backends (remove 'company-clang company-backends))
+  ;; (when (not (member 'company-c-headers company-backends))
+  ;;   (push 'company-c-headers company-backends))
+  ;; (eglot-ensure)
+  (color-identifiers-mode t))
+
+(add-hook 'c-mode-hook #'db/c-mode-hook)
+(add-hook 'c++-mode-hook #'db/c++-mode-hook)
+
+;; Scheme mode
 (setq scheme-program-name "plt-r5rs")
 (setq scheme-default-implementation "plt-r5rs")
-;; (define-key scheme-mode-map (kbd "C-M-i") 'scheme-smart-complete)
+(add-hook 'scheme-mode-hook 'company-mode)
 
 ;;; geiser: Scheme development 
 ;; (use-package geiser
@@ -316,13 +376,23 @@
 	  "http://pragmaticemacs.com/feed/")))
 
 
+(use-package lsp-java
+  :ensure t)
+
+(require 'lsp-java)
+
+(defun db/java-mode-hook ()
+  (setq indent-tabs-mode nil)		;insert spaces instead of tabs
+  (setq tab-width 4)			;tab width = 4
+  (set-fill-column 100)			;max line length = 100
+  (electric-pair-mode 1)		;auto-pair symbols such as (), '', "", <>, etc.
+  (lsp))
+
 ;;; Java development
-(add-hook 'java-mode-hook
-	  (lambda ()
-	    (setq indent-tabs-mode nil)
-	    (setq tab-width 4)
-	    (set-fill-column 100)
-	    (electric-pair-mode 1)))
+(add-hook 'java-mode-hook #'db/java-mode-hook)
+
+;; Eclim
+;; /home/danbanan/Documents/eclipse/eclipse/eclimd
 
 
 ;;; Ebuku - bookmark manager
@@ -426,3 +496,20 @@
 (use-package projectile
   :ensure t
   :init (projectile-mode))
+
+(setq projectile-project-search-path '(("~/Dropbox/" . 5)))
+
+;;; Multiple Cursors
+(use-package multiple-cursors
+  :ensure t)
+
+
+;; nXML
+(setq nxml-child-indent 4)
+
+
+;; GNUPLOT
+(use-package gnuplot
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.plt\\'" . gnuplot-mode)))

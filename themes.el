@@ -21,6 +21,9 @@
 (use-package color-theme-sanityinc-tomorrow
   :ensure t)
 
+(use-package ayu-theme
+  :ensure t)
+
 (defvar current-theme nil)
 
 ;; (defun load-light-theme ()
