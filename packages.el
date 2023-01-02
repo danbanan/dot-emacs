@@ -6,6 +6,20 @@
 (require 'use-package)
 
 
+;;; HELM: incremental completion and narrowing selections
+(use-package helm
+  :ensure t
+  :init (helm-mode 1))
+
+(setq split-height-threshold nil)
+(setq split-width-threshold 160)
+
+
+;;; HELM-DESCBINDS: helm interface to describe-bindings
+(use-package helm-descbinds
+  :ensure t
+  :init (helm-descbinds-mode))
+
 ;;; ACE-WINDOW: jump easier between windows
 (use-package ace-window
   :ensure t
@@ -29,6 +43,17 @@
 
 (add-hook 'pdf-view-mode-hook #'db/pdf-view-mode-hook)
 
+;;; VISUAL FILL COLUMN: Center coloumns
+(use-package visual-fill-column
+  :ensure t)
+
+(setq visual-fill-column-enable-sensible-window-split t)
+
+(defun db/visual-fill-column-mode-hook ()
+  (setq visual-fill-column-width 200) ; Should be condional due to monitor sizes
+  (setq visual-fill-column-center-text t))
+
+(add-hook 'visual-fill-column-mode-hook #'db/visual-fill-column-mode-hook)
 
 ;;; AUCTEX: Latex editing environment 
 (use-package auctex
@@ -37,18 +62,16 @@
   :init
   (when (string-equal system-type "darwin")
     (add-to-list 'exec-path "/opt/texlive/2021/bin/x86_64-linux"))
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t)
-  (setq-default TeX-master nil))
+  (setq TeX-parse-self t))
 
 (defun db/TeX-mode-hook ()
   ;; (flyspell-mode t)
   (auto-fill-mode t)
-  (set-fill-column 96)
-  (Latex-math-mode t)
-  (visual-fill-column-mode))
+  (set-fill-column 100)
+  (olivetti-mode t))
 
 (add-hook 'TeX-mode-hook #'db/TeX-mode-hook)
+(add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 
 ;; (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
 ;;       TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
@@ -69,7 +92,7 @@
 (use-package company
   :ensure t
   :init
-  (setq company-idle-delay 0.3
+  (setq company-idle-delay 0.2
 	company-async-timeout 15
 	company-tooltip-align-annotations t)
   (setq company-backends '(company-capf
@@ -92,25 +115,26 @@
 
 
 ;;; Ivy: minibuffer completion
-(use-package ivy
-  :ensure t
-  :init
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-  (setq ivy-height 30))
+;; (use-package ivy
+;;   :ensure t
+;;   :init
+;;   (ivy-mode 1)
+;;   (setq ivy-use-virtual-buffers t)
+;;   (setq ivy-count-format "(%d/%d) ")
+;;   (setq ivy-height 30))
 
 
 ;;; counsel: Ivy-enhanced versions of common Emacs commands
-(use-package counsel
-  :ensure t
-  :init
-  (counsel-mode))
+;; (use-package counsel
+;;   :ensure t
+;;   :init
+;;   (counsel-mode))
 
 
 ;;; Swiper: searching using Ivy
-(use-package swiper
-  :ensure t)
+;; (use-package swiper
+;;   :ensure t)
+
 
 
 ;;; Lines Settings
@@ -140,8 +164,11 @@
 	    (electric-pair-mode t)))
 
 
-;;; Org mode
+;;; ORG-MODE
 (setq org-log-done t)
+
+;; Disable actual width displays of images
+(setq org-image-actual-width nil)
 
 ;; Path to agenda files
 (setq-default org-agenda-files '("~/Dropbox/org/planner"))
@@ -177,6 +204,13 @@
 (setq org-clock-heading-function #'create-org-clock-heading)
 
 (setq org-clock-sound "~/.emacs.d/bells/dreamy.wav")
+
+(setq org-agenda-prefix-format '((agenda . " %i %-20:c%?-12t% s")
+				 (todo . " %i %-12:c")
+				 (tags . " %i %-12:c")
+				 (search . " %i %-12:c")))
+
+(setq org-use-property-inheritance t)
 	
 ;; Org bullets - beautify bullets in org-mode
 (use-package org-bullets
@@ -189,24 +223,15 @@
   :ensure t
   :init (require 'org-tree-slide-pauses))
 
-(use-package visual-fill-column
-  :ensure t)
-
-(setq visual-fill-column-enable-sensible-window-split t)
-
-(add-hook 'visual-fill-column-mode-hook
-	  (lambda ()
-	    (setq visual-fill-column-width 110)
-	    (setq visual-fill-column-center-text t)))
-
-(add-hook 'org-mode-hook
+ (add-hook 'org-mode-hook
 	  (lambda ()
 	    (org-bullets-mode 1)
 	    (outline-minor-mode t)
 	    (outline-hide-sublevels 1)
 	    (set-fill-column 95)
 	    (auto-fill-mode)
-	    (visual-fill-column-mode)))
+	    ; (visual-fill-column-mode)
+	    (olivetti-mode)))
 
 (add-hook 'org-tree-slide-play-hook
 	  (lambda ()
@@ -276,7 +301,7 @@
 (use-package lsp-mode
   :ensure t)
 
-;; Eglot - lightweight LSP alternative
+;;; Eglot - lightweight LSP alternative
 (use-package eglot
   :ensure t)
 
@@ -301,9 +326,9 @@
 ;; Add a cc-mode style for editing LLVM C and C++ code
 (c-add-style "llvm.org"
              '("gnu"
-	       (fill-column . 80)
+	       (fill-column . 120)
 	       (c++-indent-level . 2)
-	       (c-basic-offset . 4)
+	       (c-basic-offset . 2)
 	       (indent-tabs-mode . nil)
 	       (c-offsets-alist . ((arglist-intro . ++)
 				   (innamespace . 0)
@@ -326,19 +351,22 @@
   (c-set-style "llvm.org")
   (color-identifiers-mode t)
   (company-mode)
-  (eglot))
+  (visual-fill-column-mode)
+  (eglot-ensure))
 
 (defun db/c-mode-hook ()
-  (c-set-style "llvm.org")
-  (company-mode)
-  ;; (setq company-backends (remove 'company-clang company-backends))
-  ;; (when (not (member 'company-c-headers company-backends))
-  ;;   (push 'company-c-headers company-backends))
-  ;; (eglot-ensure)
-  (color-identifiers-mode t))
+  (c-set-style "k&r")
+  (color-identifiers-mode t)
+  (company-mode))
+  ;; (eglot-ensure))
 
 (add-hook 'c-mode-hook #'db/c-mode-hook)
 (add-hook 'c++-mode-hook #'db/c++-mode-hook)
+
+(use-package clang-format
+  :ensure t
+  :init
+  (setq clang-format-executable "clang-format"))
 
 ;; Scheme mode
 (setq scheme-program-name "plt-r5rs")
@@ -364,16 +392,9 @@
   :init
   (setq elfeed-feeds
 	'(;; School stuff
-	  "https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/?vrtx=feed"
-	  "https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/exercises/?vrtx=feed"
-	  "https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/handouts/?vrtx=feed"
-	  "https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/obligs/?vrtx=feed"
-	  "https://www.uio.no/studier/emner/matnat/ifi/INF5110/v21/slides/?vrtx=feed"
-	  "https://www.uio.no/studier/emner/matnat/ifi/IN5050/v21/index.html?vrtx=feed"
-	  "https://www.uio.no/studier/emner/matnat/ifi/IN5050/v21/beskjeder/?vrtx=feed"
-	  "https://www.uio.no/studier/emner/matnat/ifi/IN5050/v21/slides/?vrtx=feed"
 	  ;; Emacs stuff
-	  "http://pragmaticemacs.com/feed/")))
+	  "http://pragmaticemacs.com/feed/"
+	  "https://martinsteffen.github.io/feed.xml")))
 
 
 (use-package lsp-java
@@ -381,11 +402,16 @@
 
 (require 'lsp-java)
 
+(setq lsp-headerline-breadcrumb-enable nil)
+
 (defun db/java-mode-hook ()
   (setq indent-tabs-mode nil)		;insert spaces instead of tabs
   (setq tab-width 4)			;tab width = 4
   (set-fill-column 100)			;max line length = 100
   (electric-pair-mode 1)		;auto-pair symbols such as (), '', "", <>, etc.
+  (setq lsp-headerline-breadcrumb-enable nil)
+  (visual-fill-column-mode)
+  (yas-minor-mode-on)
   (lsp))
 
 ;;; Java development
@@ -425,16 +451,18 @@
 	    (racer-mode)))
 
 
-;;; Python development
+;;; PYTHON DEVELOPMENT
 ;; (setq python-shell-remote-exec-path nil)
 (setq python-shell-interpreter "/bin/python3")
 
-;;; Terminal-here - launch an extern terminal
-;; Might be interesting if exwm is installed
-;; (setq terminal-here-linux-terminal-command 'xfce4-terminal)
 
+;;; TERMINAL HERE - launch an external terminal
+(use-package terminal-here ;; Might be interesting if exwm is installed
+  :ensure t
+  :init
+  (setq terminal-here-linux-terminal-command 'gnome-terminal))
 
-;;; Vterm
+;;; VTERM
 (use-package vterm
   :ensure t
   :commands vterm
@@ -446,9 +474,19 @@
 (use-package vterm-toggle
   :ensure t
   :init
-  (setq vterm-buffer-name "*vterm*")
   (setq vterm-toggle-cd-auto-create-buffer t))
 
+(defun db/vterm-toggle-cd ()
+  (interactive)
+  (setq vterm-buffer-name
+	(concat "vterm-" (read-string "Vterm name:")))
+  (vterm-toggle-cd))
+
+;;; XML FORMAT - Easily reformat XML files
+(use-package xml-format
+  :ensure t
+  :demand t
+  :after nxml-mode)
 
 (use-package web-beautify
   :ensure t)
@@ -492,12 +530,19 @@
 	    (company-mode)))
 
 
-;;; Projectile
+;;; Projectile + Helm-projectile
+(use-package helm-projectile
+  :ensure t)
+
 (use-package projectile
   :ensure t
-  :init (projectile-mode))
-
-(setq projectile-project-search-path '(("~/Dropbox/" . 5)))
+  :init
+  (setq projectile-indexing-method 'alien)
+  (setq projectile-project-search-path '(("~/Dropbox/" . 10) ("~/dev/" . 3)))
+  (setq projectile-completion-system 'helm)
+  (setq projectile-switch-project-action 'helm-projectile)
+  (projectile-global-mode)
+  (helm-projectile-on))
 
 ;;; Multiple Cursors
 (use-package multiple-cursors
@@ -508,8 +553,41 @@
 (setq nxml-child-indent 4)
 
 
-;; GNUPLOT
+;;; GNUPLOT
 (use-package gnuplot
   :ensure t
   :init
-  (add-to-list 'auto-mode-alist '("\\.plt\\'" . gnuplot-mode)))
+  (add-to-list 'auto-mode-alist '("\\.gp\\'" . gnuplot-mode)))
+
+
+;;; Shell scripting
+(defun db/shell-hook ()
+  (setq indent-tabs-mode t)
+  (setq tab-width 4))
+
+(add-hook 'sh-mode-hook #'db/shell-hook)
+
+
+;;; EYEBROWSE: workspace manager
+(use-package eyebrowse
+  :ensure t
+  :init (progn
+	  (eyebrowse-mode t)
+	  (setq eyebrowse-new-workspace t)))
+
+
+;;; CPERL-MODE
+;; Prefer cperl-mode to perl-mode, (more robust according to EmacsWiki)
+(mapc
+ (lambda (pair)
+   (if (eq (cdr pair) 'perl-mode)
+       (setcdr pair 'cperl-mode)))
+ (append auto-mode-alist interpreter-mode-alist))
+;; Also highlight referenced variables, not only when they are declared.
+(setq cperl-highlight-variables-indiscriminately t)
+
+(add-hook 'cperl-mode-hook #'db/perl-hook)
+
+(defun db/perl-hook ()
+  (cperl-set-style 'PerlStyle)
+  (company-mode))
