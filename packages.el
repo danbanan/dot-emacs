@@ -5,6 +5,8 @@
 
 (require 'use-package)
 
+(use-package olivetti
+  :ensure t)
 
 ;;; HELM: incremental completion and narrowing selections
 (use-package helm
@@ -25,7 +27,7 @@
   :ensure t
   :init
   (ace-window-display-mode)
-  (setq aw-keys '(?a ?s ?d ?f)))
+  (setq aw-keys '(?s ?d ?f ?g)))
 
 
 ;;; PDF-TOOL: reading PDFs in Emacs
@@ -211,47 +213,40 @@
 				 (search . " %i %-12:c")))
 
 (setq org-use-property-inheritance t)
-	
+
+(setq org-adapt-indentation t)
+
+(setq org-default-notes-file "~/Documents/capture/notes.org")
+
+(setq)
+
+(setq org-capture-templates
+      '(("n" "Note without annotation" entry
+	 (file+olp+datetree "~/Documents/capture/notes.org")
+	 "* %a\n\n  %?\n\n"
+	 :empty-lines 1)
+	("t" "Todo without annotation" entry
+	 (file "~/Documents/capture/notes.org")
+	 "* TODO %?\n\n  %u\n\n  %a"
+	 :prepend 1
+	 :empty-lines 1)))
+
 ;; Org bullets - beautify bullets in org-mode
 (use-package org-bullets
   :ensure t)
 
-(use-package org-tree-slide
-  :ensure t)
-
-(use-package org-tree-slide-pauses
-  :ensure t
-  :init (require 'org-tree-slide-pauses))
-
- (add-hook 'org-mode-hook
+(add-hook 'org-mode-hook
 	  (lambda ()
 	    (org-bullets-mode 1)
 	    (outline-minor-mode t)
 	    (outline-hide-sublevels 1)
 	    (set-fill-column 95)
 	    (auto-fill-mode)
-	    ; (visual-fill-column-mode)
-	    (olivetti-mode)))
+	    (olivetti-mode)
+	    (setq olivetti-body-width 112)))
 
-(add-hook 'org-tree-slide-play-hook
-	  (lambda ()
-	    ;; Display images inline
-	    (org-display-inline-images) ;; Can also use org-startup-with-inline-images
 
-	    ;; Scale the text.  The next line is for basic scaling:
-	    (setq text-scale-mode-amount 3)
-	    (text-scale-mode 1)))
-
-	    ;; This option is more advanced, allows you to scale other faces too
-	    ;; (setq-local face-remapping-alist '((default (:height 2.0) variable-pitch)
-	    ;; 				       (org-verbatim (:height 1.75) org-verbatim)
-	    ;; 				       (org-block (:height 1.25) org-block)))))
-
-(add-hook 'org-tree-slide-stop-hook
-	  (lambda ()
-	    (setq-local face-remapping-alist '((default variable-pitch default)))))
-
-;;; Calender
+;;; Calendar
 (add-hook 'calendar-load-hook
 	  (calendar-set-date-style 'european))
 
@@ -478,9 +473,15 @@
 
 (defun db/vterm-toggle-cd ()
   (interactive)
-  (setq vterm-buffer-name
-	(concat "vterm-" (read-string "Vterm name:")))
-  (vterm-toggle-cd))
+  (let ((custom-name (read-string "Vterm name:"))
+	(machine-name (s-trim (shell-command-to-string "uname -n"))))
+    (setq vterm-buffer-name
+	  (concat "vterm-"
+		  machine-name
+		  (if (string-empty-p custom-name)
+		      custom-name
+		    (s-concat "-" custom-name))))
+    (vterm-toggle-cd)))
 
 ;;; XML FORMAT - Easily reformat XML files
 (use-package xml-format
@@ -525,8 +526,6 @@
 ;;; Eshell
 (add-hook 'eshell-mode-hook
 	  (lambda ()
-	    ;; eshell-mode-map is defined locally only
-	    (define-key eshell-mode-map (kbd "C-j") 'eshell-send-input)
 	    (company-mode)))
 
 
@@ -538,7 +537,7 @@
   :ensure t
   :init
   (setq projectile-indexing-method 'alien)
-  (setq projectile-project-search-path '(("~/Dropbox/" . 10) ("~/dev/" . 3)))
+  ;; (setq projectile-project-search-path '(("~/Dropbox/" . 10) ("~/dev/" . 3)))
   (setq projectile-completion-system 'helm)
   (setq projectile-switch-project-action 'helm-projectile)
   (projectile-global-mode)
@@ -547,6 +546,8 @@
 ;;; Multiple Cursors
 (use-package multiple-cursors
   :ensure t)
+
+(require 'multiple-cursors)
 
 
 ;; nXML
@@ -586,8 +587,30 @@
 ;; Also highlight referenced variables, not only when they are declared.
 (setq cperl-highlight-variables-indiscriminately t)
 
+(defun db/perl-hook ()
+  (cperl-set-style 'K&R)
+  (company-mode)  
+  (olivetti-mode)
+  (setq-local olivetti-body-width 110))
+
 (add-hook 'cperl-mode-hook #'db/perl-hook)
 
-(defun db/perl-hook ()
-  (cperl-set-style 'PerlStyle)
-  (company-mode))
+;;; COMMON LISP
+;; SLY: Common Lisp IDE
+(use-package sly
+  :config
+  ;; (setq inferior-lisp-program "cmucl-21d")
+  (setq inferior-lisp-program "/usr/local/bin/sbcl --noinform"))
+
+(defun db/common-lisp-hook ()
+  (sly-mode))
+
+(add-hook 'lisp-mode-hook #'db/common-lisp-hook)
+
+
+;;; Info
+(add-to-list 'Info-directory-list (expand-file-name "~/.local/share/info/"))
+;; (defun db/info-mode-hook ()
+;;   )
+
+;; (add-hook 'Info-mode-hook #'db/info-mode-hook)

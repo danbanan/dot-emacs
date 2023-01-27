@@ -2,6 +2,8 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
+(setq warning-minimum-level :error)
+
 ;;;* PACKAGE MANAGER
 
 ;; Package repository with 'package' and adding repository source
