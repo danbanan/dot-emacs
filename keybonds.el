@@ -22,7 +22,6 @@
 
 ;;; Backspace and enter replacements
 ;; (define-key global-map (kbd "<backspace>") 'ignore)
-(define-key global-map (kbd "C-j") 'newline)
 (define-key global-map (kbd "C-?") 'help-command)
 (define-key global-map (kbd "M-?") 'mark-paragraph)
 (define-key global-map (kbd "C-h") 'delete-backward-char)
@@ -40,7 +39,6 @@
 (global-set-key (kbd "C-x b") #'helm-mini)
 
 (define-key helm-map (kbd "C-h") #'helm-mode-delete-char-backward-maybe)
-(define-key helm-map (kbd "C-j") #'helm-confirm-and-exit-minibuffer)
 (define-key helm-map (kbd "C-i") #'helm-execute-persistent-action)
 (define-key helm-map (kbd "C-z") #'helm-select-action)
 
@@ -50,7 +48,7 @@
 (define-key projectile-mode-map (kbd "C-x p p") #'projectile-switch-project)
 (define-key projectile-mode-map (kbd "C-x p s") #'projectile-run-shell)
 (define-key projectile-mode-map (kbd "C-x p b") #'projectile-switch-to-buffer)
-
+(define-key projectile-mode-map (kbd "C-x p v") #'projectile-run-vterm)
 
 ;;; Ivy
 ;; (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-alt-done)
@@ -69,9 +67,10 @@
 
 
 ;;; Org-mode
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(define-key org-mode-map (kbd "C-c SPC") 'counsel-outline)
+(define-key global-map (kbd "C-c l") #'org-store-link)
+(define-key global-map (kbd "C-c a") #'org-agenda)
+(define-key global-map (kbd "C-c c") #'org-capture)
+;; (define-key org-mode-map (kbd "C-c SPC") 'counsel-outline)
 
 
 ;;; Markdown-mode
@@ -103,7 +102,6 @@
 (define-key company-active-map (kbd "C-h") 'delete-backward-char)
 (define-key company-active-map (kbd "C-n") 'company-select-next)
 (define-key company-active-map (kbd "C-p") 'company-select-previous)
-(define-key company-active-map (kbd "C-j") 'company-complete)
 
 ;;; Elisp
 (define-key emacs-lisp-mode-map (kbd "<C-tab>") 'counsel-company)
@@ -124,12 +122,7 @@
 
 
 ;;; Dired
-(define-key dired-mode-map (kbd "C-j") 'dired-find-file)
 (define-key dired-mode-map (kbd "C-h") 'dired-unmark-backward)
-
-
-;;; Comint
-(define-key comint-mode-map (kbd "C-j") 'comint-send-input)
 
 ;;; Vterm
 (define-key vterm-mode-map (kbd "C-h") 'vterm-send-backspace)
@@ -161,7 +154,7 @@
 (define-key global-map (kbd "C-x T") #'terminal-here-launch)
 
 
-;; Scheme
+;;; Scheme
 (require 'scheme)
 (define-key key-translation-map (kbd "C-x 8 +") (kbd "＋"))
 (define-key key-translation-map (kbd "C-x 8 -" ) (kbd "－"))
@@ -171,3 +164,9 @@
 
 ;; LSP mode
 (define-key lsp-mode-map (kbd "M-.") #'lsp-find-implementation)
+
+;;; Perl
+(require 'cperl-mode)			; may not be necessary
+(define-key cperl-mode-map (kbd "C-c C-c c") #'compile)
+(define-key cperl-mode-map (kbd "C-c C-c r") #'recompile)
+(define-key cperl-mode-map (kbd "C-c C-c d") #'cperl-db)

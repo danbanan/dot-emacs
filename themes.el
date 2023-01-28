@@ -1,17 +1,17 @@
-(use-package alect-themes
-  :ensure t)
+;; (use-package alect-themes
+;;   :ensure t)
 
-(use-package ample-theme
-  :ensure t)
+;; (use-package ample-theme
+;;   :ensure t)
 
-(use-package gruvbox-theme
-  :ensure t)
+;; (use-package gruvbox-theme
+;;   :ensure t)
 
-(use-package github-modern-theme
-  :ensure t)
+;; (use-package github-modern-theme
+;;   :ensure t)
 
-(use-package solarized-theme
-  :ensure t)
+;; (use-package solarized-theme
+;;   :ensure t)
 
 (use-package leuven-theme
   :ensure t
@@ -21,8 +21,8 @@
 (use-package color-theme-sanityinc-tomorrow
   :ensure t)
 
-(use-package ayu-theme
-  :ensure t)
+;; (use-package ayu-theme
+;;   :ensure t)
 
 (defvar current-theme nil)
 
