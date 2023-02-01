@@ -47,8 +47,8 @@
 (define-key projectile-mode-map (kbd "C-x p d") #'helm-projectile-find-dir)
 (define-key projectile-mode-map (kbd "C-x p p") #'projectile-switch-project)
 (define-key projectile-mode-map (kbd "C-x p s") #'projectile-run-shell)
+(define-key projectile-mode-map (kbd "C-x p b") #'projectile-switch-to-buffer)
 (define-key projectile-mode-map (kbd "C-x p v") #'projectile-run-vterm)
-
 
 ;;; Ivy
 ;; (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-alt-done)
@@ -161,6 +161,9 @@
 (define-key key-translation-map (kbd "C-x 8 /") (kbd "÷"))
 (define-key key-translation-map (kbd "C-x 8 <up>") (kbd "↑"))
 
+
+;; LSP mode
+(define-key lsp-mode-map (kbd "M-.") #'lsp-find-implementation)
 
 ;;; Perl
 (require 'cperl-mode)			; may not be necessary

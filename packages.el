@@ -193,6 +193,12 @@
 				    "POSTPONED(p)"
 				    "DONE(d)")))
 
+;; Path to capture files
+(setq org-default-notes-file "~/Dropbox/org/capture/notes.org")
+
+;; Fix indentation
+(setq org-adapt-indentation t)
+
 ;; Make Org commands work on regions
 (setq org-loop-over-headlines-in-active-region 'start-level)
 
@@ -216,12 +222,12 @@
 
 (setq org-adapt-indentation t)
 
-(setq org-default-notes-file "~/Documents/capture/notes.org")
-
-(setq)
-
 (setq org-capture-templates
-      '(("n" "Note without annotation" entry
+      '(("p" "Personal note" entry
+	 (file+olp+datetree "~/Dropbox/org/capture/notes.org")
+	 "* %a\n\n  %?"
+	 :emtpy-lines 1)
+	("w" "Work note without annotation" entry
 	 (file+olp+datetree "~/Documents/capture/notes.org")
 	 "* %a\n\n  %?\n\n"
 	 :empty-lines 1)
@@ -235,16 +241,16 @@
 (use-package org-bullets
   :ensure t)
 
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    (org-bullets-mode 1)
-	    (outline-minor-mode t)
-	    (outline-hide-sublevels 1)
-	    (set-fill-column 95)
-	    (auto-fill-mode)
-	    (olivetti-mode)
-	    (setq olivetti-body-width 112)))
+(defun db/org-mode-hook ()
+  (org-bullets-mode 1)
+  (outline-minor-mode t)
+  (outline-hide-sublevels 1)
+  (set-fill-column 95)
+  (auto-fill-mode)
+  (olivetti-mode)
+  (setq olivetti-body-width 112))
 
+(add-hook 'org-mode-hook #'db/org-mode-hook)
 
 ;;; Calendar
 (add-hook 'calendar-load-hook
@@ -415,6 +421,12 @@
 ;; Eclim
 ;; /home/danbanan/Documents/eclipse/eclipse/eclimd
 
+(dap-register-debug-template "Siddhi app runner"
+                             (list :type "java"
+                                   :request "launch"
+                                   :args "--burst-delay 1000 --burst-size 30 --count 30 -f /home/danbanan/dev/java/siddhi-instrumentation/java/modules/application/src/main/resources/events.txt"
+                                   :vmArgs "-Xint -XX:+AlwaysPreTouch"
+                                   :env '(("DEV" . "1"))))
 
 ;;; Ebuku - bookmark manager
 (use-package ebuku
@@ -598,6 +610,7 @@
 ;;; COMMON LISP
 ;; SLY: Common Lisp IDE
 (use-package sly
+  :ensure t
   :config
   ;; (setq inferior-lisp-program "cmucl-21d")
   (setq inferior-lisp-program "/usr/local/bin/sbcl --noinform"))

@@ -69,3 +69,14 @@ bookmarks
 
 #ivy
 recentf
+
+custom.el
+/.mc-lists.el
+/eglot-eclipse-jdt-cache/
+/eln-cache/
+/projectile-bookmarks.eld
+/projectile.cache
+/projects
+/request/
+/session.108b98c0a48047bd2163635771323665800000017710075
+/session.10c568b11afef57ef0163645269130083300000018510075
