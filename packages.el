@@ -182,7 +182,7 @@
 (setq org-agenda-clockreport-parameter-plist '(:link t :maxlevel 4))
 
 ;; Fontify bold, italics and underlined text without the pre-symbols
-(setq org-hide-emphasis-markers t)
+(setq org-hide-emphasis-markers nil)
 
 ;; Global Org TODO keywords
 (setq org-todo-keywords '((sequence "TODO(t)"
@@ -240,6 +240,29 @@
 ;; Org bullets - beautify bullets in org-mode
 (use-package org-bullets
   :ensure t)
+
+(use-package org-ref
+  :ensure t
+  :config
+  (setq org-latex-prefer-user-labels t)
+  (require 'org-ref-helm))
+
+(use-package helm-bibtex
+  :ensure t)
+
+(setq bibtex-completion-bibliography '("~/Dropbox/emacs/bibliography/references.bib")
+      bibtex-completion-library-path "~/Dropbox/emacs/bibliography/bibtex-pdfs/"
+      bibtex-completion-notes-path "~/Dropbox/emacs/bibliography/notes/"
+      bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
+      
+      bibtex-completion-additional-search-fields '(keywords)
+      bibtex-completion-display-formats
+      '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
+	(inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+	(incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+	(inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+	(t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
+      bibtex-completion-pdf-open-function #'find-file)
 
 (defun db/org-mode-hook ()
   (org-bullets-mode 1)
