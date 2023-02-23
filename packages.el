@@ -608,22 +608,40 @@
 (add-hook 'cperl-mode-hook #'db/perl-hook)
 
 ;;; COMMON LISP
+
+(add-to-list 'auto-mode-alist '("\\.cl\\'" . common-lisp-mode))
+
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
+
 ;; SLY: Common Lisp IDE
+
 (use-package sly
   :ensure t
   :config
-  ;; (setq inferior-lisp-program "cmucl-21d")
-  (setq inferior-lisp-program "/usr/local/bin/sbcl --noinform"))
+  (setq sly-lisp-implementations
+      '((cmucl-18d ("cmucl-18d"))
+	(cmucl-19d ("cmucl-19d"))
+	(cmucl-21d ("cmucl-21d"))
+	(sbcl ("sbcl"))
+	(mlisp ("mlisp"))
+	(alisp ("alisp"))))
+  (sly-setup))
 
-(defun db/common-lisp-hook ()
-  (sly-mode))
 
-(add-hook 'lisp-mode-hook #'db/common-lisp-hook)
+
+(add-to-list 'sly-filename-translations
+             (sly-create-filename-translator
+              :machine-instance "Timelisteserver"
+              :remote-host "172.16.7.206"
+              :username "root"))
+
+
+(add-hook 'lisp-mode-hook #'sly-mode)
+
+(add-hook 'sly-mrepl-mode-hook
+	  (lambda ()
+	    (company-mode)))
 
 
 ;;; Info
 (add-to-list 'Info-directory-list (expand-file-name "~/.local/share/info/"))
-;; (defun db/info-mode-hook ()
-;;   )
-
-;; (add-hook 'Info-mode-hook #'db/info-mode-hook)
