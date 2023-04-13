@@ -294,6 +294,13 @@
 
 (add-hook 'org-mode-hook #'db/org-mode-hook)
 
+;;; Org-roam
+(use-package org-roam
+  :ensure t
+  :config
+  (setq org-roam-directory "~/Documents/wiki/")
+  (org-roam-db-autosync-mode))
+
 ;;; Calendar
 (add-hook 'calendar-load-hook
 	  (calendar-set-date-style 'european))
@@ -654,22 +661,60 @@
 (load "~/.emacs.d/lisp/perl-repl/perl-repl.el")
 
 ;;; COMMON LISP
+
+(add-to-list 'auto-mode-alist '("\\.cl\\'" . common-lisp-mode))
+
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
+
 ;; SLY: Common Lisp IDE
+
 (use-package sly
   :ensure t
   :config
-  ;; (setq inferior-lisp-program "cmucl-21d")
-  (setq inferior-lisp-program "/usr/local/bin/sbcl --noinform"))
+  (setq sly-lisp-implementations
+      '((cmucl-18d ("cmucl-18d"))
+	(cmucl-19d ("cmucl-19d"))
+	(cmucl-21d ("cmucl-21d"))
+	(sbcl ("sbcl"))
+	(mlisp ("mlisp"))
+	(alisp ("alisp"))))
+  (sly-setup))
 
-(defun db/common-lisp-hook ()
-  (sly-mode))
 
-(add-hook 'lisp-mode-hook #'db/common-lisp-hook)
 
+(add-to-list 'sly-filename-translations
+             (sly-create-filename-translator
+              :machine-instance "Timelisteserver"
+              :remote-host "172.16.7.206"
+              :username "root"))
+
+
+(add-hook 'lisp-mode-hook #'sly-mode)
+
+(add-hook 'sly-mrepl-mode-hook
+	  (lambda ()
+	    (company-mode)))
 
 ;;; Info
 (add-to-list 'Info-directory-list (expand-file-name "~/.local/share/info/"))
-;; (defun db/info-mode-hook ()
-;;   )
 
-;; (add-hook 'Info-mode-hook #'db/info-mode-hook)
+
+;; R programming
+(use-package ess
+  :ensure t
+  :config
+  (setq ess-use-ido nil))
+
+
+;; Raku
+(use-package raku-mode
+  :ensure t
+  :config
+  (require 'raku-skeletons)		; This is probably not the way to do it
+  (auto-insert-mode)
+  (define-auto-insert
+    '("\\.rakumod\\'" . "Raku module skeleton")
+    'raku-module-skeleton)
+  (define-auto-insert
+    '("\\.raku\\'" . "Raku script skeleton")
+    'raku-script-skeleton))

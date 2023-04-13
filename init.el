@@ -53,7 +53,8 @@
 ;; 	(set-frame-font "Fira Code 11" nil t))
 ;;        (else (add-to-list 'default-frame-alist
 ;; 			  '(font . "Iosevka Light Extended-10.5"))))
-(set-frame-font "Monospace 12" nil t) ; Laptop screen
+(set-frame-font
+ "-JB-JetBrains Mono-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1") ; Laptop screen
 ;; (set-frame-font "Monospace 8" nil t)  ; 4K monitor
 ;; (set-frame-font "Monospace 19" nil t) ;; Projector
 (set-frame-font "Monospace 9" nil t) ; 1080p monitor
