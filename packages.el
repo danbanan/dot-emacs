@@ -167,7 +167,26 @@
 
 
 ;;; ORG-MODE
+(require 'org)
+
 (setq org-log-done t)
+
+(setq org-latex-listings t)
+
+(with-eval-after-load 'ox-latex
+  (add-to-list 'org-latex-classes
+	       '("ifimaster"
+		 "\\documentclass{ifimaster}
+[DEFAULT-PACKAGES]
+[PACKAGES]
+[EXTRA]
+\\usepackage{babel,csquotes,ifimasterforside,url,varioref}"
+		 ("\\chapter{%s}" . "\\chapter*{%s}")
+		 ("\\section{%s}" . "\\section*{%s}")
+		 ("\\subsection{%s}" . "\\subsection*{%s}")
+		 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 ;; Disable actual width displays of images
 (setq org-image-actual-width nil)
@@ -250,7 +269,7 @@
 (use-package helm-bibtex
   :ensure t)
 
-(setq bibtex-completion-bibliography '("~/Dropbox/emacs/bibliography/references.bib")
+(setq bibtex-completion-bibliography '("~/Dropbox/emacs/bibliography/references.bib" "~/dev/latex/thesis/main/org/references.bib")
       bibtex-completion-library-path "~/Dropbox/emacs/bibliography/bibtex-pdfs/"
       bibtex-completion-notes-path "~/Dropbox/emacs/bibliography/notes/"
       bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
@@ -458,6 +477,8 @@
   (require 'ebuku)
   (setq ebuku-results-limit 0))
 
+(load "ebuku")
+
 ;;; Rust development
 (use-package rust-mode
   :ensure t
@@ -629,6 +650,8 @@
   (setq-local olivetti-body-width 110))
 
 (add-hook 'cperl-mode-hook #'db/perl-hook)
+
+(load "~/.emacs.d/lisp/perl-repl/perl-repl.el")
 
 ;;; COMMON LISP
 ;; SLY: Common Lisp IDE
