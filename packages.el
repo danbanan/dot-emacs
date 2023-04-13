@@ -275,6 +275,13 @@
 
 (add-hook 'org-mode-hook #'db/org-mode-hook)
 
+;;; Org-roam
+(use-package org-roam
+  :ensure t
+  :config
+  (setq org-roam-directory "~/Documents/wiki/")
+  (org-roam-db-autosync-mode))
+
 ;;; Calendar
 (add-hook 'calendar-load-hook
 	  (calendar-set-date-style 'european))
@@ -665,6 +672,26 @@
 	  (lambda ()
 	    (company-mode)))
 
-
 ;;; Info
 (add-to-list 'Info-directory-list (expand-file-name "~/.local/share/info/"))
+
+
+;; R programming
+(use-package ess
+  :ensure t
+  :config
+  (setq ess-use-ido nil))
+
+
+;; Raku
+(use-package raku-mode
+  :ensure t
+  :config
+  (require 'raku-skeletons)		; This is probably not the way to do it
+  (auto-insert-mode)
+  (define-auto-insert
+    '("\\.rakumod\\'" . "Raku module skeleton")
+    'raku-module-skeleton)
+  (define-auto-insert
+    '("\\.raku\\'" . "Raku script skeleton")
+    'raku-script-skeleton))

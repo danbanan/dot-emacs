@@ -171,3 +171,10 @@
 (define-key cperl-mode-map (kbd "C-c C-c c") #'compile)
 (define-key cperl-mode-map (kbd "C-c C-c r") #'recompile)
 (define-key cperl-mode-map (kbd "C-c C-c d") #'cperl-db)
+
+;;; GDB
+(define-key gud-minor-mode-map (kbd "C-c C-w") nil)
+;; (define-key gud-minor-mode-map (kbd "C-c w") #')
+
+;; ESS
+(define-key ess-mode-map (kbd "C-c h") #'ess-help)
