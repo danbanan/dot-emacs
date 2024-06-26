@@ -31,46 +31,11 @@
 ;;; Help mode
 (define-key help-mode-map (kbd "<return>") 'help-follow)
 
-
-;;; HELM-MODE
-(global-set-key (kbd "M-x") #'helm-M-x)
-(global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
-(global-set-key (kbd "C-x C-f") #'helm-find-files)
-(global-set-key (kbd "C-x b") #'helm-mini)
-
-(define-key helm-map (kbd "C-h") #'helm-mode-delete-char-backward-maybe)
-(define-key helm-map (kbd "C-i") #'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-z") #'helm-select-action)
-
-;;; HELM-PROJECTILE
-(define-key projectile-mode-map (kbd "C-x p f") #'helm-projectile-find-file)
-(define-key projectile-mode-map (kbd "C-x p d") #'helm-projectile-find-dir)
-(define-key projectile-mode-map (kbd "C-x p p") #'projectile-switch-project)
-(define-key projectile-mode-map (kbd "C-x p s") #'projectile-run-shell)
-(define-key projectile-mode-map (kbd "C-x p b") #'projectile-switch-to-buffer)
-(define-key projectile-mode-map (kbd "C-x p v") #'projectile-run-vterm)
-
-;;; Ivy
-;; (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-alt-done)
-
-
-;;; Counsel
-;; (define-key global-map (kbd "C-x b") 'counsel-switch-buffer)
-;; (define-key global-map (kbd "C-x 4 b") 'counsel-switch-buffer-other-window)
-;; (define-key global-map (kbd "C-x j f") 'counsel-file-jump)
-;; (define-key global-map (kbd "C-x j d") 'counsel-dired-jump)
-
-
-;;; Swiper
-;; (define-key global-map (kbd "C-s") 'swiper-isearch)
-;; (define-key global-map (kbd "C-r") 'swiper-isearch-backward)
-
-
 ;;; Org-mode
 (define-key global-map (kbd "C-c l") #'org-store-link)
 (define-key global-map (kbd "C-c a") #'org-agenda)
 (define-key global-map (kbd "C-c c") #'org-capture)
-(define-key org-mode-map (kbd "C-c ]") #'org-ref-insert-ref-link)
+;; (define-key org-mode-map (kbd "C-c ]") #'org-ref-insert-ref-link)
 ;; (define-key org-mode-map (kbd "C-c SPC") 'counsel-outline)
 
 
@@ -84,11 +49,6 @@
 
 ;;; Ebuku
 (define-key global-map (kbd "C-x B") 'ebuku-add-bookmark)
-
-
-;; PDF-tools
-(define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
-
 
 ;;; Rust
 (define-key rust-mode-map (kbd "C-c C-c") 'rust-check)
@@ -129,19 +89,8 @@
 (define-key vterm-mode-map (kbd "C-h") 'vterm-send-backspace)
 (define-key global-map (kbd "C-x V") 'db/vterm-toggle-cd)
 
-
-;;; GNU Global
-;; (define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
-;; (define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
-;; (define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
-;; (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
-;; (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
-;; (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
-;; (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
-
-
 ;;; Ace-window
-(define-key global-map (kbd "C-x o") 'ace-window)
+(define-key global-map (kbd "C-x o") #'ace-window)
 
 
 ;;; Multiple cursors
@@ -173,8 +122,8 @@
 (define-key cperl-mode-map (kbd "C-c C-c d") #'cperl-db)
 
 ;;; GDB
-(define-key gud-minor-mode-map (kbd "C-c C-w") nil)
+;; (define-key gud-minor-mode-map (kbd "C-c C-w") nil)
 ;; (define-key gud-minor-mode-map (kbd "C-c w") #')
 
 ;; ESS
-(define-key ess-mode-map (kbd "C-c h") #'ess-help)
+;; (define-key ess-mode-map (kbd "C-c h") #'ess-help)

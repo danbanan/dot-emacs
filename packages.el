@@ -1,143 +1,100 @@
 ;;; USE-PACKAGE: isolate package configuration
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; Load use-package explicitly if not already built-in
+(unless (> 29 (string-to-number emacs-version))
+  (progn 
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package))
+    (require 'use-package)))
 
-(require 'use-package)
+(customize-set-variable 'use-package-always-ensure t)
+;; (customize-set-variable 'use-package-verbose t)
 
-(use-package olivetti
-  :ensure t)
+(use-package olivetti)
 
 ;;; HELM: incremental completion and narrowing selections
 (use-package helm
-  :ensure t
-  :init (helm-mode 1))
-
-(setq split-height-threshold nil)
-(setq split-width-threshold 160)
-
+  :bind
+  (("M-x" . helm-M-x)
+   ("C-x r b" . helm-filtered-bookmarks)
+   ("C-x C-f" . helm-find-files)
+   ("C-x b" . helm-mini)
+   :map helm-map
+   ("C-h" . helm-mode-delete-char-backward-maybe)
+   ("C-i" . helm-execute-persistent-action)
+   ("C-z" . helm-select-action))
+  :config
+  (helm-mode 1))
 
 ;;; HELM-DESCBINDS: helm interface to describe-bindings
 (use-package helm-descbinds
-  :ensure t
-  :init (helm-descbinds-mode))
+  :after helm
+  :config (helm-descbinds-mode))
 
 ;;; ACE-WINDOW: jump easier between windows
 (use-package ace-window
-  :ensure t
-  :init
-  (ace-window-display-mode)
-  (setq aw-keys '(?s ?d ?f ?g)))
-
+  :custom (aw-keys '(?s ?d ?f ?g))
+  :config (ace-window-display-mode))
 
 ;;; PDF-TOOL: reading PDFs in Emacs
 (use-package pdf-tools
-  :ensure t
+  :preface
+  (defun db/pdf-tools-hook ()
+    (display-line-numbers-mode 0))
   :init
-  (setq pdf-view-use-unicode-ligther nil)
-  (setq-default pdf-view-display-size 'fit-width)
-  :config
-  (pdf-tools-install))
-
-(defun db/pdf-view-mode-hook ()
-  (linum-mode -1)
-  (display-line-numbers-mode 0))
-
-(add-hook 'pdf-view-mode-hook #'db/pdf-view-mode-hook)
+  (pdf-loader-install t)
+  :hook
+  (pdf-tools-enabled . db/pdf-tools-hook)
+  :bind
+  (:map pdf-view-mode-map
+	("C-s" . isearch-forward))
+  :custom
+  (pdf-view-use-unicode-ligther nil)
+  (pdf-view-display-size 'fit-height))
 
 ;;; VISUAL FILL COLUMN: Center coloumns
 (use-package visual-fill-column
-  :ensure t)
+  :custom
+  (visual-fill-column-enable-sensible-window-split t)
+  (visual-fill-column-width 200 "Should be conditional due to monitor sizes")
+  (visual-fill-column-center-text t))
 
-(setq visual-fill-column-enable-sensible-window-split t)
-
-(defun db/visual-fill-column-mode-hook ()
-  (setq visual-fill-column-width 200) ; Should be condional due to monitor sizes
-  (setq visual-fill-column-center-text t))
-
-(add-hook 'visual-fill-column-mode-hook #'db/visual-fill-column-mode-hook)
-
-;;; AUCTEX: Latex editing environment 
+;;; AUCTEX: Latex editing environment
 (use-package auctex
   :defer t
-  :ensure t
-  :init
-  (when (string-equal system-type "darwin")
-    (add-to-list 'exec-path "/opt/texlive/2021/bin/x86_64-linux"))
-  (setq TeX-parse-self t))
-
-(defun db/TeX-mode-hook ()
-  ;; (flyspell-mode t)
-  (auto-fill-mode t)
-  (set-fill-column 100)
-  (olivetti-mode t))
-
-(add-hook 'TeX-mode-hook #'db/TeX-mode-hook)
-(add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
-
-;; (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-;;       TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
-;;       TeX-source-correlate-start-server t)
-
-;; (add-hook 'TeX-after-compilation-finished-functions
-;;           #'TeX-revert-document-buffer)
-
+  :preface
+  (defun db/TeX-mode-hook ()
+    (auto-fill-mode t)
+    (set-fill-column 100)
+    (olivetti-mode t))
+  :hook
+  (TeX-mode-hook . db/TeX-mode-hook)
+  (TeX-after-compilation-finished-functions . TeX-revert-document-buffer)
+  :custom
+  (TeX-parse-self t)
+  (TeX-view-program-selection '((output-pdf "PDF Tools")))
+  (TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view)))
+  (TeX-source-correlate-start-server t))
 
 ;;; YASNIPPET: template tool, pre-defined code snippets
 (use-package yasnippet
-  :ensure t
   :init
   (add-to-list 'load-path "~/Dropbox/yasnippets/"))
 
-
 ;;; COMPANY-MODE: COMPlete ANYthing, auto-completion framework
 (use-package company
-  :ensure t
-  :init
-  (setq company-idle-delay 0.2
-	company-async-timeout 15
-	company-tooltip-align-annotations t)
-  (setq company-backends '(company-capf
-                           company-keywords
-                           company-semantic
-                           company-files
-                           company-etags
-                           company-clang
-                           ;; company-irony-c-headers
-                           ;; company-irony
-                           ;; company-jedi
-                           ;; company-ispell
-                           ;; company-yasnippet
-                           company-cmake)))
-
+  :custom
+  (company-idle-delay 0.1)
+  (company-tooltip-align-annotations t))
 
 ;;; magit: Git porcelain
-(use-package magit
-  :ensure t)
+(use-package magit)
 
+;; (use-package forge
+;;   :after magit
+;;   :config (setq auth-sources '("~/.authinfo")))
 
-;;; Ivy: minibuffer completion
-;; (use-package ivy
-;;   :ensure t
-;;   :init
-;;   (ivy-mode 1)
-;;   (setq ivy-use-virtual-buffers t)
-;;   (setq ivy-count-format "(%d/%d) ")
-;;   (setq ivy-height 30))
-
-
-;;; counsel: Ivy-enhanced versions of common Emacs commands
-;; (use-package counsel
-;;   :ensure t
-;;   :init
-;;   (counsel-mode))
-
-
-;;; Swiper: searching using Ivy
-;; (use-package swiper
-;;   :ensure t)
-
-
+;; kJf9ZuWALmQUhtmc3CqF
 
 ;;; Lines Settings
 (when (version<= "26.0.50" emacs-version)
@@ -146,7 +103,6 @@
 ;; (global-linum-mode 1)
 
 ;; (setq linum-format " %d")
-
 
 ;; Set relative line numbers 
 (setq display-line-numbers-type 'visual)
@@ -169,6 +125,10 @@
 ;;; ORG-MODE
 (setq org-log-done t)
 
+;; Add markdown export
+(eval-after-load "org"
+  '(require 'ox-md nil t))
+
 ;; Disable actual width displays of images
 (setq org-image-actual-width nil)
 
@@ -176,13 +136,16 @@
 (setq-default org-agenda-files '("~/Dropbox/org/planner"))
 
 ;; Still show undone tasks in agenda even if deadline has passed
-(setq org-agenda-skip-scheduled-if-deadline-is-shown 'repeated-after-deadline)
+(setq org-agenda-skip-scheduled-if-deadline-is-shown t)
 
 ;; Clock report format in agenda
 (setq org-agenda-clockreport-parameter-plist '(:link t :maxlevel 4))
 
 ;; Fontify bold, italics and underlined text without the pre-symbols
 (setq org-hide-emphasis-markers nil)
+
+(setq org-refile-targets '(("~/dev/common-lisp/timelisteserver/README.org" . (:maxlevel . 3))
+			   ("~/dev/common-lisp/timelisteserver/BUGFIXES.org" . (:maxlevel . 3))))
 
 ;; Global Org TODO keywords
 (setq org-todo-keywords '((sequence "TODO(t)"
@@ -239,30 +202,29 @@
 
 ;; Org bullets - beautify bullets in org-mode
 (use-package org-bullets
-  :ensure t)
+  :after org-mode)
 
 (use-package org-ref
-  :ensure t
+  :after org-mode
   :config
   (setq org-latex-prefer-user-labels t)
   (require 'org-ref-helm))
 
-(use-package helm-bibtex
-  :ensure t)
+;; (use-package helm-bibtex)
 
-(setq bibtex-completion-bibliography '("~/Dropbox/emacs/bibliography/references.bib")
-      bibtex-completion-library-path "~/Dropbox/emacs/bibliography/bibtex-pdfs/"
-      bibtex-completion-notes-path "~/Dropbox/emacs/bibliography/notes/"
-      bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
+;; (setq bibtex-completion-bibliography '("~/Dropbox/emacs/bibliography/references.bib")
+;;       bibtex-completion-library-path "~/Dropbox/emacs/bibliography/bibtex-pdfs/"
+;;       bibtex-completion-notes-path "~/Dropbox/emacs/bibliography/notes/"
+;;       bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
       
-      bibtex-completion-additional-search-fields '(keywords)
-      bibtex-completion-display-formats
-      '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
-	(inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
-	(incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-	(inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-	(t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
-      bibtex-completion-pdf-open-function #'find-file)
+;;       bibtex-completion-additional-search-fields '(keywords)
+;;       bibtex-completion-display-formats
+;;       '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
+;; 	(inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+;; 	(incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+;; 	(inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+;; 	(t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
+;;       bibtex-completion-pdf-open-function #'find-file)
 
 (defun db/org-mode-hook ()
   (org-bullets-mode 1)
@@ -276,15 +238,14 @@
 (add-hook 'org-mode-hook #'db/org-mode-hook)
 
 ;;; Org-roam
-(use-package org-roam
-  :ensure t
-  :config
-  (setq org-roam-directory "~/Documents/wiki/")
-  (org-roam-db-autosync-mode))
+;; (use-package org-roam
+;;   :config
+;;   (setq org-roam-directory "~/Documents/wiki/")
+;;   (org-roam-db-autosync-mode))
 
 ;;; Calendar
-(add-hook 'calendar-load-hook
-	  (calendar-set-date-style 'european))
+;; (add-hook 'calendar-load-hook
+;; 	  (calendar-set-date-style 'european))
 
 
 ;;; Markdown-mode
@@ -313,7 +274,6 @@
 		      :extend t))
 
 (use-package markdown-mode
-  :ensure t
   :init
   (add-hook 'markdown-mode-hook
 	    (lambda ()
@@ -329,17 +289,13 @@
 (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
 
 
-(use-package lsp-mode
-  :ensure t)
+(use-package lsp-mode)
 
 ;;; Eglot - lightweight LSP alternative
-(use-package eglot
-  :ensure t)
+(use-package eglot)
 
 ;;; Color-indentifier - unique color per variable name
-(use-package color-identifiers-mode
-  :ensure t)
-
+(use-package color-identifiers-mode)
 
 ;;; CC-MODE
 (require 'cc-mode)
@@ -353,6 +309,83 @@
             (+ (aref in-assign 0)
                (* 2 c-basic-offset)))
       in-assign)))
+
+(c-add-style "ExpressDrive"
+	     '((c-basic-offset . 4)	; Guessed value
+	       (c-offsets-alist
+		(arglist-cont . 0)	    ; Guessed value
+		(arglist-intro . +)	    ; Guessed value
+		(block-close . 0)	    ; Guessed value
+		(case-label . 0)	    ; Guessed value
+		(defun-block-intro . +)	    ; Guessed value
+		(defun-close . 0)	    ; Guessed value
+		(defun-open . 0)	    ; Guessed value
+		(statement . 0)		    ; Guessed value
+		(statement-block-intro . +) ; Guessed value
+		(statement-case-intro . +)  ; Guessed value
+		(topmost-intro . 0)	    ; Guessed value
+		(topmost-intro-cont . 0)    ; Guessed value
+		(access-label . -)
+		(annotation-top-cont . 0)
+		(annotation-var-cont . +)
+		(arglist-close . c-lineup-close-paren)
+		(arglist-cont-nonempty . c-lineup-arglist)
+		(block-open . 0)
+		(brace-entry-open . 0)
+		(brace-list-close . 0)
+		(brace-list-entry . 0)
+		(brace-list-intro . +)
+		(brace-list-open . 0)
+		(c . c-lineup-C-comments)
+		(catch-clause . 0)
+		(class-close . 0)
+		(class-open . 0)
+		(comment-intro . c-lineup-comment)
+		(composition-close . 0)
+		(composition-open . 0)
+		(cpp-define-intro c-lineup-cpp-define +)
+		(cpp-macro . -1000)
+		(cpp-macro-cont . +)
+		(do-while-closure . 0)
+		(else-clause . 0)
+		(extern-lang-close . 0)
+		(extern-lang-open . 0)
+		(friend . 0)
+		(func-decl-cont . +)
+		(inclass . +)
+		(incomposition . +)
+		(inexpr-class . +)
+		(inexpr-statement . +)
+		(inextern-lang . +)
+		(inher-cont . c-lineup-multi-inher)
+		(inher-intro . +)
+		(inlambda . 0)
+		(inline-close . 0)
+		(inline-open . +)
+		(inmodule . +)
+		(innamespace . +)
+		(knr-argdecl . 0)
+		(knr-argdecl-intro . +)
+		(label . 2)
+		(lambda-intro-cont . +)
+		(member-init-cont . c-lineup-multi-inher)
+		(member-init-intro . +)
+		(module-close . 0)
+		(module-open . 0)
+		(namespace-close . 0)
+		(namespace-open . 0)
+		(objc-method-args-cont . c-lineup-ObjC-method-args)
+		(objc-method-call-cont c-lineup-ObjC-method-call-colons c-lineup-ObjC-method-call +)
+		(objc-method-intro .
+				   [0])
+		(statement-case-open . 0)
+		(statement-cont . +)
+		(stream-op . c-lineup-streamop)
+		(string . -1000)
+		(substatement . +)
+		(substatement-label . 2)
+		(substatement-open . +)
+		(template-args-cont c-lineup-template-args +))))
 
 ;; Add a cc-mode style for editing LLVM C and C++ code
 (c-add-style "llvm.org"
@@ -370,11 +403,20 @@
 (add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cuh\\'" . c++-mode))
 
-;; (use-package ggtags
-;;   :ensure t)
+;;; GNU Global
+(use-package ggtags
+  :bind (:map ggtags-mode-map
+	      ("C-c M-a" . ggtags-navigation-mode-abort)
+	      ;; ("C-c g s" . ggtags-find-other-symbol)
+	      ;; ("C-c g h" . ggtags-view-tag-history)
+	      ;; ("C-c g r" . ggtags-find-reference)
+	      ;; ("C-c g f" . ggtags-find-file)
+	      ;; ("C-c g c" . ggtags-create-tags)
+	      ;; ("C-c g u" . ggtags-update-tags)
+	      ;; ("M-," . pop-tag-mark)
+	      ))
 
 (use-package company-c-headers
-  :ensure t
   :init
   (add-to-list 'company-backends 'company-c-headers))
 
@@ -386,18 +428,21 @@
   (eglot-ensure))
 
 (defun db/c-mode-hook ()
-  (c-set-style "k&r")
+  (c-set-style "EXPRESSDRIVE")
   (color-identifiers-mode t)
-  (company-mode))
-  ;; (eglot-ensure))
+  (company-mode)
+  (clang-format+-mode)
+  (ggtags-mode)
+  (olivetti-mode)
+  (setq olivetti-body-width 85))
 
 (add-hook 'c-mode-hook #'db/c-mode-hook)
 (add-hook 'c++-mode-hook #'db/c++-mode-hook)
 
-(use-package clang-format
-  :ensure t
-  :init
-  (setq clang-format-executable "clang-format"))
+(use-package clang-format+
+  :config
+  (setq clang-format-executable "clang-format-16")
+  (setq-default clang-format-style "file:/home/dolphin-dan/dev/c/.clang-format"))
 
 ;; Scheme mode
 (setq scheme-program-name "plt-r5rs")
@@ -406,7 +451,7 @@
 
 ;;; geiser: Scheme development 
 ;; (use-package geiser
-;;   :ensure t
+;;   
 ;;   :init
 ;;   ;; Set racket path
 ;;   ;; (setq geiser-racket-binary "/Applications/Racket v7.6/bin/racket")
@@ -415,11 +460,10 @@
 ;;   (setq geiser-active-implementations '(racket)))
 
 ;; (use-package geiser-racket
-;;   :ensure t)
+;;   )
 
 ;;; Elfeed - RSS reader
 (use-package elfeed
-  :ensure t
   :init
   (setq elfeed-feeds
 	'(;; School stuff
@@ -428,8 +472,7 @@
 	  "https://martinsteffen.github.io/feed.xml")))
 
 
-(use-package lsp-java
-  :ensure t)
+(use-package lsp-java)
 
 (require 'lsp-java)
 
@@ -460,21 +503,18 @@
 
 ;;; Ebuku - bookmark manager
 (use-package ebuku
-  :ensure t
   :init
   (require 'ebuku)
   (setq ebuku-results-limit 0))
 
 ;;; Rust development
 (use-package rust-mode
-  :ensure t
   :init
   ;; Color encoding for LALRPOP files
   (add-to-list 'auto-mode-alist '("\\.lalrpop\\'" . rust-mode)))
 
 ;; Racer - completion, find definition, describe functions, and types in Rust
 (use-package racer
-  :ensure t
   :init
   (when (string= system-type "gnu/linux")
     (setq racer-rust-src-path
@@ -495,13 +535,11 @@
 
 ;;; TERMINAL HERE - launch an external terminal
 (use-package terminal-here ;; Might be interesting if exwm is installed
-  :ensure t
   :init
   (setq terminal-here-linux-terminal-command 'gnome-terminal))
 
 ;;; VTERM
 (use-package vterm
-  :ensure t
   :commands vterm
   :config
   ;; To have enough buffer to look through output, but not so much that is negatively affects
@@ -509,7 +547,6 @@
   (setq vterm-max-scrollback 10000))
 
 (use-package vterm-toggle
-  :ensure t
   :init
   (setq vterm-toggle-cd-auto-create-buffer t))
 
@@ -527,12 +564,10 @@
 
 ;;; XML FORMAT - Easily reformat XML files
 (use-package xml-format
-  :ensure t
   :demand t
   :after nxml-mode)
 
-(use-package web-beautify
-  :ensure t)
+(use-package web-beautify)
 
 ;;; html
 (eval-after-load 'js2-mode
@@ -553,73 +588,114 @@
 (eval-after-load 'css-mode
   '(define-key css-mode-map (kbd "C-c b") 'web-beautify-css))
 
-
 ;;; TRAMP
 (setq tramp-default-method "ssh")
-
-
-;; ;;; clang-format
-;; (use-package clang-format
-;;   :ensure t
-;;   :init
-;;   (setq-default clang-format-style "file"))
-
 
 ;;; Eshell
 (add-hook 'eshell-mode-hook
 	  (lambda ()
 	    (company-mode)))
 
-
 ;;; Projectile + Helm-projectile
+(use-package ppcompile
+  :after projectile
+  :bind
+  (:map projectile-mode-map
+	("C-x p c" . double-ppcompile))
+  :config
+  ;; TODO: Make more general
+  (defun double-ppcompile (n)
+    (interactive "cexd_cluster_(1|2|3|4)")
+    (let* ((option (char-to-string n))
+	   (cluster (pcase option
+		      ("1" (cons "mxsw-10" "mxsw-11"))
+		      ("2" (cons "sibiu-4" "sibiu-5"))
+		      ("3" (cons "ni-transp-02" "mx-transp-01"))
+		      ("4" (cons "rcy" "pxmxs-07"))
+		      (_ nil)))
+	   (launch-ppcompile (lambda (ssh-host)
+			       (let ((bufname (format "*compilation-%s*" ssh-host)))
+				 (when (get-buffer bufname)
+				   (kill-buffer bufname))
+				 (setq ppcompile-ssh-host ssh-host)
+				 (ppcompile t)
+				 (with-current-buffer "*compilation*"
+				   (rename-buffer bufname))))))
+      (when cluster
+	(setq ppcompile-path-mapping-alist '(("/root/dan/ppcompile" . "/home/dolphin-dan/dev/c"))
+	      ppcompile-rsync-dst-dir  "/root/dan/ppcompile"
+	      ppcompile-ssh-user  "root"
+	      ppcompile-remote-compile-command "cmake -B build -S . && make -C build module && make -C build/examples")
+	(delete-other-windows)
+	(funcall launch-ppcompile (car cluster))
+	(funcall launch-ppcompile (cdr cluster))))))
+
 (use-package helm-projectile
-  :ensure t)
+  :bind
+  (("C-x p p" . helm-projectile-switch-project)
+   :map projectile-mode-map
+	("C-x p f" . helm-projectile-find-file)
+	("C-x p d" . helm-projectile-find-dir)))
 
 (use-package projectile
-  :ensure t
-  :init
-  (setq projectile-indexing-method 'alien)
-  ;; (setq projectile-project-search-path '(("~/Dropbox/" . 10) ("~/dev/" . 3)))
-  (setq projectile-completion-system 'helm)
-  (setq projectile-switch-project-action 'helm-projectile)
-  (projectile-global-mode)
+  :bind
+  (:map projectile-mode-map
+   ("C-x p s" . projectile-run-shell)
+   ("C-x p b" . projectile-switch-to-buffer)
+   ("C-x p v" . projectile-run-vterm)
+   ("C-x p r" . dired-exd-sync))
+  :custom
+  (projectile-indexing-method 'alien)
+  (projectile-completion-system 'helm)
+  (projectile-switch-project-action 'helm-projectile)
+  (projectile-find-dir-includes-top-level t)
+  :config
+  (projectile-mode)
   (helm-projectile-on))
 
+(use-package dired-rsync)
+
+(defun dired-exd-sync ()
+  (interactive)
+  (when (projectile-project-root)
+    (find-file (projectile-project-root))
+    (dired-toggle-marks)
+    (message "before check")
+    (cond ((string-match-p tramp-file-name-regexp default-directory)
+	   (dired-rsync "/home/dolphin-dan/dev/c/expressdrive"))
+	   (t (dired-rsync "/ssh:mx-transp-01:/root/dan/ppcompile/expressdrive")))))
+
 ;;; Multiple Cursors
-(use-package multiple-cursors
-  :ensure t)
+(use-package multiple-cursors)
 
 (require 'multiple-cursors)
-
 
 ;; nXML
 (setq nxml-child-indent 4)
 
-
 ;;; GNUPLOT
 (use-package gnuplot
-  :ensure t
   :init
   (add-to-list 'auto-mode-alist '("\\.gp\\'" . gnuplot-mode)))
 
-
 ;;; Shell scripting
 (defun db/shell-hook ()
-  (setq indent-tabs-mode t)
-  (setq tab-width 4))
+  (setq indent-tabs-mode nil)
+  (setq sh-basic-offset 4))
 
 (add-hook 'sh-mode-hook #'db/shell-hook)
 
-
 ;;; EYEBROWSE: workspace manager
-(use-package eyebrowse
-  :ensure t
+(use-package eyebrowse  
   :init (progn
 	  (eyebrowse-mode t)
 	  (setq eyebrowse-new-workspace t)))
 
+;;; PERL
 
-;;; CPERL-MODE
+;; (add-to-list 'load-path "~/.emacs.d/pde/")
+;; (load "pde-load")
+
 ;; Prefer cperl-mode to perl-mode, (more robust according to EmacsWiki)
 (mapc
  (lambda (pair)
@@ -630,47 +706,48 @@
 (setq cperl-highlight-variables-indiscriminately t)
 
 (defun db/perl-hook ()
-  (cperl-set-style 'K&R)
+  (cperl-set-style 'PBP)
   (company-mode)  
   (olivetti-mode)
-  (setq-local olivetti-body-width 110))
+  (setq-local olivetti-body-width 110)
+  (cperl-set-style "PBP"))
 
 (add-hook 'cperl-mode-hook #'db/perl-hook)
 
+;; (setq Man-switches "")
+
+;; (setenv "MANPATH" (concat "/home/dolphin-dan/perl5/man/man1:" (getenv "MANPATH")))
+;; (setenv "MANPATH" (concat "/home/dolphin-dan/perl5/man/man3:" (getenv "MANPATH")))
+
+(setenv "PERL5LIB" (concat "/home/dolphin-dan/perl5/lib/perl5/:" (getenv "PERL5LIB")))
+
+
 ;;; COMMON LISP
-
 (add-to-list 'auto-mode-alist '("\\.cl\\'" . common-lisp-mode))
-
-(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(setq inferior-lisp-program "/usr/local/bin/alisp")
 
 ;; SLY: Common Lisp IDE
-
 (use-package sly
-  :ensure t
+  :hook
+  (sly-mrepl-mode . company-mode)
+  (lisp-mode . sly-mode)
+  ;; :custom
+  ;; (inferior-lisp "alisp")
   :config
+  (sly-setup)
   (setq sly-lisp-implementations
-      '((cmucl-18d ("cmucl-18d"))
-	(cmucl-19d ("cmucl-19d"))
-	(cmucl-21d ("cmucl-21d"))
-	(sbcl ("sbcl"))
-	(mlisp ("mlisp"))
-	(alisp ("alisp"))))
-  (sly-setup))
+	'((alisp ("alisp"))
+	  (mlisp ("mlisp"))
+	  (cmucl-18d ("cmucl-18d"))
+	  (cmucl-19d ("cmucl-19d"))
+	  (cmucl-21d ("cmucl-21d"))
+	  (sbcl ("sbcl")))))
 
-
-
-(add-to-list 'sly-filename-translations
-             (sly-create-filename-translator
-              :machine-instance "Timelisteserver"
-              :remote-host "172.16.7.206"
-              :username "root"))
-
-
-(add-hook 'lisp-mode-hook #'sly-mode)
-
-(add-hook 'sly-mrepl-mode-hook
-	  (lambda ()
-	    (company-mode)))
+;; (add-to-list 'sly-filename-translations
+;;              (sly-create-filename-translator
+;;               :machine-instance "Timelisteserver"
+;;               :remote-host "172.16.7.206"
+;;               :username "root"))
 
 ;;; Info
 (add-to-list 'Info-directory-list (expand-file-name "~/.local/share/info/"))
@@ -678,20 +755,41 @@
 
 ;; R programming
 (use-package ess
-  :ensure t
   :config
   (setq ess-use-ido nil))
 
-
 ;; Raku
-(use-package raku-mode
-  :ensure t
+;; (use-package raku-mode
+;;   :config
+;;   (require 'raku-skeletons)		; This is probably not the way to do it
+;;   (auto-insert-mode)
+;;   (define-auto-insert
+;;     '("\\.rakumod\\'" . "Raku module skeleton")
+;;     'raku-module-skeleton)
+;;   (define-auto-insert
+;;     '("\\.raku\\'" . "Raku script skeleton")
+;;     'raku-script-skeleton))
+
+;; Dolphin spesific
+(use-package compile
+  :ensure nil
   :config
-  (require 'raku-skeletons)		; This is probably not the way to do it
-  (auto-insert-mode)
-  (define-auto-insert
-    '("\\.rakumod\\'" . "Raku module skeleton")
-    'raku-module-skeleton)
-  (define-auto-insert
-    '("\\.raku\\'" . "Raku script skeleton")
-    'raku-script-skeleton))
+  (add-to-list 'compilation-error-regexp-alist '("\\(minor: \\)\\(.*\\):\\([0-9]+\\)" 2 3 nil 1 nil (1 compilation-warning-face)))
+  (add-to-list 'compilation-error-regexp-alist '("\\(critical: \\)\\(.*\\):\\([0-9]+\\)" 2 3 nil 2 nil (1 compilation-error-face))))
+
+
+;; Set up work printer
+(setq lpr-command "lp")
+(setq lpr-switches
+      (append '("-d" "EPSON_WF_4830_Series"
+                "-o" "sides=two-sided-long-edge"
+                "-o" "number-up=2")
+              lpr-switches))
+      
+;; Docker
+(use-package dockerfile-mode
+  :ensure t)
+
+
+(use-package systemd-mode
+  :ensure t)

@@ -54,7 +54,10 @@
 ;;        (else (add-to-list 'default-frame-alist
 ;; 			  '(font . "Iosevka Light Extended-10.5"))))
 (set-frame-font
- "-JB-JetBrains Mono-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1") ; Laptop screen
+ "-JB-JetBrains Mono-normal-normal-normal-*-19-*-*-*-m-0-iso10646-1") ; 16:18 screen
+;; (set-frame-font
+;;  "-JB-JetBrains Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+					; regular laptop screen
 ;; (set-frame-font "Monospace 8" nil t)  ; 4K monitor
 ;; (set-frame-font "Monospace 19" nil t) ;; Projector
 ;; (set-frame-font "Monospace 9" nil t) ; 1080p monitor
@@ -66,6 +69,9 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 ;; -----------------------------------------------------------------------------
+
+;; Split windows evenly
+(setq window-combination-resize t)
 
 ;; Sort completions vertically
 ;; -----------------------------------------------------------------------------
@@ -106,6 +112,7 @@
 	    (setq ns-pop-up-frames nil)
 	    (setq select-enable-clipboard t)
 	    (setq split-height-threshold nil) ; always split horizontaly
+	    (setq split-width-threshold 0)
 	    (set-frame-parameter nil 'undecorated t)
 	    (set-frame-position nil 0 0)
 	    (global-visual-line-mode t)
@@ -142,10 +149,25 @@
 	    (electric-pair-mode t)))
 ;; -----------------------------------------------------------------------------
 
-;;; Dired
+;;;* Dired
 ;; ----------------------------------------------------------------------------- 
 (setq dired-dwim-target t)
 ;; ----------------------------------------------------------------------------- 
+
+;;;* Compilation
+;; -----------------------------------------------------------------------------
+(setq compilation-scroll-output t)
+;; -----------------------------------------------------------------------------
+
+;;;* TRAMP
+;; -----------------------------------------------------------------------------
+(setq tramp-verbose 10)
+;; -----------------------------------------------------------------------------
+
+(customize-set-variable 'next-screen-context-lines 25)
+
+;; (setq split-height-threshold nil)
+;; (setq split-width-threshold 160)
 
 (setq custom-file (concat user-emacs-directory "custom.el"))
 
