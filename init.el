@@ -60,7 +60,7 @@
 					; regular laptop screen
 ;; (set-frame-font "Monospace 8" nil t)  ; 4K monitor
 ;; (set-frame-font "Monospace 19" nil t) ;; Projector
-;; (set-frame-font "Monospace 9" nil t) ; 1080p monitor
+(set-frame-font "Monospace 9" nil t) ; 1080p monitor
 ;; -----------------------------------------------------------------------------
 
 ;; Disable menu, tool, and scroll bar

@@ -123,11 +123,30 @@
 
 
 ;;; ORG-MODE
+(require 'org)
+
 (setq org-log-done t)
 
 ;; Add markdown export
 (eval-after-load "org"
   '(require 'ox-md nil t))
+
+(setq org-latex-listings t)
+
+(with-eval-after-load 'ox-latex
+  (add-to-list 'org-latex-classes
+	       '("ifimaster"
+		 "\\documentclass{ifimaster}
+[DEFAULT-PACKAGES]
+[PACKAGES]
+[EXTRA]
+\\usepackage{babel,csquotes,ifimasterforside,url,varioref}"
+		 ("\\chapter{%s}" . "\\chapter*{%s}")
+		 ("\\section{%s}" . "\\section*{%s}")
+		 ("\\subsection{%s}" . "\\subsection*{%s}")
+		 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 ;; Disable actual width displays of images
 (setq org-image-actual-width nil)
@@ -212,10 +231,10 @@
 
 ;; (use-package helm-bibtex)
 
-;; (setq bibtex-completion-bibliography '("~/Dropbox/emacs/bibliography/references.bib")
-;;       bibtex-completion-library-path "~/Dropbox/emacs/bibliography/bibtex-pdfs/"
-;;       bibtex-completion-notes-path "~/Dropbox/emacs/bibliography/notes/"
-;;       bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
+(setq bibtex-completion-bibliography '("~/Dropbox/emacs/bibliography/references.bib" "~/dev/latex/thesis/main/org/references.bib")
+      bibtex-completion-library-path "~/Dropbox/emacs/bibliography/bibtex-pdfs/"
+      bibtex-completion-notes-path "~/Dropbox/emacs/bibliography/notes/"
+      bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
       
 ;;       bibtex-completion-additional-search-fields '(keywords)
 ;;       bibtex-completion-display-formats
@@ -506,6 +525,8 @@
   :init
   (require 'ebuku)
   (setq ebuku-results-limit 0))
+
+(load "ebuku")
 
 ;;; Rust development
 (use-package rust-mode
