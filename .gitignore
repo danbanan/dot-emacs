@@ -83,3 +83,5 @@ custom.el
 /url/
 /image-dired/
 /pde/
+/eglot-java-eclipse-jdt-cache/
+/share/
