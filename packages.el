@@ -809,7 +809,3 @@
 ;; Docker
 (use-package dockerfile-mode
   :ensure t)
-
-
-(use-package systemd-mode
-  :ensure t)
