@@ -205,18 +205,33 @@
 (setq org-adapt-indentation t)
 
 (setq org-capture-templates
-      '(("p" "Personal note" entry
-	 (file+olp+datetree "~/Dropbox/org/capture/notes.org")
-	 "* %a\n\n  %?"
-	 :emtpy-lines 1)
-	("w" "Work note without annotation" entry
+      '(("w" "Work note with annotation" entry
 	 (file+olp+datetree "~/Documents/capture/notes.org")
-	 "* %a\n\n  %?\n\n"
+	 "* %?\n\n  %a"	 
+	 :tree-type month
 	 :empty-lines 1)
-	("t" "Todo without annotation" entry
+	("W" "Work note without annotation" entry
+	 (file+olp+datetree "~/Documents/capture/notes.org")
+	 "* %?"
+	 :tree-type month
+	 :empty-lines 1)
+	("t" "Todo with annotation" entry
 	 (file "~/Documents/capture/notes.org")
-	 "* TODO %?\n\n  %u\n\n  %a"
-	 :prepend 1
+	 "* TODO %?\n\n  %a"
+	 :tree-type month
+	 :empty-lines 1)
+	("T" "Todo without annotation" entry
+	 (file "~/Documents/capture/notes.org")
+	 "* TODO %?"
+	 :tree-type month
+	 :empty-lines 1)
+	("p" "Personal note with annotation" entry
+	 (file+olp+datetree "~/Dropbox/org/capture/notes.org")
+	 "* %a\n\n%?"
+	 :empty-lines 1)
+	("P" "Personal note without annotation" entry
+	 (file+olp+datetree "~/Dropbox/org/capture/notes.org")
+	 "* %?"
 	 :empty-lines 1)))
 
 ;; Org bullets - beautify bullets in org-mode
