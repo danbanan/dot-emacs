@@ -505,18 +505,20 @@
 	  "https://martinsteffen.github.io/feed.xml")))
 
 
-(use-package lsp-java)
-
-(require 'lsp-java)
-
-(setq lsp-headerline-breadcrumb-enable nil)
+(use-package lsp-java
+  :custom ;; Fix from https://github.com/emacs-lsp/lsp-java/issues/26#issuecomment-698573923
+  (lsp-java-vmargs '("-noverify"
+		     "-Xmx1G"
+		     "-XX:+UseG1GC"
+		     "-XX:+UseStringDeduplication"
+		     "-javaagent:/home/dan/.m2/repository/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar"))
+  (lsp-java-format-settings-url "~/.emacs.d/resources/eclipse-java-google-style.xml"))
 
 (defun db/java-mode-hook ()
   (setq indent-tabs-mode nil)		;insert spaces instead of tabs
   (setq tab-width 4)			;tab width = 4
   (set-fill-column 100)			;max line length = 100
   (electric-pair-mode 1)		;auto-pair symbols such as (), '', "", <>, etc.
-  (setq lsp-headerline-breadcrumb-enable nil)
   (visual-fill-column-mode)
   (yas-minor-mode-on)
   (lsp))
