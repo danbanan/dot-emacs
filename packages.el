@@ -28,6 +28,10 @@
   (setq helm-show-completion-display-function #'helm-show-completion-default-display-function)
   (helm-mode 1))
 
+(use-package helm-project
+  :bind (("C-x C-p" . helm-project)
+	 ([remap project-switch-to-buffer] . helm-project-buffers)
+	 ([remap project-find-file] . helm-project-files)))
 ;;; HELM-DESCBINDS: helm interface to describe-bindings
 (use-package helm-descbinds
   :after helm
