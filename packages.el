@@ -815,3 +815,7 @@
   :ensure nil
   :demand magit-extras)
 
+(use-package edebug
+  :ensure nil
+  :custom
+  (edebug-print-length nil))
