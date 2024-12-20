@@ -796,3 +796,10 @@
 (defun db/xml-hook ()
   (customize-set-variable 'indent-tabs-mode nil))
 
+(use-package plantuml-mode
+  :mode ("\\.puml\\'" "\\.pu\\'")
+  :custom
+  (plantuml-default-exec-mode 'jar)
+  (plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+  (plantuml-indent-level 4))
+
