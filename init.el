@@ -10,8 +10,12 @@
 ;; -----------------------------------------------------------------------------
 (require 'package)
 
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
+(setq package-archive-priorities '(("gnu" . 3)
+				   ("nongnu" . 2)
+                                   ("melpa" . 1))
+      package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                         ("melpa-devel" . "https://melpa.org/packages/")))
 (package-initialize)
 ;; -----------------------------------------------------------------------------
 
