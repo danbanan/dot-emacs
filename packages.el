@@ -803,3 +803,5 @@
   (plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
   (plantuml-indent-level 4))
 
+(use-package adoc-mode)
+
