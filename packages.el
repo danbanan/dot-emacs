@@ -531,6 +531,7 @@
   (lsp-java-format-settings-url "~/.emacs.d/resources/eclipse-java-google-style.xml"))
 
 (defun db/java-mode-hook ()
+  (add-hook 'before-save-hook #'delete-trailing-whitespace 0 'local)
   (setq indent-tabs-mode nil)		;insert spaces instead of tabs
   (setq tab-width 4)			;tab width = 4
   (set-fill-column 100)			;max line length = 100
