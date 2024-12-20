@@ -791,3 +791,8 @@
   (add-to-list 'sqlplus-connect-strings-alist '("txsdata/txs@//dlt-exa851-scan.unix.cosng.net/cr_r_a1" . nil))
   (add-to-list 'sqlplus-connect-strings-alist '("appdata/app@//localhost:1521/orcl" . nil)))
 
+(add-hook 'nxml-mode-hook #'db/xml-hook)
+
+(defun db/xml-hook ()
+  (customize-set-variable 'indent-tabs-mode nil))
+
