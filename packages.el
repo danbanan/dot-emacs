@@ -223,7 +223,7 @@
 (setq org-capture-templates
       '(("w" "Work note with annotation" entry
 	 (file+olp+datetree "~/Documents/capture/notes.org")
-	 "* %?\n\n  %a"	 
+	 "* %?\n\n  [[%L][Capture point]]"
 	 :tree-type month
 	 :empty-lines 1)
 	("W" "Work note without annotation" entry
@@ -233,7 +233,7 @@
 	 :empty-lines 1)
 	("t" "Todo with annotation" entry
 	 (file "~/Documents/capture/notes.org")
-	 "* TODO %?\n\n  %a"
+	 "* TODO %?\n\n  [[%L][Capture point]]"
 	 :tree-type month
 	 :empty-lines 1)
 	("T" "Todo without annotation" entry
@@ -243,12 +243,15 @@
 	 :empty-lines 1)
 	("p" "Personal note with annotation" entry
 	 (file+olp+datetree "~/Dropbox/org/capture/notes.org")
-	 "* %a\n\n%?"
+	 "* [[%L][Capture point]]\n\n%?"
 	 :empty-lines 1)
 	("P" "Personal note without annotation" entry
 	 (file+olp+datetree "~/Dropbox/org/capture/notes.org")
 	 "* %?"
-	 :empty-lines 1)))
+	 :empty-lines 1)
+        ("a" "Affirmations" entry
+         (file+olp+datetree "~/Dropbox/org/capture/affirmations.org")
+         "* Three nice things about my workday\n\n  1) %?\n  2) \n  3) \n")))
 
 ;; Org bullets - beautify bullets in org-mode
 (use-package org-bullets
