@@ -105,13 +105,12 @@
   (company-tooltip-align-annotations t))
 
 ;;; magit: Git porcelain
-(use-package magit)
-
-;; (use-package forge
-;;   :after magit
-;;   :config (setq auth-sources '("~/.authinfo")))
-
-;; kJf9ZuWALmQUhtmc3CqF
+;; Ensures that magit-project-status is available in
+;; project-switch-commands when loading project.el
+(use-package magit
+  :after project
+  :config
+  (require 'magit-extras))
 
 ;;; Lines Settings
 (when (version<= "26.0.50" emacs-version)
