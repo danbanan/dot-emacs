@@ -768,7 +768,6 @@
                 "-o" "sides=two-sided-long-edge"
                 "-o" "number-up=2")
               lpr-switches))
-      
-;; Docker
-(use-package dockerfile-mode
-  :ensure t)
+
+;; Edit modes
+(use-package dockerfile-mode)		; Docker files
