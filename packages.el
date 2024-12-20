@@ -774,3 +774,20 @@
 (use-package yaml-mode)                 ; YAML files
 (use-package feature-mode)              ; Cucumber files
 
+;; Oracle SQL
+(use-package sql
+  :custom
+  (sql-oracle-login-params '(user password database)))
+
+(use-package sqlplus
+  :load-path "./lisp/"
+  :commands (sqlplus sqlplus-mode)
+  :init
+  (add-to-list 'auto-mode-alist '("\\.sqp\\'" . sqlplus-mode))
+  :config
+  (add-to-list 'sqlplus-connect-strings-alist '("eom/eom@//dlt-exa853-scan.unix.cosng.net/cr_g_d2" . nil))
+  (add-to-list 'sqlplus-connect-strings-alist '("txsdata/txs@//dlt-exa853-scan.unix.cosng.net/cr_g_d2" . nil))
+  (add-to-list 'sqlplus-connect-strings-alist '("txsdata/txs@//dlt-exa853-scan.unix.cosng.net/cr_g_a2" . nil))
+  (add-to-list 'sqlplus-connect-strings-alist '("txsdata/txs@//dlt-exa851-scan.unix.cosng.net/cr_r_a1" . nil))
+  (add-to-list 'sqlplus-connect-strings-alist '("appdata/app@//localhost:1521/orcl" . nil)))
+
