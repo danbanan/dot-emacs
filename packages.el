@@ -770,4 +770,7 @@
               lpr-switches))
 
 ;; Edit modes
-(use-package dockerfile-mode)		; Docker files
+(use-package dockerfile-mode)           ; Docker files
+(use-package yaml-mode)                 ; YAML files
+(use-package feature-mode)              ; Cucumber files
+
