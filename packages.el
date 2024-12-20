@@ -32,6 +32,17 @@
   :bind (("C-x C-p" . helm-project)
 	 ([remap project-switch-to-buffer] . helm-project-buffers)
 	 ([remap project-find-file] . helm-project-files)))
+
+;; Helm interface for "complete anything" (company)
+(use-package helm-company
+  :after helm
+  :after company
+  :bind
+  ((:map company-mode-map
+	 ("C-:" . helm-company))
+   (:map company-active-map
+	 ("C-:" . helm-company))))
+
 ;;; HELM-DESCBINDS: helm interface to describe-bindings
 (use-package helm-descbinds
   :after helm
