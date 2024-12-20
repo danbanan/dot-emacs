@@ -618,6 +618,11 @@
 		    (s-concat "-" custom-name))))
     (vterm-toggle-cd)))
 
+(use-package nxml-mode
+  :ensure nil
+  :custom
+  (nxml-child-indent 2))
+
 ;;; XML FORMAT - Easily reformat XML files
 (use-package xml-format
   :demand t
@@ -725,9 +730,6 @@
 (use-package multiple-cursors)
 
 (require 'multiple-cursors)
-
-;; nXML
-(setq nxml-child-indent 4)
 
 ;;; GNUPLOT
 (use-package gnuplot
