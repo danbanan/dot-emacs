@@ -657,39 +657,6 @@
 	  (lambda ()
 	    (company-mode)))
 
-;;; Projectile + Helm-projectile
-(use-package ppcompile
-  :after projectile
-  :bind
-  (:map projectile-mode-map
-	("C-x p c" . double-ppcompile))
-  :config
-  ;; TODO: Make more general
-  (defun double-ppcompile (n)
-    (interactive "cexd_cluster_(1|2|3|4)")
-    (let* ((option (char-to-string n))
-	   (cluster (pcase option
-		      ("1" (cons "mxsw-10" "mxsw-11"))
-		      ("2" (cons "sibiu-4" "sibiu-5"))
-		      ("3" (cons "ni-transp-02" "mx-transp-01"))
-		      ("4" (cons "rcy" "pxmxs-07"))
-		      (_ nil)))
-	   (launch-ppcompile (lambda (ssh-host)
-			       (let ((bufname (format "*compilation-%s*" ssh-host)))
-				 (when (get-buffer bufname)
-				   (kill-buffer bufname))
-				 (setq ppcompile-ssh-host ssh-host)
-				 (ppcompile t)
-				 (with-current-buffer "*compilation*"
-				   (rename-buffer bufname))))))
-      (when cluster
-	(setq ppcompile-path-mapping-alist '(("/root/dan/ppcompile" . "/home/dolphin-dan/dev/c"))
-	      ppcompile-rsync-dst-dir  "/root/dan/ppcompile"
-	      ppcompile-ssh-user  "root"
-	      ppcompile-remote-compile-command "cmake -B build -S . && make -C build module && make -C build/examples")
-	(delete-other-windows)
-	(funcall launch-ppcompile (car cluster))
-	(funcall launch-ppcompile (cdr cluster))))))
 
 (use-package helm-projectile
   :bind
@@ -713,19 +680,6 @@
   :config
   (projectile-mode)
   (helm-projectile-on))
-
-(use-package dired-rsync)
-
-(defun dired-exd-sync ()
-  (interactive)
-  (when (projectile-project-root)
-    (find-file (projectile-project-root))
-    (dired-toggle-marks)
-    (message "before check")
-    (cond ((string-match-p tramp-file-name-regexp default-directory)
-	   (dired-rsync "/home/dolphin-dan/dev/c/expressdrive"))
-	   (t (dired-rsync "/ssh:mx-transp-01:/root/dan/ppcompile/expressdrive")))))
-
 ;;; Multiple Cursors
 (use-package multiple-cursors)
 
