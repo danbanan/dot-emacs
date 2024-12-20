@@ -340,11 +340,9 @@
 ;; Load ledger-mode for '.dat' files
 (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
 
-
-(use-package lsp-mode)
-
-;;; Eglot - lightweight LSP alternative
-(use-package eglot)
+(use-package lsp-mode
+  :custom
+  (lsp-headerline-breadcrumb-enable nil))
 
 ;;; Color-indentifier - unique color per variable name
 (use-package color-identifiers-mode)
@@ -526,11 +524,10 @@
 
 (use-package lsp-java
   :custom ;; Fix from https://github.com/emacs-lsp/lsp-java/issues/26#issuecomment-698573923
-  (lsp-java-vmargs '("-noverify"
-		     "-Xmx1G"
+  (lsp-java-vmargs '("-Xmx1G"
 		     "-XX:+UseG1GC"
 		     "-XX:+UseStringDeduplication"
-		     "-javaagent:/home/dan/.m2/repository/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar"))
+		     "-javaagent:/home/dan/.m2/repository/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar"))
   (lsp-java-format-settings-url "~/.emacs.d/resources/eclipse-java-google-style.xml"))
 
 (defun db/java-mode-hook ()
