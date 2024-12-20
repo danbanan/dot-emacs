@@ -85,3 +85,4 @@ custom.el
 /pde/
 /eglot-java-eclipse-jdt-cache/
 /share/
+/session.*
