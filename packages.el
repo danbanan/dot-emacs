@@ -19,6 +19,7 @@
    ("C-x r b" . helm-filtered-bookmarks)
    ("C-x C-f" . helm-find-files)
    ("C-x b" . helm-mini)
+   ("C-s" . helm-occur)
    :map helm-map
    ("C-h" . helm-mode-delete-char-backward-maybe)
    ("C-i" . helm-execute-persistent-action)
