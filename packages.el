@@ -805,3 +805,9 @@
 
 (use-package adoc-mode)
 
+;; Eshell's history
+(use-package em-hist
+  :ensure nil
+  :bind (:map eshell-hist-mode-map
+	      ("M-r" . helm-eshell-history)))
+
