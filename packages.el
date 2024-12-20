@@ -24,7 +24,8 @@
    ("C-h" . helm-mode-delete-char-backward-maybe)
    ("C-i" . helm-execute-persistent-action)
    ("C-z" . helm-select-action))
-  :config
+  :init
+  (setq helm-show-completion-display-function #'helm-show-completion-default-display-function)
   (helm-mode 1))
 
 ;;; HELM-DESCBINDS: helm interface to describe-bindings
