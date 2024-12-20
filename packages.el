@@ -543,8 +543,10 @@
 ;;; Java development
 (add-hook 'java-mode-hook #'db/java-mode-hook)
 
-;; Eclim
-;; /home/danbanan/Documents/eclipse/eclipse/eclimd
+;; (use-package java-mode
+;;   :ensure nil
+;;   :bind (:map java-mode-map
+;; 	      ("TAB" . lsp-format-region)))
 
 (dap-register-debug-template "Siddhi app runner"
                              (list :type "java"
