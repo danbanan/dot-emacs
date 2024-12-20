@@ -811,3 +811,7 @@
   :bind (:map eshell-hist-mode-map
 	      ("M-r" . helm-eshell-history)))
 
+(use-package project
+  :ensure nil
+  :demand magit-extras)
+
