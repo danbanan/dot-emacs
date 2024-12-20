@@ -657,29 +657,6 @@
 	  (lambda ()
 	    (company-mode)))
 
-
-(use-package helm-projectile
-  :bind
-  (("C-x p p" . helm-projectile-switch-project)
-   :map projectile-mode-map
-	("C-x p f" . helm-projectile-find-file)
-	("C-x p d" . helm-projectile-find-dir)))
-
-(use-package projectile
-  :bind
-  (:map projectile-mode-map
-   ("C-x p s" . projectile-run-shell)
-   ("C-x p b" . projectile-switch-to-buffer)
-   ("C-x p v" . projectile-run-vterm)
-   ("C-x p r" . dired-exd-sync))
-  :custom
-  (projectile-indexing-method 'alien)
-  (projectile-completion-system 'helm)
-  (projectile-switch-project-action 'helm-projectile)
-  (projectile-find-dir-includes-top-level t)
-  :config
-  (projectile-mode)
-  (helm-projectile-on))
 ;;; Multiple Cursors
 (use-package multiple-cursors)
 
