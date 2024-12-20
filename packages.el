@@ -674,12 +674,6 @@
 
 (add-hook 'sh-mode-hook #'db/shell-hook)
 
-;;; EYEBROWSE: workspace manager
-(use-package eyebrowse  
-  :init (progn
-	  (eyebrowse-mode t)
-	  (setq eyebrowse-new-workspace t)))
-
 ;;; PERL
 
 ;; (add-to-list 'load-path "~/.emacs.d/pde/")
