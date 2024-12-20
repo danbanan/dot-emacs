@@ -59,12 +59,11 @@
 ;; 			  '(font . "Iosevka Light Extended-10.5"))))
 (set-frame-font
  "-JB-JetBrains Mono-normal-normal-normal-*-19-*-*-*-m-0-iso10646-1") ; 16:18 screen
+(set-frame-font
+ "-JB-JetBrains Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1") ; Ultra wide screen
 ;; (set-frame-font
-;;  "-JB-JetBrains Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+;;  "-JB-JetBrains Mono-normal-normal-normal-*-29-*-*-*-m-0-iso10646-1")
 					; regular laptop screen
-;; (set-frame-font "Monospace 8" nil t)  ; 4K monitor
-;; (set-frame-font "Monospace 19" nil t) ;; Projector
-(set-frame-font "Monospace 9" nil t) ; 1080p monitor
 ;; -----------------------------------------------------------------------------
 
 ;; Disable menu, tool, and scroll bar
