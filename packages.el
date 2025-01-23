@@ -633,7 +633,7 @@
 (use-package nxml-mode
   :ensure nil
   :custom
-  (nxml-child-indent 2))
+  (nxml-child-indent 4))
 
 ;;; XML FORMAT - Easily reformat XML files
 (use-package xml-format
