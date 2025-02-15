@@ -10,6 +10,16 @@
 (customize-set-variable 'use-package-always-ensure t)
 ;; (customize-set-variable 'use-package-verbose t)
 
+;; Macports' emacs-app does not inherit shell environment automatically
+(use-package exec-path-from-shell
+  :custom
+  (exec-path-from-shell-shell-name "/opt/local/bin/bash")
+  :config
+  (when (memq window-system '(mac ns x))
+    (dolist (var '("JAVA_HOME"))
+      (add-to-list 'exec-path-from-shell-variables var))
+    (exec-path-from-shell-initialize)))
+
 (use-package olivetti)
 
 ;;; HELM: incremental completion and narrowing selections
