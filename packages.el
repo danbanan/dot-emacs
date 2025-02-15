@@ -600,7 +600,9 @@
   :config
   ;; To have enough buffer to look through output, but not so much that is negatively affects
   ;; performance.
-  (setq vterm-max-scrollback 10000))
+  (setq vterm-max-scrollback 10000)
+  :custom
+  (vterm-shell "/bin/bash"))
 
 (use-package vterm-toggle
   :init
