@@ -20,7 +20,10 @@
       (add-to-list 'exec-path-from-shell-variables var))
     (exec-path-from-shell-initialize)))
 
-(use-package olivetti)
+(use-package olivetti
+  :hook (adoc-mode . (lambda ()
+                       (olivetti-mode)
+                       (customize-set-variable 'olivetti-body-width 120))))
 
 ;;; HELM: incremental completion and narrowing selections
 (use-package helm
@@ -813,7 +816,14 @@
   (plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
   (plantuml-indent-level 4))
 
-(use-package adoc-mode)
+(use-package auto-fill
+  :ensure nil
+  :hook (adoc-mode))
+
+(use-package adoc-mode
+  :hook (adoc-mode . (lambda ()
+                       (add-hook 'before-save-hook #'delete-trailing-whitespace 0 'local)
+                       (customize-set-variable 'fill-column 66))))
 
 ;; Eshell's history
 (use-package em-hist
