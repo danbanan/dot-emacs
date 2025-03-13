@@ -12,13 +12,13 @@
 
 ;; Macports' emacs-app does not inherit shell environment automatically
 (use-package exec-path-from-shell
+  :when (memq window-system '(mac ns))
   :custom
   (exec-path-from-shell-shell-name "/opt/local/bin/bash")
   :config
-  (when (memq window-system '(mac ns x))
-    (dolist (var '("JAVA_HOME"))
-      (add-to-list 'exec-path-from-shell-variables var))
-    (exec-path-from-shell-initialize)))
+  (dolist (var '("JAVA_HOME"))
+    (add-to-list 'exec-path-from-shell-variables var))
+  (exec-path-from-shell-initialize))
 
 (use-package olivetti
   :hook (adoc-mode . (lambda ()
