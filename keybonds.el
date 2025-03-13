@@ -26,6 +26,7 @@
 (define-key global-map (kbd "M-?") 'mark-paragraph)
 (define-key global-map (kbd "C-h") 'delete-backward-char)
 (define-key global-map (kbd "M-h") 'backward-kill-word)
+(define-key global-map (kbd "C-x C-b") 'previous-buffer)
 
 ;;; Help mode
 (define-key help-mode-map (kbd "<return>") 'help-follow)
