@@ -353,10 +353,6 @@
 ;; Load ledger-mode for '.dat' files
 (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
 
-(use-package lsp-mode
-  :custom
-  (lsp-headerline-breadcrumb-enable nil))
-
 ;;; Color-indentifier - unique color per variable name
 (use-package color-identifiers-mode)
 
@@ -534,14 +530,11 @@
 	  "http://pragmaticemacs.com/feed/"
 	  "https://martinsteffen.github.io/feed.xml")))
 
-
-(use-package lsp-java
-  :custom ;; Fix from https://github.com/emacs-lsp/lsp-java/issues/26#issuecomment-698573923
-  (lsp-java-vmargs '("-Xmx1G"
-		     "-XX:+UseG1GC"
-		     "-XX:+UseStringDeduplication"
-		     "-javaagent:/home/dan/.m2/repository/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar"))
-  (lsp-java-format-settings-url "~/.emacs.d/resources/eclipse-java-google-style.xml"))
+(use-package eglot-java
+  :hook java-mode
+  :config
+  (add-hook 'eglot-java-mode-hook
+	    (lambda () (eglot-inlay-hints-mode -1))))
 
 (defun db/java-mode-hook ()
   (add-hook 'before-save-hook #'delete-trailing-whitespace 0 'local)
@@ -550,8 +543,7 @@
   (set-fill-column 100)			;max line length = 100
   (electric-pair-mode 1)		;auto-pair symbols such as (), '', "", <>, etc.
   (visual-fill-column-mode)
-  (yas-minor-mode-on)
-  (lsp))
+  (yas-minor-mode-on))
 
 ;;; Java development
 (add-hook 'java-mode-hook #'db/java-mode-hook)
