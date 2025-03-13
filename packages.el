@@ -113,6 +113,7 @@
 
 ;;; COMPANY-MODE: COMPlete ANYthing, auto-completion framework
 (use-package company
+  :hook java-mode
   :custom
   (company-idle-delay 0.1)
   (company-tooltip-align-annotations t))
