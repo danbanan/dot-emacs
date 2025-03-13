@@ -111,10 +111,6 @@
 (define-key key-translation-map (kbd "C-x 8 /") (kbd "÷"))
 (define-key key-translation-map (kbd "C-x 8 <up>") (kbd "↑"))
 
-
-;; LSP mode
-(define-key lsp-mode-map (kbd "M-.") #'lsp-find-implementation)
-
 ;;; Perl
 (require 'cperl-mode)			; may not be necessary
 (define-key cperl-mode-map (kbd "C-c C-c c") #'compile)

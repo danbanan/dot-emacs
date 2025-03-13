@@ -549,18 +549,6 @@
 ;;; Java development
 (add-hook 'java-mode-hook #'db/java-mode-hook)
 
-;; (use-package java-mode
-;;   :ensure nil
-;;   :bind (:map java-mode-map
-;; 	      ("TAB" . lsp-format-region)))
-
-(dap-register-debug-template "Siddhi app runner"
-                             (list :type "java"
-                                   :request "launch"
-                                   :args "--burst-delay 1000 --burst-size 30 --count 30 -f /home/danbanan/dev/java/siddhi-instrumentation/java/modules/application/src/main/resources/events.txt"
-                                   :vmArgs "-Xint -XX:+AlwaysPreTouch"
-                                   :env '(("DEV" . "1"))))
-
 ;;; Ebuku - bookmark manager
 (use-package ebuku
   :init
