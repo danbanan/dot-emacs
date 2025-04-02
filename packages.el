@@ -534,20 +534,20 @@
 (use-package eglot-java
   :hook java-mode
   :config
-  (add-hook 'eglot-java-mode-hook
-	    (lambda () (eglot-inlay-hints-mode -1))))
+  (add-hook 'eglot-java-mode-hook #'eglot-inlay-hints-mode))
 
-(defun db/java-mode-hook ()
-  (add-hook 'before-save-hook #'delete-trailing-whitespace 0 'local)
-  (setq indent-tabs-mode nil)		;insert spaces instead of tabs
-  (setq tab-width 4)			;tab width = 4
-  (set-fill-column 100)			;max line length = 100
-  (electric-pair-mode 1)		;auto-pair symbols such as (), '', "", <>, etc.
-  (visual-fill-column-mode)
-  (yas-minor-mode-on))
-
-;;; Java development
-(add-hook 'java-mode-hook #'db/java-mode-hook)
+(use-package cc-mode
+  :ensure nil
+  :config
+  (add-hook 'java-mode-hook
+	    (lambda ()
+	      (add-hook 'before-save-hook #'delete-trailing-whitespace 0 'local)
+	      (setq indent-tabs-mode nil)		;insert spaces instead of tabs
+	      (setq tab-width 4)			;tab width = 4
+	      (set-fill-column 100)			;max line length = 100
+	      (electric-pair-mode 1)		        ;auto-pair symbols such as (), '', "", <>, etc.
+	      (visual-fill-column-mode)
+	      (yas-minor-mode-on))))
 
 ;;; Ebuku - bookmark manager
 (use-package ebuku
