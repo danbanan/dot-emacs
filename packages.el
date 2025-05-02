@@ -484,8 +484,7 @@
   (c-set-style "llvm.org")
   (color-identifiers-mode t)
   (company-mode)
-  (visual-fill-column-mode)
-  (eglot-ensure))
+  (visual-fill-column-mode))
 
 (defun db/c-mode-hook ()
   (c-set-style "EXPRESSDRIVE")
@@ -531,11 +530,6 @@
 	  "http://pragmaticemacs.com/feed/"
 	  "https://martinsteffen.github.io/feed.xml")))
 
-(use-package eglot-java
-  :hook java-mode
-  :config
-  (add-hook 'eglot-java-mode-hook #'eglot-inlay-hints-mode))
-
 (use-package cc-mode
   :ensure nil
   :config
@@ -548,6 +542,11 @@
 	      (electric-pair-mode 1)		        ;auto-pair symbols such as (), '', "", <>, etc.
 	      (visual-fill-column-mode)
 	      (yas-minor-mode-on))))
+
+(use-package eglot)
+
+(use-package eglot-java
+  :hook java-mode)
 
 ;;; Ebuku - bookmark manager
 (use-package ebuku
