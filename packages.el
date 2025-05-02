@@ -193,9 +193,6 @@
 ;; Fontify bold, italics and underlined text without the pre-symbols
 (setq org-hide-emphasis-markers nil)
 
-(setq org-refile-targets '(("~/dev/common-lisp/timelisteserver/README.org" . (:maxlevel . 3))
-			   ("~/dev/common-lisp/timelisteserver/BUGFIXES.org" . (:maxlevel . 3))))
-
 ;; Global Org TODO keywords
 (setq org-todo-keywords '((sequence "TODO(t)"
 				    "IN-PROGRESS(i)"
