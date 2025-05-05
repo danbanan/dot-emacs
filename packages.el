@@ -264,6 +264,11 @@
          (file+olp+datetree "~/Dropbox/org/capture/affirmations.org")
          "* Three nice things about my workday\n\n  1) %?\n  2) \n  3) \n")))
 
+(add-to-list 'org-refile-targets '(nil . (:level . 1)))
+(add-to-list 'org-refile-targets '(nil . (:level . 2)))
+(add-to-list 'org-refile-targets '(nil . (:level . 3)))
+(add-to-list 'org-refile-targets '(nil . (:level . 4)))
+
 ;; Org bullets - beautify bullets in org-mode
 (use-package org-bullets
   :after org-mode)
