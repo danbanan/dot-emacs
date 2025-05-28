@@ -525,12 +525,11 @@
 
 ;;; Elfeed - RSS reader
 (use-package elfeed
-  :init
-  (setq elfeed-feeds
-	'(;; School stuff
-	  ;; Emacs stuff
-	  "http://pragmaticemacs.com/feed/"
-	  "https://martinsteffen.github.io/feed.xml")))
+  :custom
+  (elfeed-feeds	'("http://pragmaticemacs.com/feed/"
+		  "https://martinsteffen.github.io/feed.xml"
+		  "https://themkat.net/feed.xml"))
+  (elfeed-search-filter "+unread"))
 
 (use-package cc-mode
   :ensure nil
