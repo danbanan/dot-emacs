@@ -702,35 +702,14 @@
 
 
 ;;; COMMON LISP
-(add-to-list 'auto-mode-alist '("\\.cl\\'" . common-lisp-mode))
-(setq inferior-lisp-program "/usr/local/bin/alisp")
-
-;; SLY: Common Lisp IDE
-(use-package sly
-  :hook
-  (sly-mrepl-mode . company-mode)
-  (lisp-mode . sly-mode)
-  ;; :custom
-  ;; (inferior-lisp "alisp")
+(use-package slime
+  :init
+  (setq inferior-lisp-program "alisp")
   :config
-  (sly-setup)
-  (setq sly-lisp-implementations
-	'((alisp ("alisp"))
-	  (mlisp ("mlisp"))
-	  (cmucl-18d ("cmucl-18d"))
-	  (cmucl-19d ("cmucl-19d"))
-	  (cmucl-21d ("cmucl-21d"))
-	  (sbcl ("sbcl")))))
-
-;; (add-to-list 'sly-filename-translations
-;;              (sly-create-filename-translator
-;;               :machine-instance "Timelisteserver"
-;;               :remote-host "172.16.7.206"
-;;               :username "root"))
+  (add-to-list 'auto-mode-alist '("\\.cl\\'" . common-lisp-mode)))
 
 ;;; Info
 (add-to-list 'Info-directory-list (expand-file-name "~/.local/share/info/"))
-
 
 ;; R programming
 (use-package ess
