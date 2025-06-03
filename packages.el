@@ -793,7 +793,30 @@
 
 (use-package project
   :ensure nil
-  :demand magit-extras)
+  :demand magit-extras
+  :config
+  (defun project-vterm ()
+    "Start Vterm in the current project's root directory.
+If a buffer already exists for running Vterm in the project's root,
+switch to it.  Otherwise, create a new Vterm buffer.
+With \\[universal-argument] prefix arg, create a new Vterm buffer even
+if one already exists."
+    (interactive)
+    (defvar vterm-buffer-name)
+    (let* ((default-directory (project-root (project-current t)))
+           (vterm-buffer-name (project-prefixed-buffer-name "vterm"))
+           (vterm-buffer (get-buffer vterm-buffer-name)))
+      (if (and vterm-buffer (not current-prefix-arg))
+          (pop-to-buffer vterm-buffer (bound-and-true-p display-comint-buffer-action))
+	(vterm t))))
+  :custom
+  (project-switch-commands '((project-find-file "Find file")
+			     (project-find-regexp "Find regexp")
+			     (project-find-dir "Find directory")
+			     (project-vterm "Vterm" "v")
+			     (project-eshell "Eshell")
+			     (magit-project-status "Magit")))
+  :bind (("C-x p v" . project-vterm)))
 
 (use-package edebug
   :ensure nil
