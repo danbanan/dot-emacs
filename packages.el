@@ -736,7 +736,9 @@
   :ensure nil
   :config
   (add-to-list 'compilation-error-regexp-alist '("\\(minor: \\)\\(.*\\):\\([0-9]+\\)" 2 3 nil 1 nil (1 compilation-warning-face)))
-  (add-to-list 'compilation-error-regexp-alist '("\\(critical: \\)\\(.*\\):\\([0-9]+\\)" 2 3 nil 2 nil (1 compilation-error-face))))
+  (add-to-list 'compilation-error-regexp-alist '("\\(critical: \\)\\(.*\\):\\([0-9]+\\)" 2 3 nil 2 nil (1 compilation-error-face)))
+  (add-hook 'compilation-filter-hook
+            (lambda () (ansi-color-apply-on-region (point-min) (point-max)))))
 
 
 ;; Set up work printer
