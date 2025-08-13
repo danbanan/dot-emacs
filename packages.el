@@ -757,7 +757,14 @@
 ;; Oracle SQL
 (use-package sql
   :custom
-  (sql-oracle-login-params '(user password database)))
+  (sql-oracle-login-params '(user password database))
+  (sql-connection-alist '((ihub-postgres-db
+                           (sql-password "quarkus")
+                           (sql-product 'postgres)
+                           (sql-server "localhost")
+                           (sql-user "quarkus")
+                           (sql-database "quarkus")
+			   (sql-port 32769)))))
 
 (use-package sqlplus
   :load-path "./lisp/"
