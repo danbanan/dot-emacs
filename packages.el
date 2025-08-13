@@ -827,3 +827,7 @@ if one already exists."
   :ensure nil
   :custom
   (edebug-print-length nil))
+
+(use-package restclient
+  :init
+  (add-to-list 'auto-mode-alist '("\\.rest\\'" . restclient-mode)))
