@@ -115,7 +115,7 @@
 	    (setq ns-pop-up-frames nil)
 	    (setq select-enable-clipboard t)
 	    (setq split-height-threshold nil) ; always split horizontaly
-	    (setq split-width-threshold 0)
+	    (setq split-width-threshold 200)
 	    (set-frame-parameter nil 'undecorated t)
 	    (set-frame-position nil 0 0)
 	    (global-visual-line-mode t)
@@ -168,9 +168,6 @@
 ;; -----------------------------------------------------------------------------
 
 (customize-set-variable 'next-screen-context-lines 25)
-
-;; (setq split-height-threshold nil)
-;; (setq split-width-threshold 160)
 
 (setq custom-file (concat user-emacs-directory "custom.el"))
 
