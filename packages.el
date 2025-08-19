@@ -366,7 +366,7 @@
 (use-package color-identifiers-mode)
 
 ;;; CC-MODE
-(require 'cc-mode)
+(require 'cc-mode)                      ;Can potentially be ignored
 
 ;; LLVM format settings
 (defun llvm-lineup-statement (langelem)
