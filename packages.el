@@ -535,6 +535,11 @@
 		  "https://themkat.net/feed.xml"))
   (elfeed-search-filter "+unread"))
 
+;;; electric-pair - Auto-pair symbols such as (), '', "", <>, etc.
+(use-package electric-pair
+  :ensure nil
+  :hook (kotlin-mode java-mode))
+
 (use-package cc-mode
   :ensure nil
   :config
