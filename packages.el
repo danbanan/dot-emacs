@@ -551,7 +551,10 @@
                          fill-column 100)
 	             (add-hook 'before-save-hook #'delete-trailing-whitespace 0 'local))))
 
-(use-package eglot)
+
+(use-package eglot
+  :ensure nil
+  :hook (kotlin-mode . eglot-ensure))
 
 (use-package eglot-java
   :hook java-mode)
@@ -842,3 +845,15 @@ if one already exists."
 (use-package restclient
   :init
   (add-to-list 'auto-mode-alist '("\\.rest\\'" . restclient-mode)))
+
+(use-package kotlin-mode
+  :ensure nil
+  :custom (kotlin-tab-width 2)
+  :hook (kotlin-mode . (lambda ()
+			             (setopt indent-tabs-mode nil)
+                         (setopt tab-width 2))))
+
+(use-package auto-revert
+  :ensure nil
+  :hook kotlin-mode)
+
