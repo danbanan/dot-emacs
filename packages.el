@@ -87,9 +87,10 @@
 
 ;;; VISUAL FILL COLUMN: Center coloumns
 (use-package visual-fill-column
+  :hook (java-mode kotlin-mode)
   :custom
   (visual-fill-column-enable-sensible-window-split t)
-  (visual-fill-column-width 200 "Should be conditional due to monitor sizes")
+  (visual-fill-column-width 180 "Should be conditional due to monitor sizes")
   (visual-fill-column-center-text t))
 
 ;;; AUCTEX: Latex editing environment
