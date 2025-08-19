@@ -113,7 +113,9 @@
 ;;; YASNIPPET: template tool, pre-defined code snippets
 (use-package yasnippet
   :init
-  (add-to-list 'load-path "~/Dropbox/yasnippets/"))
+  (add-to-list 'load-path "~/Dropbox/yasnippets/")
+  :hook
+  (java-mode . yas-minor-mode-on))
 
 ;;; COMPANY-MODE: COMPlete ANYthing, auto-completion framework
 (use-package company
@@ -542,16 +544,12 @@
 
 (use-package cc-mode
   :ensure nil
-  :config
-  (add-hook 'java-mode-hook
-	    (lambda ()
-	      (add-hook 'before-save-hook #'delete-trailing-whitespace 0 'local)
-	      (setq indent-tabs-mode nil)		;insert spaces instead of tabs
-	      (setq tab-width 4)			;tab width = 4
-	      (set-fill-column 100)			;max line length = 100
-	      (electric-pair-mode 1)		        ;auto-pair symbols such as (), '', "", <>, etc.
-	      (visual-fill-column-mode)
-	      (yas-minor-mode-on))))
+  :hook
+  (java-mode . (lambda ()
+                 (setopt indent-tabs-mode nil
+                         tab-width 4
+                         fill-column 100)
+	             (add-hook 'before-save-hook #'delete-trailing-whitespace 0 'local))))
 
 (use-package eglot)
 
