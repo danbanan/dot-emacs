@@ -227,7 +227,7 @@
 (setq org-clock-sound "~/.emacs.d/bells/dreamy.wav")
 
 (setq org-agenda-prefix-format '((agenda . " %i %-20:c%?-12t% s")
-				 (todo . " %i %-12:c")
+				 (todo . " %i %-12:b")
 				 (tags . " %i %-12:c")
 				 (search . " %i %-12:c")))
 
