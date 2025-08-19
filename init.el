@@ -49,21 +49,6 @@
 
 ;;; Font settings
 ;; -----------------------------------------------------------------------------
-;; (cond ((string-equal system-type "darwin")
-;;        ;; (set-frame-font "Iosevka 15" nil t)
-;;        (set-frame-font "Fira Code 14" nil t))
-;;        ((string-equal system-type "gnu/linux")
-;; 	;; (set-frame-font "Iosevka Heavy 12")
-;; 	(set-frame-font "Fira Code 11" nil t))
-;;        (else (add-to-list 'default-frame-alist
-;; 			  '(font . "Iosevka Light Extended-10.5"))))
-(set-frame-font
- "-JB-JetBrains Mono-normal-normal-normal-*-19-*-*-*-m-0-iso10646-1") ; 16:18 screen
-(set-frame-font
- "-JB-JetBrains Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1") ; Ultra wide screen
-;; (set-frame-font
-;;  "-JB-JetBrains Mono-normal-normal-normal-*-29-*-*-*-m-0-iso10646-1")
-					; regular laptop screen
 ;; -----------------------------------------------------------------------------
 
 ;; Disable menu, tool, and scroll bar
