@@ -857,3 +857,8 @@ if one already exists."
   :ensure nil
   :hook kotlin-mode)
 
+(use-package textsize
+  :custom
+  (textsize-default-points 12)
+  :init
+  (textsize-mode))
