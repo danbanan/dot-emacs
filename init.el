@@ -45,6 +45,9 @@
 (add-hook 'emacs-startup-hook #'db/display-startup-time)
 ;; -----------------------------------------------------------------------------
 
+;; Enables narrow-to-region
+(put 'narrow-to-region 'disabled nil)
+
 ;; TODO, start eshell upon startup
 
 ;;; Font settings
