@@ -1,3 +1,5 @@
+;; blabla
+
 ;;; USE-PACKAGE: isolate package configuration
 ;; Load use-package explicitly if not already built-in
 (unless (> 29 (string-to-number emacs-version))
