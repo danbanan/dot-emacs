@@ -89,7 +89,7 @@
 
 ;;; VISUAL FILL COLUMN: Center coloumns
 (use-package visual-fill-column
-  :hook (java-mode kotlin-mode)
+  :hook java-mode
   :custom
   (visual-fill-column-enable-sensible-window-split t)
   (visual-fill-column-width 180 "Should be conditional due to monitor sizes")
@@ -121,7 +121,7 @@
 
 ;;; COMPANY-MODE: COMPlete ANYthing, auto-completion framework
 (use-package company
-  :hook (java-mode kotlin-mode perl-mode)
+  :hook (java-mode perl-mode)
   :custom
   (company-idle-delay 0.1)
   (company-tooltip-align-annotations t))
@@ -545,7 +545,7 @@
 ;;; electric-pair - Auto-pair symbols such as (), '', "", <>, etc.
 (use-package electric-pair
   :ensure nil
-  :hook (kotlin-mode java-mode))
+  :hook java-mode)
 
 (use-package cc-mode
   :ensure nil
@@ -559,8 +559,7 @@
 
 (use-package eglot
   :ensure nil
-  :hook ((kotlin-mode . eglot-ensure)
-	 (clojure-mode . eglot-ensure)
+  :hook ((clojure-mode . eglot-ensure)
          (java-mode . eglot-ensure))
   :bind (:map eglot-mode-map
               ("C-c C-a" . eglot-code-actions)
@@ -837,17 +836,6 @@ if one already exists."
 (use-package restclient
   :init
   (add-to-list 'auto-mode-alist '("\\.rest\\'" . restclient-mode)))
-
-(use-package kotlin-mode
-  :ensure nil
-  :custom (kotlin-tab-width 2)
-  :hook (kotlin-mode . (lambda ()
-			             (setopt indent-tabs-mode nil)
-                         (setopt tab-width 2))))
-
-(use-package auto-revert
-  :ensure nil
-  :hook kotlin-mode)
 
 (use-package textsize
   :custom
