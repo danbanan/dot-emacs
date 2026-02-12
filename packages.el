@@ -551,7 +551,7 @@
                  (setopt indent-tabs-mode nil
                          tab-width 4
                          fill-column 100)
-	             (add-hook 'before-save-hook #'delete-trailing-whitespace 0 'local))))
+	         (add-hook 'before-save-hook #'delete-trailing-whitespace 0 'local))))
 
 
 (use-package eglot
@@ -711,7 +711,6 @@
 (add-hook 'cperl-mode-hook #'db/perl-hook)
 
 ;; (setq Man-switches "")
-
 ;; (setenv "MANPATH" (concat "/home/dolphin-dan/perl5/man/man1:" (getenv "MANPATH")))
 ;; (setenv "MANPATH" (concat "/home/dolphin-dan/perl5/man/man3:" (getenv "MANPATH")))
 
