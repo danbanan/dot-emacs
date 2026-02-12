@@ -115,7 +115,7 @@
 ;;; YASNIPPET: template tool, pre-defined code snippets
 (use-package yasnippet
   :init
-  (add-to-list 'load-path "~/Dropbox/yasnippets/")
+  (add-to-list 'load-path "~/Jottacloud/yasnippets/")
   :hook
   (java-mode . yas-minor-mode-on))
 
