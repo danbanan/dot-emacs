@@ -556,10 +556,15 @@
 
 (use-package eglot
   :ensure nil
-  :hook (kotlin-mode . eglot-ensure))
+  :hook ((kotlin-mode . eglot-ensure)
+	 (clojure-mode . eglot-ensure)
+         (java-mode . eglot-ensure))
+  :bind (:map eglot-mode-map
+              ("C-c C-a" . eglot-code-actions)
+              ("C-c C-r" . eglot-rename)
+              ("C-c C-f" . flymake-show-buffer-diagnostics)
+              ("C-c C-h" . eldoc)))
 
-(use-package eglot-java
-  :hook java-mode)
 
 ;;; Ebuku - bookmark manager
 (use-package ebuku
