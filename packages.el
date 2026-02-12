@@ -134,6 +134,9 @@
   :config
   (require 'magit-extras))
 
+(use-package forge
+  :after magit)
+
 ;;; Lines Settings
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode t))
