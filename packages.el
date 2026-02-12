@@ -687,35 +687,18 @@
 
 (add-hook 'sh-mode-hook #'db/shell-hook)
 
-;;; PERL
-
-;; (add-to-list 'load-path "~/.emacs.d/pde/")
-;; (load "pde-load")
-
-;; Prefer cperl-mode to perl-mode, (more robust according to EmacsWiki)
-(mapc
- (lambda (pair)
-   (if (eq (cdr pair) 'perl-mode)
-       (setcdr pair 'cperl-mode)))
- (append auto-mode-alist interpreter-mode-alist))
-;; Also highlight referenced variables, not only when they are declared.
-(setq cperl-highlight-variables-indiscriminately t)
-
-(defun db/perl-hook ()
-  (cperl-set-style 'PBP)
-  (company-mode)  
-  (olivetti-mode)
-  (setq-local olivetti-body-width 110)
-  (cperl-set-style "PBP"))
-
-(add-hook 'cperl-mode-hook #'db/perl-hook)
-
 ;; (setq Man-switches "")
 ;; (setenv "MANPATH" (concat "/home/dolphin-dan/perl5/man/man1:" (getenv "MANPATH")))
 ;; (setenv "MANPATH" (concat "/home/dolphin-dan/perl5/man/man3:" (getenv "MANPATH")))
 
+;;; PERL
 (setenv "PERL5LIB" (concat "/home/dolphin-dan/perl5/lib/perl5/:" (getenv "PERL5LIB")))
 
+(use-package perl-mode
+  :ensure nil
+  :hook (perl-mode . (lambda ()
+		       (setq indent-tabs-mode nil
+			     olivetti-body-width 100))))
 
 ;;; COMMON LISP
 (use-package slime
