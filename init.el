@@ -92,7 +92,7 @@
 
 ;; Set default directory on start-up
 ;; -----------------------------------------------------------------------------
-(setq default-directory "~/Dropbox/")
+(setq default-directory "~/Jottacloud/")
 ;; -----------------------------------------------------------------------------
 
 ;;;* FRAME SETUP
