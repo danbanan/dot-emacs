@@ -66,7 +66,11 @@
 
 ;;; ACE-WINDOW: jump easier between windows
 (use-package ace-window
-  :custom (aw-keys '(?s ?d ?f ?g))
+  :custom
+  (aw-keys '(?s ?d ?f ?g))
+  (aw-dispatch-always t)
+  :bind (("M-o" . ace-window)
+         ("C-x o" . nil))
   :config (ace-window-display-mode))
 
 ;;; PDF-TOOL: reading PDFs in Emacs
