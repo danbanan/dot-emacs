@@ -36,12 +36,6 @@
 (define-key global-map (kbd "C-c a") #'org-agenda)
 (define-key global-map (kbd "C-c c") #'org-capture)
 ;; (define-key org-mode-map (kbd "C-c ]") #'org-ref-insert-ref-link)
-;; (define-key org-mode-map (kbd "C-c SPC") 'counsel-outline)
-
-
-;;; Markdown-mode
-(define-key markdown-mode-map (kbd "C-c SPC") 'counsel-outline)
-
 
 ;;; Elfeed
 (define-key global-map (kbd "C-x W") 'elfeed)
@@ -64,13 +58,7 @@
 (define-key company-active-map (kbd "C-n") 'company-select-next)
 (define-key company-active-map (kbd "C-p") 'company-select-previous)
 
-;;; Elisp
-(define-key emacs-lisp-mode-map (kbd "<C-tab>") 'counsel-company)
-(define-key emacs-lisp-mode-map (kbd "C-c SPC") 'counsel-outline)
-
-
 ;; C and C++
-(define-key c-mode-map (kbd "<C-tab>") 'counsel-company)
 ;; (define-key c-mode-map (kbd "<C-M-tab>") 'clang-format-buffer)
 (define-key c-mode-map (kbd "C-c C-c") 'compile)
 (define-key c++-mode-map (kbd "C-c C-c") 'compile)
