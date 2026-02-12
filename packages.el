@@ -842,3 +842,10 @@ if one already exists."
   (textsize-default-points 12)
   :init
   (textsize-mode))
+
+(use-package ace-jump-mode
+  :config (ace-jump-mode-enable-mark-sync)
+  :bind (("C-c j" . ace-jump-mode)
+         ("C-c SPC" . ace-jump-mode-pop-mark)
+         :map java-mode-map
+         ("C-c j" . 'ace-jump-mode)))
