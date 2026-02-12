@@ -21,9 +21,7 @@
   (exec-path-from-shell-initialize))
 
 (use-package olivetti
-  :hook (adoc-mode . (lambda ()
-                       (olivetti-mode)
-                       (customize-set-variable 'olivetti-body-width 120))))
+  :hook (adoc-mode perl-mode))
 
 ;;; HELM: incremental completion and narrowing selections
 (use-package helm
@@ -123,7 +121,7 @@
 
 ;;; COMPANY-MODE: COMPlete ANYthing, auto-completion framework
 (use-package company
-  :hook (java-mode kotlin-mode)
+  :hook (java-mode kotlin-mode perl-mode)
   :custom
   (company-idle-delay 0.1)
   (company-tooltip-align-annotations t))
