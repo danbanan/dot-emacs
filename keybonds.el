@@ -9,6 +9,7 @@
        (w32-register-hot-key [M-tab])
        (w32-register-hot-key [s-])))
 
+(define-key global-map (kbd "C-x K") #'kill-current-buffer)
 
 ;;; Norwegian letters
 (define-key key-translation-map (kbd "s-'") (kbd "æ"))
