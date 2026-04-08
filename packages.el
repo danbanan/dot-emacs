@@ -160,7 +160,7 @@
 	  (lambda ()
 	    (outline-minor-mode t)
 	    (company-mode)
-	    (electric-pair-mode t)))
+	    (electric-pair-local-mode t)))
 
 
 ;;; ORG-MODE
