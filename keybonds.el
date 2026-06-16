@@ -110,3 +110,6 @@
 
 ;; ESS
 ;; (define-key ess-mode-map (kbd "C-c h") #'ess-help)
+
+;; Remap C-h to backspace (I don't know how it works) link: https://emacs.stackexchange.com/questions/5882/global-unset-key-backspace
+(define-key key-translation-map [?\C-h] [?\C-?])
