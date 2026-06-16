@@ -10,6 +10,8 @@
        (w32-register-hot-key [s-])))
 
 (define-key global-map (kbd "C-x K") #'kill-current-buffer)
+(define-key global-map (kbd "C-S-k") #'kill-whole-line)
+(define-key global-map (kbd "C-x g") #'revert-buffer)
 
 ;;; Norwegian letters
 (define-key key-translation-map (kbd "s-'") (kbd "æ"))
