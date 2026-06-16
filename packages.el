@@ -701,6 +701,10 @@
 
 (use-package perl-mode
   :ensure nil
+  :bind (:map perl-mode-map
+	      ("C-c C-c" . compile)
+	      ("C-c C-r" . recompile)
+	      ("C-c C-k" . kill-compilation))
   :hook (perl-mode . (lambda ()
 		       (setq indent-tabs-mode nil
 			     olivetti-body-width 100))))
