@@ -137,7 +137,7 @@
 	  (lambda ()
 	    (setq outline-regexp ";;;\\*+")
 	    (outline-minor-mode t)
-	    (electric-pair-mode t)))
+	    (electric-pair-local-mode t)))
 ;; -----------------------------------------------------------------------------
 
 ;;;* Dired
