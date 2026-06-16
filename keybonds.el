@@ -39,6 +39,7 @@
 (define-key global-map (kbd "C-c a") #'org-agenda)
 (define-key global-map (kbd "C-c c") #'org-capture)
 ;; (define-key org-mode-map (kbd "C-c ]") #'org-ref-insert-ref-link)
+(define-key org-mode-map (kbd "M-h") #'backward-kill-word)
 
 ;;; Elfeed
 (define-key global-map (kbd "C-x W") 'elfeed)
