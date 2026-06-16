@@ -539,7 +539,10 @@
   :custom
   (elfeed-feeds	'("http://pragmaticemacs.com/feed/"
 		  "https://martinsteffen.github.io/feed.xml"
-		  "https://themkat.net/feed.xml"))
+		  "https://themkat.net/feed.xml"
+		  "https://rss-feed-api.aws.jyllands-posten.dk/finanswatch.no/latest"
+		  "https://garymarcus.substack.com/feed"
+		  "https://www.wheresyoured.at/rss/"))
   (elfeed-search-filter "+unread"))
 
 ;;; electric-pair - Auto-pair symbols such as (), '', "", <>, etc.
