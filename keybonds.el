@@ -76,10 +76,6 @@
 ;;; Dired
 (define-key dired-mode-map (kbd "C-h") 'dired-unmark-backward)
 
-;;; Vterm
-(define-key vterm-mode-map (kbd "C-h") 'vterm-send-backspace)
-(define-key global-map (kbd "C-x V") 'db/vterm-toggle-cd)
-
 ;;; Multiple cursors
 (define-key global-map (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (define-key global-map (kbd "C->") 'mc/mark-next-like-this)

@@ -610,31 +610,6 @@
   :init
   (setq terminal-here-linux-terminal-command 'gnome-terminal))
 
-;;; VTERM
-(use-package vterm
-  :commands vterm
-  :config
-  ;; To have enough buffer to look through output, but not so much that is negatively affects
-  ;; performance.
-  (setq vterm-max-scrollback 10000)
-  :custom
-  (vterm-shell "/bin/bash"))
-
-(use-package vterm-toggle
-  :init
-  (setq vterm-toggle-cd-auto-create-buffer t))
-
-(defun db/vterm-toggle-cd ()
-  (interactive)
-  (let ((custom-name (read-string "Vterm name:"))
-	(machine-name (s-trim (shell-command-to-string "uname -n"))))
-    (setq vterm-buffer-name
-	  (concat "vterm-"
-		  machine-name
-		  (if (string-empty-p custom-name)
-		      custom-name
-		    (s-concat "-" custom-name))))
-    (vterm-toggle-cd)))
 
 (use-package nxml-mode
   :ensure nil
@@ -812,20 +787,6 @@
   :ensure nil
   :demand magit-extras
   :config
-  (defun project-vterm ()
-    "Start Vterm in the current project's root directory.
-If a buffer already exists for running Vterm in the project's root,
-switch to it.  Otherwise, create a new Vterm buffer.
-With \\[universal-argument] prefix arg, create a new Vterm buffer even
-if one already exists."
-    (interactive)
-    (defvar vterm-buffer-name)
-    (let* ((default-directory (project-root (project-current t)))
-           (vterm-buffer-name (project-prefixed-buffer-name "vterm"))
-           (vterm-buffer (get-buffer vterm-buffer-name)))
-      (if (and vterm-buffer (not current-prefix-arg))
-          (pop-to-buffer vterm-buffer (bound-and-true-p display-comint-buffer-action))
-	(vterm t))))
   :custom
   (project-switch-commands '((project-find-file "Find file")
 			     (project-find-regexp "Find regexp")
@@ -833,7 +794,7 @@ if one already exists."
 			     (project-vterm "Vterm" "v")
 			     (project-eshell "Eshell")
 			     (magit-project-status "Magit")))
-  :bind (("C-x p v" . project-vterm)))
+  :bind (("C-x p t" . ghostel-project)))
 
 (use-package edebug
   :ensure nil
@@ -856,3 +817,21 @@ if one already exists."
          ("C-c SPC" . ace-jump-mode-pop-mark)
          :map java-mode-map
          ("C-c j" . 'ace-jump-mode)))
+
+(use-package ghostel
+  :bind (("C-x m" . ghostel)
+         :map ghostel-semi-char-mode-map
+         ("C-s"  . helm-occur)
+         ("C-k"  . my/ghostel-send-C-k-and-kill)
+         :map project-prefix-map
+         ("t" . ghostel-project))
+  :config
+  (defun my/ghostel-send-C-k-and-kill ()
+    "Send `C-k' to ghostel.
+Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
+    (interactive)
+    (kill-ring-save (point) (line-end-position))
+    (ghostel-send-key "k" "ctrl"))
+
+  (add-to-list 'project-switch-commands '(ghostel-project "Ghostel") t)
+  (add-to-list 'project-switch-commands '(ghostel-project-list-buffers "Ghostel buffers") t))
